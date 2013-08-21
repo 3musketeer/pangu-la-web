@@ -18,7 +18,7 @@ require('./config/routes')(app)
 // Start the app by listening on <port>
 var port = process.env.PORT || 3000
 app.listen(port)
-console.log('pangu log analyse platform started on port '+port)
+console.log('pangu log analyse server started on port '+port)
 
 // expose app
 exports = module.exports = app

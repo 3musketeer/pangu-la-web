@@ -236,8 +236,8 @@ $(function() {
 				defaultDate: +7,
 		showOtherMonths:true,
 		autoSize: true,
-		appendText: '(dd-mm-yyyy)',
-		dateFormat: 'dd-mm-yy'
+		appendText: '(yyyy-mm-dd)',
+		dateFormat: 'yyyy-mm-dd'
 		});
 		
 	$('.inlinepicker').datepicker({
@@ -796,6 +796,7 @@ $(function() {
 
 
 
+/*
 	//===== Make Google maps visible inaide tabs =====//
 
 	function initialize()
@@ -815,6 +816,7 @@ $(function() {
 	};
 	google.maps.event.addDomListener(window, 'load', initialize);
 
+*/
 
 
 	//===== Collapsible plugin for main nav =====//

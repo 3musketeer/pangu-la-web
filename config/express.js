@@ -14,7 +14,7 @@ module.exports = function (app, config) {
       level: 9
     }))
 
-    app.use(express.favicon())
+    app.use(express.favicon('public/favicon.ico'))
     app.use(express.static(config.root + '/public'))
 
     // don't use logger for test env
