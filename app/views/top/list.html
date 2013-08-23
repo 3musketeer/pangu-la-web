@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<title>LAP 日志分析平台</title>
+<link href="/css/main.css" rel="stylesheet" type="text/css" />
+<!--[if IE 8]><link href="/css/ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+<!--[if IE 9]><link href="/css/ie9.css" rel="stylesheet" type="text/css" /><![endif]-->
+
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+
+<script type="text/javascript" src="/js/plugins/charts/excanvas.min.js"></script>
+<script type="text/javascript" src="/js/plugins/charts/jquery.flot.js"></script>
+<script type="text/javascript" src="/js/plugins/charts/jquery.flot.resize.js"></script>
+<script type="text/javascript" src="/js/plugins/charts/jquery.sparkline.min.js"></script>
+
+<script type="text/javascript" src="/js/plugins/ui/jquery.easytabs.min.js"></script>
+<script type="text/javascript" src="/js/plugins/ui/jquery.collapsible.min.js"></script>
+<script type="text/javascript" src="/js/plugins/ui/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="/js/plugins/ui/jquery.bootbox.min.js"></script>
+<script type="text/javascript" src="/js/plugins/ui/jquery.colorpicker.js"></script>
+<script type="text/javascript" src="/js/plugins/ui/jquery.timepicker.min.js"></script>
+<script type="text/javascript" src="/js/plugins/ui/jquery.jgrowl.js"></script>
+<script type="text/javascript" src="/js/plugins/ui/jquery.fancybox.js"></script>
+<script type="text/javascript" src="/js/plugins/ui/jquery.fullcalendar.min.js"></script>
+<script type="text/javascript" src="/js/plugins/ui/jquery.elfinder.js"></script>
+
+<script type="text/javascript" src="/js/plugins/uploader/plupload.js"></script>
+<script type="text/javascript" src="/js/plugins/uploader/plupload.html4.js"></script>
+<script type="text/javascript" src="/js/plugins/uploader/plupload.html5.js"></script>
+<script type="text/javascript" src="/js/plugins/uploader/jquery.plupload.queue.js"></script>
+
+<script type="text/javascript" src="/js/plugins/forms/jquery.uniform.min.js"></script>
+<script type="text/javascript" src="/js/plugins/forms/jquery.autosize.js"></script>
+<script type="text/javascript" src="/js/plugins/forms/jquery.inputlimiter.min.js"></script>
+<script type="text/javascript" src="/js/plugins/forms/jquery.tagsinput.min.js"></script>
+<script type="text/javascript" src="/js/plugins/forms/jquery.inputmask.js"></script>
+<script type="text/javascript" src="/js/plugins/forms/jquery.select2.min.js"></script>
+<script type="text/javascript" src="/js/plugins/forms/jquery.listbox.js"></script>
+<script type="text/javascript" src="/js/plugins/forms/jquery.validation.js"></script>
+<script type="text/javascript" src="/js/plugins/forms/jquery.validationEngine-en.js"></script>
+<script type="text/javascript" src="/js/plugins/forms/jquery.form.wizard.js"></script>
+<script type="text/javascript" src="/js/plugins/forms/jquery.form.js"></script>
+
+<script type="text/javascript" src="/js/plugins/tables/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript" src="/js/files/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/js/files/functions.js"></script>
+
+</head>
+
+<body>
+
+	<!-- Fixed top -->
+	<div id="top">
+		<div class="fixed">
+			<a href="index.html" title="" class="logo"><img src="/img/logo.png" alt="" /></a>
+			<ul class="top-menu">
+				<li><a class="fullview"></a></li>
+				<li><a class="showmenu"></a></li>
+				<li><a href="#" title="" class="messages"><i class="new-message"></i></a></li>
+				<li class="dropdown">
+					<a class="user-menu" data-toggle="dropdown"><img src="/img/userpic.png" alt="" /><span>你好, 唐治! <b class="caret"></b></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#" title=""><i class="icon-user"></i>个人资料</a></li>
+						<li><a href="#" title=""><i class="icon-inbox"></i>消息<span class="badge badge-info">9</span></a></li>
+						<li><a href="#" title=""><i class="icon-cog"></i>设置</a></li>
+						<li><a href="#" title=""><i class="icon-remove"></i>退出</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /fixed top -->
+
+
+	<!-- Content container -->
+	<div id="container">
+
+		<!-- Sidebar -->
+		<div id="sidebar">
+
+	        <!-- Sidebar user -->
+	        <div class="sidebar-user widget">
+				<div class="navbar"><div class="navbar-inner"><h6>欢迎你, 唐治!</h6></div></div>
+	            <a href="#" title="" class="user"><img src="http://placehold.it/210x110" alt="" /></a>
+	            <ul class="user-links">
+	            	<li><a href="" title="">今日调用总数<strong>5929312</strong></a></li>
+	            	<li><a href="" title="">今日异常总数<strong>2964</strong></a></li>
+	            	<li><a href="" title="">今日调用成功率<strong>99.95%</strong></a></li>
+	            </ul>
+	        </div>
+	        <!-- /sidebar user -->
+
+	        <div class="general-stats widget">
+		        <ul class="head">
+		        	<li><span>月-总数</span></li>
+		        	<li><span>月-异常</span></li>
+		        	<li><span>月-成功率</span></li>
+		        </ul>
+		        <ul class="body">
+		        	<li><strong>6000w+</strong></li>
+		        	<li><strong>2.4w+</strong></li>
+		        	<li><strong>99.96%</strong></li>
+		        </ul>
+		    </div>
+
+		    <!-- Main navigation -->
+	        <ul class="navigation widget">
+	            <li><a href="index.html" title=""><i class="icon-home"></i>分析大厅</a></li>
+	            <li class="active"><a href="#" title="" class="expand" id="current"><i class="icon-signal"></i>排名<strong>8</strong></a>
+	                <ul>
+	                    <li><a href="forms.html" title="" class="current">流程调用超时排名</a></li>
+	                    <li><a href="wysiwyg.html" title="">流程调用次数排名</a></li>
+	                    <li><a href="form_wizards.html" title="">流程调用异常排名</a></li>
+	                </ul>
+	            </li>
+	            <li><a href="#" title="" class="expand"><i class="icon-tasks"></i>流程分析<strong>4</strong></a>
+	                <ul>
+	                    <li><a href="components.html" title="">流程分析</a></li>
+	                    <li><a href="content_grid.html" title="">Content grid</a></li>
+	                    <li><a href="blank.html" title="">Blank page</a></li>
+	                </ul>
+	            </li>
+				<li><a href="#" title="" class="expand"><i class="icon-tasks"></i>服务分析<strong>4</strong></a>
+	                <ul>
+	                    <li><a href="components.html" title="">服务分析</a></li>
+	                    <li><a href="content_grid.html" title="">Content grid</a></li>
+	                    <li><a href="blank.html" title="">Blank page</a></li>
+	                </ul>
+	            </li>
+	            <li><a href="media.html" title=""><i class="icon-picture"></i>自定义视图</a></li>
+				<li><a href="#" title="" class="expand"><i class="icon-list-alt"></i>数据预测<strong>4</strong></a>
+	                <ul>
+	                    <li><a href="components.html" title="">服务分析</a></li>
+	                    <li><a href="content_grid.html" title="">Content grid</a></li>
+	                    <li><a href="blank.html" title="">Blank page</a></li>
+	                </ul>
+	            </li>
+				<li><a href="#" title="" class="expand"><i class="icon-warning-sign"></i>数据告警<strong>4</strong></a>
+	                <ul>
+	                    <li><a href="components.html" title="">服务分析</a></li>
+	                    <li><a href="content_grid.html" title="">Content grid</a></li>
+	                    <li><a href="blank.html" title="">Blank page</a></li>
+	                </ul>
+	            </li>
+	            <li><a href="icons.html" title=""><i class="icon-thumbs-up"></i>健康检查</a></li>
+	        </ul>
+	        <!-- /main navigation -->
+	        
+		</div>
+		<!-- /sidebar -->
+
+
+		<!-- Content -->
+		<div id="content">
+
+		    <!-- Content wrapper -->
+		    <div class="wrapper">
+
+			    <!-- Breadcrumbs line -->
+			    <div class="crumbs">
+		            <ul id="breadcrumbs" class="breadcrumb"> 
+		                <li><a href="/">分析大厅</a></li>
+						<li class="active"><a href="#">排名清单</a></li>
+		            </ul>
+			        
+		            <ul class="alt-buttons">
+						<li class="dropdown"><a href="#" title="" data-toggle="dropdown"><i class="icon-warning-sign"></i><span>告警</span> <strong>(+5)</strong></a>
+							<ul class="dropdown-menu pull-right">
+								<li><a href="#" title=""><i class="icon-info-sign"></i>告警1</a><li>
+								<li><a href="#" title=""><i class="icon-info-sign"></i>告警2</a><li>
+								<li><a href="#" title=""><i class="icon-info-sign"></i>告警3</a><li>
+								<li><a href="#" title=""><i class="icon-list"></i>更多...</a><li>
+							</ul>
+						</li>
+		            </ul>
+			    </div>
+			    <!-- /breadcrumbs line -->
+
+			    <!-- Page header -->
+			    <div class="page-header">
+			    	<div class="page-title">
+				    	<h5>排名清单</h5>
+				    	<span>早上好, 唐治!</span>
+			    	</div>
+
+			    	<ul class="page-stats">
+			    		<li>
+			    			<div class="showcase">
+			    				<span>日访问量</span>
+								<h2>12</h2>
+			    			</div>
+							<div id="total-visits" class="chart">10,14,8,45,23,41,22,31,19,12, 28, 21, 24, 20</div>
+			    		</li>
+			    		<li>
+			    			<div class="showcase">
+			    				<span>总访问量</span>
+			    				<h2>264</h2>
+			    			</div>
+			    			<div id="balance" class="chart">10,14,8,45,23,41,22,31,19,12, 28, 21, 24, 20</div>
+			    		</li>
+			    	</ul>
+			    </div>
+			    <!-- /page header -->
+
+			    
+		    
+                <h5 class="widget-name"></h5>
+
+				<div class="row-fluid">
+
+					<div class="span4">
+
+						<div class="widget navbar-tabs">
+	                        <div class="navbar">
+	                            <div class="navbar-inner">
+	                                <h6>流程超时排名</h6>
+	                                <ul class="nav nav-tabs pull-right">
+	                                    <li class="active"><a href="#tab1" data-toggle="tab">日</a></li>
+	                                    <li><a href="#tab2" data-toggle="tab">月</a></li>
+	                                    <li><a href="#tab3" data-toggle="tab">年</a></li>
+	                                </ul>
+	                            </div>
+	                        </div>
+	                        <div class="tabbable">
+	                            <div class="tab-content">
+									<div class="tab-pane active fade in" id="tab1">
+										<div class="list">
+											<ol>
+												<li>ITF_CCHQ_GetBalance<strong class="text-error pull-right">120</strong></li>
+												<li>ITF_CRM_GetBalance<strong class="text-error pull-right">120</strong></li>
+												<li>QAM_OWEFEE_QUERY<strong class="text-error pull-right">120</strong></li>
+												<li>ITF_CCHT_SPTradeOrder<strong class="text-error pull-right">117</strong></li>
+												<li>ITF_CRM_SPTradeOrder<strong class="text-error pull-right">117</strong></li>
+												<li>ITF_CCHT_SPTradeOrder<strong class="text-error pull-right">116</strong></li>
+												<li>ITF_CRM_SPTradeOrder<strong class="text-error pull-right">116</strong></li>
+												<li>ITF_CCHT_SPTradeOrder<strong class="text-error pull-right">115</strong></li>
+												<li>ITF_CRM_SPTradeOrder<strong class="text-error pull-right">115</strong></li>
+												<li>ITF_CCHQ_GetBalance<strong class="text-error pull-right">43</strong></li>
+											</ol>
+										</div>	
+										更新时间2013-08-20 10:30 <a href="detail.html?mode=TuxState&type=TimeOutTop&scope=day" class="pull-right">更多</a>
+									</div>
+	                                <div class="tab-pane fade" id="tab2">Howdy, I'm in Section 2.</div>
+	                                <div class="tab-pane fade" id="tab3">Howdy, I'm in Section 2.</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	
+						<div class="widget navbar-tabs">
+	                        <div class="navbar">
+	                            <div class="navbar-inner">
+	                                <h6>流程调用总量排名</h6>
+	                                <ul class="nav nav-tabs pull-right">
+	                                    <li class="active"><a href="#tab7" data-toggle="tab">日</a></li>
+	                                    <li><a href="#tab8" data-toggle="tab">月</a></li>
+	                                    <li><a href="#tab9" data-toggle="tab">年</a></li>
+	                                </ul>
+	                            </div>
+	                        </div>
+	                        <div class="tabbable">
+	                            <div class="tab-content">
+									<div class="tab-pane active fade in" id="tab7">
+										<div class="list">
+											<ol>
+												<li>QAM_pQueryOweState<strong class="text-info pull-right">1157876</strong></li>
+												<li>ITF_CCHQ_GetUserInfoCU<strong class="text-info pull-right">395854</strong></li>
+												<li>TCC_ModifyUserCredit<strong class="text-info pull-right">347458</strong></li>
+												<li>ITF_CRM_GetUserInfoCU<strong class="text-info pull-right">260066</strong></li>
+												<li>ITF_CRM_GetInfoCU<strong class="text-info pull-right">234092</strong></li>
+												<li>ITF_CCHQ_GetBalance<strong class="text-info pull-right">146811</strong></li>
+												<li>ITF_CRM_GetBalance<strong class="text-info pull-right">143776</strong></li>
+												<li>QAM_OWEFEE_QUERY<strong class="text-info pull-right">97261</strong></li>
+												<li>ITF_CCHQ_GetMastBill<strong class="text-info pull-right">54318</strong></li>
+												<li>ITF_CRM_GetSuppBill<strong class="text-info pull-right">52524</strong></li>
+											</ol>
+										</div>	
+										更新时间2013-08-20 10:30 <a href="#" class="pull-right">更多</a>
+									</div>
+	                                <div class="tab-pane fade" id="tab8">Howdy, I'm in Section 2.</div>
+	                                <div class="tab-pane fade" id="tab9">Howdy, I'm in Section 2.</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	
+						<div class="widget navbar-tabs">
+	                        <div class="navbar">
+	                            <div class="navbar-inner">
+	                                <h6>流程异常排名</h6>
+	                                <ul class="nav nav-tabs pull-right">
+	                                    <li class="active"><a href="#tab4" data-toggle="tab">日</a></li>
+	                                    <li><a href="#tab5" data-toggle="tab">月</a></li>
+	                                    <li><a href="#tab6" data-toggle="tab">年</a></li>
+	                                </ul>
+	                            </div>
+	                        </div>
+	                        <div class="tabbable">
+	                            <div class="tab-content">
+									<div class="tab-pane active fade in" id="tab4">
+										<div class="list">
+											<ol>
+												<li>TCC_ModifyUserCredit<strong class="text-error pull-right">330588</strong></li>
+												<li>ITF_CCHQ_GetUserInfoCU<strong class="text-error pull-right">171843</strong></li>
+												<li>QAM_pQueryOweState<strong class="text-error pull-right">106127</strong></li>
+												<li>ITF_CRM_GetUserInfoCU<strong class="text-error pull-right">25969</strong></li>
+												<li>ITF_CCHQ_GetMastBill<strong class="text-error pull-right">4835</strong></li>
+												<li>ITF_CCHQ_GetBalance<strong class="text-error pull-right">3099</strong></li>
+												<li>ITF_CCHQ_GetRecvLog<strong class="text-error pull-right">3005</strong></li>
+												<li>ITF_CRM_GetRecvLog<strong class="text-error pull-right">2890</strong></li>
+												<li>ITF_CCHQ_CheckUserPWD_SD<strong class="text-error pull-right">2455</strong></li>
+												<li>ITF_CRM_SPTradeOrder<strong class="text-error pull-right">2372</strong></li>
+											</ol>
+										</div>	
+										更新时间2013-08-20 10:30 <a href="#" class="pull-right">更多</a>
+									</div>
+	                                <div class="tab-pane fade" id="tab5">Howdy, I'm in Section 2.</div>
+	                                <div class="tab-pane fade" id="tab6">Howdy, I'm in Section 2.</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	
+					</div>
+
+					<div class="span4">
+
+						<div class="widget navbar-tabs">
+	                        <div class="navbar">
+	                            <div class="navbar-inner">
+	                                <h6>流程异常率排名</h6>
+	                                <ul class="nav nav-tabs pull-right">
+	                                    <li class="active"><a href="#tab5" data-toggle="tab">日</a></li>
+	                                    <li><a href="#tab6" data-toggle="tab">月</a></li>
+	                                </ul>
+	                            </div>
+	                        </div>
+	                        <div class="tabbable">
+	                            <div class="tab-content">
+	                                <div class="tab-pane active fade in" id="tab5">I'm in Section 1.</div>
+	                                <div class="tab-pane fade" id="tab6">Howdy, I'm in Section 2.</div>
+	                            </div>
+	                        </div>
+	                    </div>
+
+						<div class="widget navbar-tabs">
+	                        <div class="navbar">
+	                            <div class="navbar-inner">
+	                                <h6>服务调用总时长排名</h6>
+	                                <ul class="nav nav-tabs pull-right">
+	                                    <li class="active"><a href="#tab13" data-toggle="tab">日</a></li>
+	                                    <li><a href="#tab14" data-toggle="tab">月</a></li>
+	                                </ul>
+	                            </div>
+	                        </div>
+	                        <div class="tabbable">
+	                            <div class="tab-content">
+	                                <div class="tab-pane active" id="tab13"> I'm in Section 1.  </div>
+	                                <div class="tab-pane" id="tab14">Howdy, I'm in Section 2.</div>
+	                            </div>
+	                        </div>
+	                    </div>
+
+						<div class="widget navbar-tabs">
+	                        <div class="navbar">
+	                            <div class="navbar-inner">
+	                                <h6>服务调用总量排名</h6>
+	                                <ul class="nav nav-tabs pull-right">
+	                                    <li class="active"><a href="#tab13" data-toggle="tab">日</a></li>
+	                                    <li><a href="#tab14" data-toggle="tab">月</a></li>
+	                                </ul>
+	                            </div>
+	                        </div>
+	                        <div class="tabbable">
+	                            <div class="tab-content">
+	                                <div class="tab-pane active" id="tab13"> I'm in Section 1.  </div>
+	                                <div class="tab-pane" id="tab14">Howdy, I'm in Section 2.</div>
+	                            </div>
+	                        </div>
+	                    </div>
+
+					</div>
+
+					<div class="span4">
+
+						<div class="widget navbar-tabs">
+	                        <div class="navbar">
+	                            <div class="navbar-inner">
+	                                <h6>服务调用异常排名</h6>
+	                                <ul class="nav nav-tabs pull-right">
+	                                    <li class="active"><a href="#tab5" data-toggle="tab">日</a></li>
+	                                    <li><a href="#tab6" data-toggle="tab">月</a></li>
+	                                </ul>
+	                            </div>
+	                        </div>
+	                        <div class="tabbable">
+	                            <div class="tab-content">
+	                                <div class="tab-pane active fade in" id="tab5">I'm in Section 1.</div>
+	                                <div class="tab-pane fade" id="tab6">Howdy, I'm in Section 2.</div>
+	                            </div>
+	                        </div>
+	                    </div>
+
+						<div class="widget navbar-tabs">
+	                        <div class="navbar">
+	                            <div class="navbar-inner">
+	                                <h6>服务调用异常率排名</h6>
+	                                <ul class="nav nav-tabs pull-right">
+	                                    <li class="active"><a href="#tab13" data-toggle="tab">日</a></li>
+	                                    <li><a href="#tab14" data-toggle="tab">月</a></li>
+	                                </ul>
+	                            </div>
+	                        </div>
+	                        <div class="tabbable">
+	                            <div class="tab-content">
+	                                <div class="tab-pane active" id="tab13"> I'm in Section 1.  </div>
+	                                <div class="tab-pane" id="tab14">Howdy, I'm in Section 2.</div>
+	                            </div>
+	                        </div>
+	                    </div>
+
+						<div class="widget navbar-tabs">
+	                        <div class="navbar">
+	                            <div class="navbar-inner">
+	                                <h6>服务调用平均时长排名</h6>
+	                                <ul class="nav nav-tabs pull-right">
+	                                    <li class="active"><a href="#tab13" data-toggle="tab">日</a></li>
+	                                    <li><a href="#tab14" data-toggle="tab">月</a></li>
+	                                </ul>
+	                            </div>
+	                        </div>
+	                        <div class="tabbable">
+	                            <div class="tab-content">
+	                                <div class="tab-pane active" id="tab13"> I'm in Section 1.  </div>
+	                                <div class="tab-pane" id="tab14">Howdy, I'm in Section 2.</div>
+	                            </div>
+	                        </div>
+	                    </div>
+
+					</div>
+
+				</div>
+				<!-- /排名 -->
+
+
+		    </div>
+		    <!-- /content wrapper -->
+
+		</div>
+		<!-- /content -->
+
+	</div>
+	<!-- /content container -->
+
+
+	<!-- Footer -->
+	<div id="footer">
+		<div class="copyrights">&copy;  Asaiinfo-Linkage 2013.</div>
+		<ul class="footer-links">
+			<li><a href="javscript:void(0)" title="Version: 0.1.0"><i class="icon-cogs"></i>Version: 0.1.0</a></li>
+			<li><a href="mailto:tangzhi@asiainfo-linkage.com?subject=关于LAP的Bug" title=""><i class="icon-screenshot"></i>反馈Bug</a></li>
+		</ul>
+	</div>
+	<!-- /footer -->
+
+</body>
+</html>
