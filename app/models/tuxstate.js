@@ -41,8 +41,11 @@ var TuxStateAllTimeSchema = new Schema({
 })
 
 var methods = {
-	top : function() {
-
+	top : function(option, cb) {
+		this.find(option.filter||{}, option.colNames.join(' '))
+			.sort(option.sort||{})
+			.limit(option.limit||10)
+			.exec(cb)
 	},
 
 	list: function(option, cb) {
