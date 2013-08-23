@@ -3,7 +3,7 @@ var path = require('path')
 
 module.exports = {
   development: {
-	  db: 'mongodb://localhost/pangu',
+	  db: 'mongodb://localhost/tuxlog',
 	  root: rootPath
 
 

@@ -2,7 +2,7 @@
 exports.requiresLogin = function (req, res, next) {
     if (!req.session || req.session.hasAuth !== true) {
       req.session.returnTo = req.originalUrl
-      return res.redirect('/login')
+      return res.redirect('/login.html')
     }
     next()
 }
@@ -20,7 +20,7 @@ exports.auth = function(req, res, next) {
 		next()
 	}else{
 		req.flash('error', '用户不存在！')
-		res.redirect('/login');	
+		res.redirect('/login.html');	
 	}
 }
 

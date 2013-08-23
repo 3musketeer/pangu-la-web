@@ -31,6 +31,7 @@ module.exports = function (app, config) {
     // cookieParser should be above session
     app.use(express.cookieParser())
 
+
     // bodyParser should be above methodOverride
     app.use(express.bodyParser())
     app.use(express.methodOverride())
@@ -38,7 +39,7 @@ module.exports = function (app, config) {
     // express/mongo session storage
     app.use(express.session({
       secret: 'logAnalyse-pangu',
-	  cookie: { maxAge: 900000 },
+	  cookie: { maxAge: 900000 },  //15 minute
       store: new mongoStore({
         url: config.db,
         collection : 'sessions'
@@ -50,7 +51,7 @@ module.exports = function (app, config) {
 
     // adds CSRF support
     if (process.env.NODE_ENV !== 'test') {
-      app.use(express.csrf())
+     app.use(express.csrf())
     }
 
     app.use(function(req, res, next){
@@ -78,7 +79,7 @@ module.exports = function (app, config) {
       console.error(err.stack)
 
       // error page
-      res.status(500).render('500', { error: err.stack })
+      res.status(500).render('500', { error: err.message })
     })
 
     // assume 404 since no middleware responded
