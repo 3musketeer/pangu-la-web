@@ -9,13 +9,50 @@ exports.cfgTop = {
 	},
 
 	TuxStateCalledSumByLcu: {
-		name: '流程调用总量排名',
+		name: '流程调用量排名',
 		scopes: ['day', 'month', 'year'],
 		scopeNames: {'day':'日', 'month':'月', 'year':'年'},
 		colNames : [ 'TRANSCODE', '_count' ], 
 		filter : {TRANSCODE: {$exists: true}, host: 'all'},
 		sort: {'_count' : -1}
+	},
+
+	TuxStateFailedSumByLcu: {
+		name: '流程异常量排名',
+		scopes: ['day', 'month', 'year'],
+		scopeNames: {'day':'日', 'month':'月', 'year':'年'},
+		colNames: ['TRANSCODE', '_count'],
+		filter: {TRANSCODE: {$exists: true}, host: 'all'},
+        sort: {'_count' : -1}
+	},
+
+	TuxStateAllTimeBySvr : {
+		name: '服务总时长排名',
+		scopes: ['day', 'month', 'year'],
+		scopeNames: {'day':'日', 'month':'月', 'year':'年'},
+		colNames: ['SVRNAME', '_count'],
+		filter: {SVRNAME: {$exists: true}, host: 'all'},
+        sort: {'_count' : -1}
+	},
+
+	TuxStateCalledSumBySvr: {
+		name: '服务调用量排名',
+		scopes: ['day', 'month', 'year'],
+		scopeNames: {'day':'日', 'month':'月', 'year':'年'},
+		colNames : [ 'SVRNAME', '_count' ], 
+		filter : {SVRNAME: {$exists: true}, host: 'all'},
+		sort: {'_count' : -1}
+	},
+
+	TuxStateFailedSumBySvr: {
+		name: '服务异常量排名',
+		scopes: ['day', 'month', 'year'],
+		scopeNames: {'day':'日', 'month':'月', 'year':'年'},
+		colNames: ['SVRNAME', '_count'],
+		filter: {SVRNAME: {$exists: true}, host: 'all'},
+        sort: {'_count' : -1}
 	}
+	
 }
 
 exports.config = {

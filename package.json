@@ -12,14 +12,15 @@
 		"npm"  : ">=1.2.32"
 	},
 	"scripts": {
-		"start"	: "NODE_ENV=development ./node_modules/.bin/nodemon server.js"
+		"start"	: "DEBUG=*,-send,-connect:dispatcher ./node_modules/.bin/nodemon server.js"
 	},
 	"dependencies": {
 		"express"	: "latest",
 		"ejs"		: "latest",
 		"connect-flash": "latest",
 		"mongoose"	: "latest",
-		"connect-mongo"	: "latest"
+		"connect-mongo"	: "latest",
+		"debug": "*"
 	},
 	"devDependencies":	{
 		"nodemon": "latest"

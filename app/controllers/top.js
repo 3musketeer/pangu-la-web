@@ -1,6 +1,8 @@
 var mongoose = require('mongoose')
-  , config = require('./config.js').config
-  , cfgTop = require('./config.js').cfgTop
+  , debug = require('debug')('pangu:top')
+  , util = require("util")
+  , config = require('./config').config
+  , cfgTop = require('./config').cfgTop
 
 
 var clone = function(target, source) {
@@ -25,7 +27,7 @@ var getTable = function(mode, type, scope, value) {
 	}
 
 	var collection = mode + type + scope.toUpperCase() + value;
-	console.log('collection:'+collection)
+	debug('collection:%s.', collection)
 
 	try{
 		var table = mongoose.model(mode + type, collection);
@@ -106,10 +108,14 @@ exports.topInfo = topInfo
 exports.list = function(req, res) {
 
 	var list = [ {mode:'TuxState', type:'TimeOutTop'}, 
-				 {mode:'TuxState', type:'CalledSum', subtype: 'ByLcu'} ]
+				 {mode:'TuxState', type:'CalledSum', subtype: 'ByLcu'},
+   				 {mode:'TuxState', type:'FailedSum', subtype: 'ByLcu'},
+				 {mode:'TuxState', type:'AllTime', subtype: 'BySvr'},
+				 {mode:'TuxState', type:'CalledSum', subtype: 'BySvr'},
+   				 {mode:'TuxState', type:'FailedSum', subtype: 'BySvr'}	]
 
 	topInfo(list, function(err, docs) {
-		console.log(docs)
+		debug("doc:%s", util.inspect(docs))
 		res.render('top/list', {all: docs})
 	})
 }
