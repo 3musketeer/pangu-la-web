@@ -26,6 +26,15 @@ exports.cfgTop = {
         sort: {'_count' : -1}
 	},
 
+	TuxStateAllTimeByLcu : {
+		name: '流程总时长排名',
+		scopes: ['day', 'month', 'year'],
+		scopeNames: {'day':'日', 'month':'月', 'year':'年'},
+		colNames: ['TRANSCODE', '_count'],
+		filter: {TRANSCODE: {$exists: true}, host: 'all'},
+        sort: {'_count' : -1}
+	},
+
 	TuxStateAllTimeBySvr : {
 		name: '服务总时长排名',
 		scopes: ['day', 'month', 'year'],
@@ -55,7 +64,7 @@ exports.cfgTop = {
 	
 }
 
-exports.config = {
+exports.cfgDetail = {
 	TuxStateTimeOutTop : {
 		titles: ['排名', '流程名', '耗时(s)', '归属服务', '主机', '统计时间'],
 		colNames: ['#', 'TRANSCODE', 'MAX', 'SVRNAME', 'host', 'STARTTIME'],

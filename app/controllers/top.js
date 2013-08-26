@@ -1,7 +1,7 @@
 var mongoose = require('mongoose')
   , debug = require('debug')('pangu:top')
   , util = require("util")
-  , config = require('./config').config
+  , config = require('./config').cfgDetail
   , cfgTop = require('./config').cfgTop
 
 
@@ -110,6 +110,7 @@ exports.list = function(req, res) {
 	var list = [ {mode:'TuxState', type:'TimeOutTop'}, 
 				 {mode:'TuxState', type:'CalledSum', subtype: 'ByLcu'},
    				 {mode:'TuxState', type:'FailedSum', subtype: 'ByLcu'},
+				 {mode:'TuxState', type:'AllTime', subtype: 'ByLcu'},
 				 {mode:'TuxState', type:'AllTime', subtype: 'BySvr'},
 				 {mode:'TuxState', type:'CalledSum', subtype: 'BySvr'},
    				 {mode:'TuxState', type:'FailedSum', subtype: 'BySvr'}	]

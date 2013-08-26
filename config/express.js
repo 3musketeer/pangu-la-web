@@ -36,6 +36,15 @@ module.exports = function (app, config) {
     app.use(express.bodyParser())
     app.use(express.methodOverride())
 
+	app.use(function(req, res, next){
+		res.on('header', function() {
+			if (!req.session) return;
+			if (req.session.cookie.expires==null) return;
+			req.session.cookie.expires = new Date(Date.now() + 1000*60*60*24*14)
+		})
+		next()
+	});
+
     // express/mongo session storage
     app.use(express.session({
       secret: 'logAnalyse-pangu',
@@ -45,7 +54,7 @@ module.exports = function (app, config) {
         collection : 'sessions'
       })
     }))
-
+	
 	// connect flash for flash messages - should be declared after sessions
     app.use(flash())
 

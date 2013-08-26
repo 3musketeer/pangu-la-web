@@ -74,33 +74,33 @@
 
 					<div class="span4">
 
-						<% var tabIdx = 0 %>
-						<% var item = all['TuxStateTimeOutTop'] %>
+						<% var tabIdx = 0, mode='TuxState' %>
+						<% var item = all['TuxStateTimeOutTop'], type='TimeOutTop',subtype='' %>
 						<% include ../includes/widget/top.html %>		
 
-						<% var item = all['TuxStateCalledSumByLcu'] %>
+						<% var item = all['TuxStateCalledSumByLcu'], type='CalledSum',subtype='ByLcu' %>
 						<% include ../includes/widget/top.html %>		
 
-							
+						<% var item = all['TuxStateFailedSumByLcu'], type='FailedSum',subtype='ByLcu' %>
+						<% include ../includes/widget/top.html %>		
+					</div>
+
+					<div class="span4">
+						
+						<% var item = all['TuxStateCalledSumBySvr'], type='CalledSum', subtype='BySvr' %>
+						<% include ../includes/widget/top.html %>	
+						
+						<% var item = all['TuxStateFailedSumBySvr'], type='FailedSum',subtype='BySvr' %>
+						<% include ../includes/widget/top.html %>	
+
 					</div>
 
 					<div class="span4">
 
-						<% var item = all['TuxStateFailedSumByLcu'] %>
-						<% include ../includes/widget/top.html %>		
-						
-						<% var item = all['TuxStateCalledSumBySvr'] %>
+						<% var item = all['TuxStateAllTimeByLcu'], type='AllTime',subtype='ByLcu' %>
 						<% include ../includes/widget/top.html %>	
-						
 
-					</div>
-
-					<div class="span4">
-
-						<% var item = all['TuxStateAllTimeBySvr'] %>
-						<% include ../includes/widget/top.html %>	
-						
-						<% var item = all['TuxStateFailedSumBySvr'] %>
+						<% var item = all['TuxStateAllTimeBySvr'], type='AllTime',subtype='BySvr' %>
 						<% include ../includes/widget/top.html %>	
 
 					</div>
