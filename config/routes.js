@@ -1,7 +1,8 @@
 
 var auth = require('../app/controllers/auth')
   , main = require('../app/controllers/main')
-  , latop = require('../app/controllers/top');
+  , laTop = require('../app/controllers/top')
+  , laSum = require('../app/controllers/sum');
 
 module.exports = function (app) {
 
@@ -16,8 +17,13 @@ module.exports = function (app) {
 	app.get('/index.html', auth.requiresLogin, main.index); 
 
 	//排名清单
-	app.get('/top/list.html', auth.requiresLogin, latop.list); 
+	app.get('/top/list.html', auth.requiresLogin, laTop.list); 
 
 	//排名明细
-	app.get('/top/detail.html', auth.requiresLogin, latop.detail); 
+	app.get('/top/detail.html', auth.requiresLogin, laTop.detail); 
+
+	//总数统计列表
+	app.get('/sum/list.html', auth.requiresLogin, laSum.list); 
+
+
 }

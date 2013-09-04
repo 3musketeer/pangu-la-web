@@ -7,54 +7,28 @@
 var mongoose = require('mongoose')
   , Schema = mongoose.Schema;
 
-/**
- * TuxStateTimeOutTop Schema
- */
 
-var TuxStateTimeOutTopSchema = new Schema({
-	TRANSCODE: {type:String, default:''},
-	MAX: {type:Number, default: 0},
-	SVRNAME: { type: String, default: ''},
-	host: {type: String, default: ''},
-	STARTTIME: {type: String, default: ''}
-})
-
-var TuxStateCalledSumSchema = new Schema({
+var QueryResultSchema = new Schema({
 	TRANSCODE: {type:String},
-    SVRNAME: {type:String},
+	SVRNAME: {type:String},
+	host: {type:String},
+	STARTTIME: {type: String},
+	hours: {type: Number},
+	day: {type:Number},
 	_count: {type:Number},
-	host: {type: String}
-})
-
-var TuxStateFailedSumSchema = new Schema({
-	TRANSCODE: {type:String},
-    SVRNAME: {type:String},
-	_count: {type:Number},
-	host: {type: String}
-})
-
-var TuxStateAllTimeSchema = new Schema({
-	TRANSCODE: {type:String},
-    SVRNAME: {type:String},
-	_count: {type:Number},
-	host: {type: String}
-})
+	MAX: {type:Number}
+});
 
 var methods = {
-	top : function(option, cb) {
+	
+	list : function(option, cb) {
 		this.find(option.filter||{}, option.colNames.join(' '))
 			.sort(option.sort||{})
-			.limit(option.limit||10)
-			.exec(cb)
-	},
-
-	list: function(option, cb) {
-		this.find(option.filter||{}, option.fields||'')
-			.sort(option.sort||{})
-			.limit(option.prePage||option.limit||100)
+			.limit(option.prePage||option.limit||0)
 			.skip(option.prePage?option.page*option.prePage:option.skip||0)
-			.exec(cb);
+			.exec(cb)
 	}
+
 }
 
 var clone = function(target, source) {
@@ -62,12 +36,8 @@ var clone = function(target, source) {
 		target[key] = source[key]
 }
 
-clone(TuxStateTimeOutTopSchema.statics, methods);
-clone(TuxStateCalledSumSchema.statics, methods);
-clone(TuxStateFailedSumSchema.statics, methods);
-clone(TuxStateAllTimeSchema.statics, methods);
+clone(QueryResultSchema.statics, methods)
 
-mongoose.model('TuxStateTimeOutTop', TuxStateTimeOutTopSchema)
-mongoose.model('TuxStateCalledSum', TuxStateCalledSumSchema)
-mongoose.model('TuxStateFailedSum', TuxStateFailedSumSchema)
-mongoose.model('TuxStateAllTime', TuxStateAllTimeSchema)
+mongoose.model('QueryResult', QueryResultSchema);
+
+
