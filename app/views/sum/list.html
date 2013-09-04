@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<% include ../includes/head.html %>	
+
+<body>
+
+	
+	<% include ../includes/fixedtop.html %>	
+
+
+	<!-- Content container -->
+	<div id="container">
+
+		<% include ../includes/sidebar.html %>	
+
+		<!-- Content -->
+		<div id="content">
+
+		    <!-- Content wrapper -->
+		    <div class="wrapper">
+
+			    <!-- Breadcrumbs line -->
+			    <div class="crumbs">
+		            <ul id="breadcrumbs" class="breadcrumb"> 
+		                <li><a href="/">分析大厅</a></li>
+						<li class="active"><a href="#">排名清单</a></li>
+		            </ul>
+			        
+		            <ul class="alt-buttons">
+						<li class="dropdown"><a href="#" title="" data-toggle="dropdown"><i class="icon-warning-sign"></i><span>告警</span> <strong>(+5)</strong></a>
+							<ul class="dropdown-menu pull-right">
+								<li><a href="#" title=""><i class="icon-info-sign"></i>告警1</a><li>
+								<li><a href="#" title=""><i class="icon-info-sign"></i>告警2</a><li>
+								<li><a href="#" title=""><i class="icon-info-sign"></i>告警3</a><li>
+								<li><a href="#" title=""><i class="icon-list"></i>更多...</a><li>
+							</ul>
+						</li>
+		            </ul>
+			    </div>
+			    <!-- /breadcrumbs line -->
+
+			    <!-- Page header -->
+			    <div class="page-header">
+			    	<div class="page-title">
+				    	<h5>区域图清单</h5>
+				    	<span>早上好, 唐治!</span>
+			    	</div>
+
+			    	<ul class="page-stats">
+			    		<li>
+			    			<div class="showcase">
+			    				<span>日访问量</span>
+								<h2>12</h2>
+			    			</div>
+							<div id="total-visits" class="chart">10,14,8,45,23,41,22,31,19,12, 28, 21, 24, 20</div>
+			    		</li>
+			    		<li>
+			    			<div class="showcase">
+			    				<span>总访问量</span>
+			    				<h2>264</h2>
+			    			</div>
+			    			<div id="balance" class="chart">10,14,8,45,23,41,22,31,19,12, 28, 21, 24, 20</div>
+			    		</li>
+			    	</ul>
+			    </div>
+			    <!-- /page header -->
+
+			    
+		    
+                <h5 class="widget-name"></h5>
+
+				<div class="row-fluid">
+
+					<div class="span4">
+
+						<% var item = all['TuxStateCalledSumByTimeAtHours'], 
+								mode='TuxState', type='CalledSumByTime',subtype='AtHours' %>
+						<% include ../includes/widget/chart.html %>	
+		
+					</div>
+
+					<div class="span4">
+						
+						<% var item = all['TuxStateFailedSumByTimeAtHours'], 
+								mode='TuxState', type='FailedSumByTime',subtype='AtHours' %>
+						<% include ../includes/widget/chart.html %>	
+							
+
+					</div>
+
+					<div class="span4">
+
+							
+
+					</div>
+
+				</div>
+				<!-- /排名 -->
+
+
+		    </div>
+		    <!-- /content wrapper -->
+
+		</div>
+		<!-- /content -->
+
+	</div>
+	<!-- /content container -->
+
+
+	<% include ../includes/foot.html %>	
+
+</body>
+</html>
