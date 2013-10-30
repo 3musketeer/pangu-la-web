@@ -20,7 +20,10 @@
 		"connect-flash": "latest",
 		"mongoose"	: "latest",
 		"connect-mongo"	: "latest",
-		"debug": "*"
+		"debug": "*",
+		"validator": "0.3.7",
+		"eventproxy": ">=0.1.0",
+		"xss": ">=0.0.2"
 	},
 	"devDependencies":	{
 		"nodemon": "latest"

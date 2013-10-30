@@ -2,7 +2,8 @@
 var auth = require('../app/controllers/auth')
   , main = require('../app/controllers/main')
   , laTop = require('../app/controllers/top')
-  , laSum = require('../app/controllers/sum');
+  , laSum = require('../app/controllers/sum')
+  , register = require('../app/controllers/user_auth');
 
 module.exports = function (app) {
 
@@ -24,6 +25,13 @@ module.exports = function (app) {
 
 	//总数统计列表
 	app.get('/sum/list.html', auth.requiresLogin, laSum.list); 
-
+	
+	//注册用户
+	app.get('/register',auth.registerUser); 
+	app.post('/registerAction',register.registeUser); 
+	
+	
+	//退出
+	app.get('/logout',auth.logout); 
 
 }

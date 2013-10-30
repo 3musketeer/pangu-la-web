@@ -3,9 +3,13 @@ var path = require('path')
 
 module.exports = {
   development: {
+  	
+  	session_secret: 'tuxlog',
+    auth_cookie_name: 'USER_INFO_COOKIE',
+    admins: {admin: true},
+    
 	  db: 'mongodb://localhost/tuxlog',
 	  root: rootPath
-
-
+		
   }
 }

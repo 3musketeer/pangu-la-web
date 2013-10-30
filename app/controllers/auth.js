@@ -1,3 +1,5 @@
+var userAuth = require('./user_auth');
+
 
 exports.requiresLogin = function (req, res, next) {
     if (!req.session || req.session.hasAuth !== true) {
@@ -14,14 +16,7 @@ exports.login = function(req, res) {
 }
 
 exports.auth = function(req, res, next) {
-	if ("tangzhi" == req.body.regular) {
-		req.session.userId = req.body.regular;
-		req.session.hasAuth = true;
-		next()
-	}else{
-		req.flash('error', '用户不存在！')
-		res.redirect('/login.html');	
-	}
+	userAuth.authUser(req, res, next);
 }
 
 exports.session = function(req, res) {
@@ -31,4 +26,17 @@ exports.session = function(req, res) {
 		return
 	}
 	res.redirect('/')
+}
+
+exports.registerUser = function (req, res) {
+     res.render('user/register',{
+				errors: req.flash('error') 
+			})
+}
+
+
+exports.logout = function(req, res) {
+	delete req.session.user;
+	req.session.hasAuth = false;
+	res.redirect('/login.html');
 }
