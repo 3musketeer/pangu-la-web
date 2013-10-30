@@ -78,6 +78,13 @@ function gen_session(user, res, req){
 }
 
 
+function encrypt(str, secret){
+    var cipher = crypto.createCipher('aes192', secret);
+    var enc = cipher.update(str, 'utf8', 'hex');
+    enc += cipher.final('hex');
+    return enc;
+}
+
 exports.authUser = function(req, res, next){
 	 var userName = req.body.regular;
 	 var pass =  md5(req.body.pass);
