@@ -62,16 +62,28 @@
 	<div id="top">
 		<div class="fixed">
 			<a href="index.html" title="" class="logo"><img src="img/logo.png" alt="" /></a>
+				
 			<ul class="top-menu">
+				<% errors.forEach(function(error){ %>
+					<div class="alert alert-error" style="margin-top: 16px;">
+						<button type="button" class="close" data-dismiss="alert">×</button>
+						<strong>错误!</strong> <%= error %>
+					</div>
+				<% }) %>
 				<li><a class="fullview"></a></li>
 				<li><a class="showmenu"></a></li>
 				<li><a href="#" title="" class="messages"><i class="new-message"></i></a></li>
 				<li class="dropdown">
-					<a class="user-menu" data-toggle="dropdown"><img src="img/userpic.png" alt="" /><span>你好, 唐治! <b class="caret"></b></span></a>
+					<a class="user-menu" data-toggle="dropdown"><img src="img/userpic.png" alt="" /><span>你好, <% if(current_user){ %> <%= current_user.nick_name %> ！ <% } %> <b class="caret"></b></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="#" title=""><i class="icon-user"></i>个人资料</a></li>
 						<li><a href="#" title=""><i class="icon-inbox"></i>消息<span class="badge badge-info">9</span></a></li>
-						<li><a href="#" title=""><i class="icon-cog"></i>设置</a></li>
+						<li><a href="/editUser" title=""><i class="icon-cog"></i>设置</a></li>
+						<% if(current_user){ %>
+						    <% if(current_user.is_admin){ %>	
+							    <li><a href="/auditUser" title=""><i class="icon-cog"></i>审核</a></li>
+					    	<% } %>
+				        <% } %>
 						<li><a href="/logout" title=""><i class="icon-remove"></i>退出</a></li>
 					</ul>
 				</li>
@@ -89,7 +101,7 @@
 
 	        <!-- Sidebar user -->
 	        <div class="sidebar-user widget">
-				<div class="navbar"><div class="navbar-inner"><h6>欢迎你, 唐治!</h6></div></div>
+				<div class="navbar"><div class="navbar-inner"><h6>欢迎你, <% if(current_user){ %> <%= current_user.nick_name %>! <% } %></h6></div></div>
 	            <a href="#" title="" class="user"><img src="http://placehold.it/210x110" alt="" /></a>
 	            <ul class="user-links">
 	            	<li><a href="" title="">今日调用总数<strong>5929312</strong></a></li>

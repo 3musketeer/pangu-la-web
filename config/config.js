@@ -6,7 +6,7 @@ module.exports = {
   	
   	session_secret: 'tuxlog',
     auth_cookie_name: 'USER_INFO_COOKIE',
-    admins: {admin: true},
+    admins: {tangsz: true},
     
 	  db: 'mongodb://localhost/tuxlog',
 	  root: rootPath

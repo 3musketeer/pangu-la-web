@@ -68,11 +68,18 @@
 	</div>
 	<!-- /fixed top -->
 
-    <form action="/registerAction" id="validate" class="form-horizontal" method="post">
+    <form action="/editUserAction" id="validate" class="form-horizontal" method="post">
 		<% errors.forEach(function(error){ %>
 			<div class="alert alert-error" style="margin-top: 16px;">
 				<button type="button" class="close" data-dismiss="alert">×</button>
 				<strong>错误!</strong> <%= error %>
+			</div>
+		<% }) %>
+		
+		<% Prompts.forEach(function(Prompt){ %>
+			<div class="alert alert" style="margin-top: 16px;">
+				<button type="button" class="close" data-dismiss="alert">×</button>
+				<strong>提示!</strong> <%= Prompt %>
 			</div>
 		<% }) %>
 		<input type="hidden" name="_csrf" value="<%= csrf_token %>"/>
@@ -80,12 +87,21 @@
 			 	<div class="widget">
 	        <div class="navbar"><div class="navbar-inner"><h6>用户资料修改</h6></div></div>
 	      	<div class="well row-fluid">
-			
+			<% if(current_user){ %>
 	            <div class="control-group">
 	            	  <label class="control-label align-right"></label>
 	                <label class="control-label align-center">用户名： </label>
 	                <div class="controls align-left">
-	                    <input type="text" class="validate[required,custom[onlyLetterNumber]] span4" name="user_name" id="req"/> <span class="text-error">*</span>
+	                    <input type="text" class="validate[required,custom[onlyLetterNumber]] span4"  disabled="disabled" name="user_names" id="req" value = <%= current_user.user_name %>> <span class="text-error">*</span>
+	                    <input type="hidden" name = "user_name" value = <%= current_user.user_name %>>
+	                </div>
+	             </div>
+	             
+	             <div class="control-group">
+	            	  <label class="control-label align-right"></label>
+	                <label class="control-label align-center">用户昵称： </label>
+	                <div class="controls align-left">
+	                    <input type="text" class="validate[required] span4" name="nick_name" id="req" value = <%= current_user.nick_name %>> <span class="text-error">*</span>
 	                </div>
 	             </div>
 	                   
@@ -93,7 +109,7 @@
 	              			<label class="control-label align-right"></label>
 	                    <label class="control-label align-center">联系号码：</label>
 	                    <div class="controls align-left">
-	                        <input type="text" value="" class="validate[required,custom[phone]] span4" name="phone" id="phone"/>  <span class="text-error">*</span>
+	                        <input type="text"  class="validate[required,custom[phone]] span4" name="phone" id="phone" value = <%= current_user.phone %>>  <span class="text-error">*</span>
 	                    </div>
 	              </div>
 	              
@@ -102,7 +118,7 @@
 	              	<label class="control-label align-right"></label>
 	                <label class="control-label align-center">电子邮箱：</label>
 	                <div class="controls align-left">
-	                    <input type="text" value="" class="validate[required,custom[email]] span4" name="email" id="email"/> <span class="text-error">*</span>
+	                    <input type="text" value = <%= current_user.email %> class="validate[required,custom[email]] span4" name="email" id="email"/> <span class="text-error">*</span>
 	                </div>
 	            </div>
 	            
@@ -114,9 +130,9 @@
                       <input type="file" id="unstyled-file" class="span4" >
                   </div>
                </div>
-	
+	       <% } %>
 	               <div class="form-actions align-center">
-	                  <button type="submit" class="btn btn-info">注册</button>
+	                  <button type="submit" class="btn btn-info">修改</button>
 	                  <a href="/index.html" title="" class="btn">取消</a>
 	               </div>
 	    	 		</div>

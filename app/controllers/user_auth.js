@@ -4,7 +4,8 @@ var crypto = require('crypto');
 var check = require('validator').check,sanitize = require('validator').sanitize;
 var env = process.env.NODE_ENV || 'development'
 var config = require('../../config/config')[env];
-var debug = require('debug')('pangu:query');
+var EventProxy = require('eventproxy').EventProxy;
+var util = require('../libs/utils');
     
 
 exports.registeUser = function(req, res, next){
@@ -16,6 +17,9 @@ exports.registeUser = function(req, res, next){
     email = sanitize(email).xss();
     var phone = sanitize(req.body.phone).trim();
     phone = sanitize(phone).xss();
+    
+    var nick_name = sanitize(req.body.nick_name).trim();
+    nick_name = sanitize(nick_name).xss();
     
     //验证用户名
     try{
@@ -46,16 +50,26 @@ exports.registeUser = function(req, res, next){
 				password = md5(password);
 				user = new User();
 				user.user_name = user_name;
+				user.nick_name = nick_name;
 				user.password = password;
 				user.phone = phone;
 				user.email = email;
 				user.create_time = Date.now();
-				user.update_time = Date.now();		
+				user.update_time = Date.now();	
+				if(config.admins[user_name]){
+				    user.audit_tag = 1;
+				    user.is_admin = true;
+			    }	
 				
 				user.save(function(err){
 					if(err) return next(err);	
-						gen_session(user, res, req);
-						return res.redirect('/index.html');
+						gen_session(user, req, res);
+						if(user.is_admin)
+						    return res.redirect('/index.html');
+						else{
+						    req.flash('error', '注册用户管理员审核通过后可以登录！');
+						    return res.redirect('/login.html');
+						}
 				});
 		});
 }
@@ -69,10 +83,16 @@ function md5(str) {
 }
 
 //设置缓存函数
-function gen_session(user, res, req){
+function gen_session(user, req, res){
     var auth_token = encrypt(user.user_name + '\t' + user.password + '\t' + user.email+ '\t' +user.phone, config.session_secret);
     res.cookie(config.auth_cookie_name, auth_token, {path: '/',maxAge: 1000 * 60 * 60}); //cookie 有效期１个小时
-    req.session.user = user;
+   
+    if(config.admins[user.user_name]){
+	  	user.is_admin = true;
+	}else{
+		user.is_admin = false;
+	}
+	req.session.user = user;
     req.session.hasAuth = true;
     req.session.cookie.maxAge = 1000 * 60 * 60;
 }
@@ -97,11 +117,115 @@ exports.authUser = function(req, res, next){
 						res.redirect('/login.html');
 						return;
 				}
-				gen_session(userRow, res, req);					
+				else if(userRow.audit_tag == 0 && !config.admins[userRow.user_name]){
+				    req.flash('error', '注册用户未经过管理员审核无法登录！');
+					res.redirect('/login.html');
+					return;
+			    }	
+			    
+				gen_session(userRow, req, res);					
 				next();
 			}else{
 					req.flash('error', '用户不存在！')
 					res.redirect('/login.html');	
 			}
 		});	
+}
+
+
+exports.auditUser = function(req, res){
+    
+	if (!req.session || req.session.hasAuth != true) {
+        req.flash('error', '管理员需先登录后才能审核！')
+		return	res.redirect('/login.html');
+    }else{
+    	  if(!req.session.user.is_admin){
+    	  	req.flash('error', '只有管理员有审核权限！')
+			return res.redirect('/');
+	    }
+	}
+	
+	var render = function(users){	
+    	 res.render('user/AuditUser',{
+	        users: users, 
+			errors: req.flash('error')
+	     });
+	}
+	var proxy = new EventProxy();
+	proxy.assign('users', render);
+	
+	
+	User.find({'audit_tag':0}, {},function(err, userRow){
+		if(err) return next(err);		
+		if(userRow){
+		    for(var i = 0; i<userRow.length; i++){
+		        userRow[i].create_time = util.format_date(userRow[i].create_time);
+		    }
+			proxy.trigger('users', userRow);
+		}
+	});	
+}
+
+
+
+
+exports.audit = function(req, res){
+    
+    var checkValue = req.params.checkValue.split(",");     
+    for (var i=0;i<checkValue.length ;i++ )    
+    {
+    	if('' != checkValue[i]) {
+    		 User.update({user_name:checkValue[i]},{$set:{audit_tag:1}},function(err){
+    		    if(err) return next(err);	
+    		    res.redirect('/auditUser');
+    		 });
+    	}
+    }    
+}
+
+
+exports.editUser = function(req, res, next){
+    
+    var method = req.method.toLowerCase();
+    if(method == 'get'){
+        res.render('user/edituser',{
+            current_user:req.session.user,
+		    errors: req.flash('error'),
+		    Prompts: req.flash('Prompt')
+	    })
+       
+    }
+    else if(method == 'post'){
+        
+        var user_name = sanitize(req.body.user_name).trim();
+        user_name = sanitize(user_name).xss();
+        
+        var email = sanitize(req.body.email).trim();
+        email = sanitize(email).xss();
+        
+        var phone = sanitize(req.body.phone).trim();
+        phone = sanitize(phone).xss();
+        
+        var nick_name = sanitize(req.body.nick_name).trim();
+        nick_name = sanitize(nick_name).xss();
+
+
+        var user = req.session.user;
+        if(email==user.email && phone==user.phone && nick_name==user.nick_name){
+            req.flash('error', '您没有修改任何资料！');
+			return res.redirect('/editUser');
+		}    
+       
+        User.update({user_name:user_name},{$set:{email:email,nick_name:nick_name,phone:phone}},function(err){
+		    if(err) return next(err);	
+		    User.findOne({'user_name': user_name}, function(err, userRow){
+				if(err) return next(err);		
+				if(userRow){					
+					gen_session(userRow, req, res);
+					req.flash('Prompt', '用户资料修改成功！');
+					return res.redirect('/editUser');
+				}
+		    });	    
+        });
+    }
 }

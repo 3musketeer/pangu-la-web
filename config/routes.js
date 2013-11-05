@@ -3,7 +3,7 @@ var auth = require('../app/controllers/auth')
   , main = require('../app/controllers/main')
   , laTop = require('../app/controllers/top')
   , laSum = require('../app/controllers/sum')
-  , register = require('../app/controllers/user_auth');
+  , user_auth = require('../app/controllers/user_auth');
 
 module.exports = function (app) {
 
@@ -28,8 +28,16 @@ module.exports = function (app) {
 	
 	//注册用户
 	app.get('/register',auth.registerUser); 
-	app.post('/registerAction',register.registeUser); 
+	app.post('/registerAction',user_auth.registeUser); 
 	
+	
+	//注册用户审核
+	app.get('/auditUser',auth.auditUser);
+	app.post('/auditAction/:checkValue',auth.audit);
+	
+	 //用户资料修改
+	app.get('/editUser',user_auth.editUser);
+	app.post('/editUserAction',user_auth.editUser);
 	
 	//退出
 	app.get('/logout',auth.logout); 

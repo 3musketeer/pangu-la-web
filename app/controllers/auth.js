@@ -3,7 +3,7 @@ var userAuth = require('./user_auth');
 
 exports.requiresLogin = function (req, res, next) {
     if (!req.session || req.session.hasAuth !== true) {
-      req.session.returnTo = req.originalUrl
+      //req.session.returnTo = req.originalUrl
       return res.redirect('/login.html')
     }
     next()
@@ -15,16 +15,17 @@ exports.login = function(req, res) {
 	})
 }
 
-exports.auth = function(req, res, next) {
-	userAuth.authUser(req, res, next);
+exports.auth = function(req, res, next) {    
+	userAuth.authUser(req, res, next);	
 }
 
 exports.session = function(req, res) {
-	if (req.session.returnTo) {
-		res.redirect(req.session.returnTo)
-		delete req.session.returnTo
-		return
-	}
+	//if (req.session.returnTo) {
+		//res.redirect(req.session.returnTo)
+		//delete req.session.returnTo
+		//return
+     // }
+	
 	res.redirect('/')
 }
 
@@ -34,6 +35,14 @@ exports.registerUser = function (req, res) {
 			})
 }
 
+
+exports.auditUser = function (req, res) {
+	userAuth.auditUser(req, res);
+}
+
+exports.audit = function (req, res) {
+	userAuth.audit(req, res);
+}
 
 exports.logout = function(req, res) {
 	delete req.session.user;
