@@ -6,7 +6,8 @@ var env = process.env.NODE_ENV || 'development'
 var config = require('../../config/config')[env];
 var EventProxy = require('eventproxy').EventProxy;
 var util = require('../libs/utils');
-    
+var gridfs = require('./gridfs');
+
 
 exports.registeUser = function(req, res, next){
     var user_name = sanitize(req.body.user_name).trim();
@@ -59,11 +60,12 @@ exports.registeUser = function(req, res, next){
 				if(config.admins[user_name]){
 				    user.audit_tag = 1;
 				    user.is_admin = true;
-			    }	
-				
-				user.save(function(err){
+			    }
+			    		    
+			    user.save(function(err){
 					if(err) return next(err);	
 						gen_session(user, req, res);
+						gridfs.putFile(req,user_name);
 						if(user.is_admin)
 						    return res.redirect('/index.html');
 						else{
@@ -155,13 +157,19 @@ exports.auditUser = function(req, res){
 	proxy.assign('users', render);
 	
 	
+	var Ruser = [];
 	User.find({'audit_tag':0}, {},function(err, userRow){
 		if(err) return next(err);		
-		if(userRow){
-		    for(var i = 0; i<userRow.length; i++){
-		        userRow[i].create_time = util.format_date(userRow[i].create_time);
-		    }
-			proxy.trigger('users', userRow);
+		if(userRow){		    
+            for (var property in userRow){
+                var destination = {};
+                for (var key in userRow[property]) {
+                    destination[key] = (userRow[property])[key];
+                }
+                destination.create_time = util.format_date(destination.create_time);
+                Ruser.push(destination);
+            }           
+			proxy.trigger('users', Ruser);
 		}
 	});	
 }
@@ -211,7 +219,8 @@ exports.editUser = function(req, res, next){
 
 
         var user = req.session.user;
-        if(email==user.email && phone==user.phone && nick_name==user.nick_name){
+        var file =  req.files && req.files.uploadfile;
+        if(email==user.email && phone==user.phone && nick_name==user.nick_name && file.name =='' ){
             req.flash('error', '您没有修改任何资料！');
 			return res.redirect('/editUser');
 		}    
@@ -222,6 +231,7 @@ exports.editUser = function(req, res, next){
 				if(err) return next(err);		
 				if(userRow){					
 					gen_session(userRow, req, res);
+					gridfs.putFile(req,user_name);
 					req.flash('Prompt', '用户资料修改成功！');
 					return res.redirect('/editUser');
 				}

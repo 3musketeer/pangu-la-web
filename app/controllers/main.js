@@ -4,3 +4,5 @@ exports.index = function(req, res) {
 		current_user:req.session.user
 	})
 }
+
+

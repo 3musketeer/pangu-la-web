@@ -1,5 +1,5 @@
 var userAuth = require('./user_auth');
-
+var gridfs = require('./gridfs');
 
 exports.requiresLogin = function (req, res, next) {
     if (!req.session || req.session.hasAuth !== true) {
@@ -43,6 +43,16 @@ exports.auditUser = function (req, res) {
 exports.audit = function (req, res) {
 	userAuth.audit(req, res);
 }
+
+
+exports.getHeadPicture = function(req, res) {
+    if (req.session){
+        gridfs.getFile(req.session.user.user_name,function(data){
+            res.send(data);
+        });
+    }
+}
+
 
 exports.logout = function(req, res) {
 	delete req.session.user;

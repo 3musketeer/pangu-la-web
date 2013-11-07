@@ -39,6 +39,11 @@ module.exports = function (app) {
 	app.get('/editUser',user_auth.editUser);
 	app.post('/editUserAction',user_auth.editUser);
 	
+	
+	//调用头像
+	app.get('/getHeadPicture',auth.getHeadPicture);
+	
+	
 	//退出
 	app.get('/logout',auth.logout); 
 
