@@ -53,6 +53,27 @@
 <script type="text/javascript" src="js/charts/chart1.js"></script>
 <script type="text/javascript" src="js/charts/chart2.js"></script>
 <script type="text/javascript" src="js/charts/chart3.js"></script>
+<script>
+        
+    function imgLoad(obj,maxWidth,maxHeight){   
+        var ratio = 0;  // 缩放比例  
+        var width = $(obj).width();    // 图片实际宽度   
+        var height = $(obj).height();  // 图片实际高度     // 检查图片是否超宽  
+         if(width > maxWidth){   
+             ratio = maxWidth / width;   // 计算缩放比例       
+             $(obj).css("width", maxWidth); // 设定实际显示宽度       
+             height = height * ratio;    // 计算等比例缩放后的高度       
+             $(obj).css("height", height);  // 设定等比例缩放后的高度   
+         }     // 检查图片是否超高  
+         else{         
+             ratio = width / maxWidth;      
+             $(obj).css("width", maxWidth);   // 设定实际显示高度       
+             height = height * ratio;    // 计算等比例缩放后的高度       
+             $(obj).css("height", height);    // 设定等比例缩放后的高度   
+         }
+      }
+     
+</script>
 
 </head>
 
@@ -74,7 +95,7 @@
 				<li><a class="showmenu"></a></li>
 				<li><a href="#" title="" class="messages"><i class="new-message"></i></a></li>
 				<li class="dropdown">
-					<a class="user-menu" data-toggle="dropdown"><img src="/img/userpic.png" alt="" /><span>你好, <% if(current_user){ %> <%= current_user.nick_name %> ！ <% } %> <b class="caret"></b></span></a>
+					<a class="user-menu" data-toggle="dropdown"><img src="/getHeadPicture" onload = imgLoad(this,20,30); alt="" /><span>你好, <% if(current_user){ %> <%= current_user.nick_name %> ！ <% } %> <b class="caret"></b></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="#" title=""><i class="icon-user"></i>个人资料</a></li>
 						<li><a href="#" title=""><i class="icon-inbox"></i>消息<span class="badge badge-info">9</span></a></li>
@@ -102,7 +123,7 @@
 	        <!-- Sidebar user -->
 	        <div class="sidebar-user widget">
 				<div class="navbar"><div class="navbar-inner"><h6>欢迎你, <% if(current_user){ %> <%= current_user.nick_name %>! <% } %></h6></div></div>
-	            <a href="#" title="" class="user"><img width="210" height="110" src="/getHeadPicture" alt="" /></a>
+	            <a href="#" title="" class="user"><img  src="/getHeadPicture" onload = imgLoad(this,210,110); alt="" /></a>
 	            <ul class="user-links">
 	            	<li><a href="" title="">今日调用总数<strong>5929312</strong></a></li>
 	            	<li><a href="" title="">今日异常总数<strong>2964</strong></a></li>
