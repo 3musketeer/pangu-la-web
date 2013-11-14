@@ -51,31 +51,12 @@
 <script type="text/javascript" src="/js/view/frame.js"></script>
 <script type="text/javascript" src="/js/view/top/detail.js"></script>
 
-
-</head>
+</head>
 
 <body>
 
 	<!-- Fixed top -->
-	<div id="top">
-		<div class="fixed">
-			<a href="/index.html" title="" class="logo"><img src="/img/logo.png" alt="" /></a>
-			<ul class="top-menu">
-				<li><a class="fullview"></a></li>
-				<li><a class="showmenu"></a></li>
-				<li><a href="#" title="" class="messages"><i class="new-message"></i></a></li>
-				<li class="dropdown">
-					<a class="user-menu" data-toggle="dropdown"><img src="/img/userpic.png" alt="" /><span>你好, 唐治! <b class="caret"></b></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="#" title=""><i class="icon-user"></i>个人资料</a></li>
-						<li><a href="#" title=""><i class="icon-inbox"></i>消息<span class="badge badge-info">9</span></a></li>
-						<li><a href="#" title=""><i class="icon-cog"></i>设置</a></li>
-						<li><a href="#" title=""><i class="icon-remove"></i>退出</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-	</div>
+	<% include ../includes/fixedtop.html %>	
 	<!-- /fixed top -->
 
 
@@ -83,77 +64,7 @@
 	<div id="container">
 
 		<!-- Sidebar -->
-		<div id="sidebar">
-
-	        <!-- Sidebar user -->
-	        <div class="sidebar-user widget">
-				<div class="navbar"><div class="navbar-inner"><h6>欢迎你, 唐治!</h6></div></div>
-	            <a href="#" title="" class="user"><img src="http://placehold.it/210x110" alt="" /></a>
-	            <ul class="user-links">
-	            	<li><a href="" title="">今日调用总数<strong>5929312</strong></a></li>
-	            	<li><a href="" title="">今日异常总数<strong>2964</strong></a></li>
-	            	<li><a href="" title="">今日调用成功率<strong>99.95%</strong></a></li>
-	            </ul>
-	        </div>
-	        <!-- /sidebar user -->
-
-	        <div class="general-stats widget">
-		        <ul class="head">
-		        	<li><span>月-总数</span></li>
-		        	<li><span>月-异常</span></li>
-		        	<li><span>月-成功率</span></li>
-		        </ul>
-		        <ul class="body">
-		        	<li><strong>6000w+</strong></li>
-		        	<li><strong>2.4w+</strong></li>
-		        	<li><strong>99.96%</strong></li>
-		        </ul>
-		    </div>
-
-		    <!-- Main navigation -->
-	        <ul class="navigation widget">
-	            <li><a href="/index.html" title=""><i class="icon-home"></i>分析大厅</a></li>
-	            <li class="active"><a href="#" title="" class="expand" id="current"><i class="icon-signal"></i>排名<strong>8</strong></a>
-	                <ul>
-	                    <li><a href="forms.html" title="" class="current">流程调用超时排名</a></li>
-	                    <li><a href="wysiwyg.html" title="">流程调用次数排名</a></li>
-	                    <li><a href="form_wizards.html" title="">流程调用异常排名</a></li>
-	                </ul>
-	            </li>
-	            <li><a href="#" title="" class="expand"><i class="icon-tasks"></i>流程分析<strong>4</strong></a>
-	                <ul>
-	                    <li><a href="components.html" title="">流程分析</a></li>
-	                    <li><a href="content_grid.html" title="">Content grid</a></li>
-	                    <li><a href="blank.html" title="">Blank page</a></li>
-	                </ul>
-	            </li>
-				<li><a href="#" title="" class="expand"><i class="icon-tasks"></i>服务分析<strong>4</strong></a>
-	                <ul>
-	                    <li><a href="components.html" title="">服务分析</a></li>
-	                    <li><a href="content_grid.html" title="">Content grid</a></li>
-	                    <li><a href="blank.html" title="">Blank page</a></li>
-	                </ul>
-	            </li>
-	            <li><a href="media.html" title=""><i class="icon-picture"></i>自定义视图</a></li>
-				<li><a href="#" title="" class="expand"><i class="icon-list-alt"></i>数据预测<strong>4</strong></a>
-	                <ul>
-	                    <li><a href="components.html" title="">服务分析</a></li>
-	                    <li><a href="content_grid.html" title="">Content grid</a></li>
-	                    <li><a href="blank.html" title="">Blank page</a></li>
-	                </ul>
-	            </li>
-				<li><a href="#" title="" class="expand"><i class="icon-warning-sign"></i>数据告警<strong>4</strong></a>
-	                <ul>
-	                    <li><a href="components.html" title="">服务分析</a></li>
-	                    <li><a href="content_grid.html" title="">Content grid</a></li>
-	                    <li><a href="blank.html" title="">Blank page</a></li>
-	                </ul>
-	            </li>
-	            <li><a href="icons.html" title=""><i class="icon-thumbs-up"></i>健康检查</a></li>
-	        </ul>
-	        <!-- /main navigation -->
-	        
-		</div>
+		    <% include ../includes/sidebar.html %>	
 		<!-- /sidebar -->
 
 
@@ -163,60 +74,18 @@
 		    <!-- Content wrapper -->
 		    <div class="wrapper">
 
-			    <!-- Breadcrumbs line -->
-			    <div class="crumbs">
-		            <ul id="breadcrumbs" class="breadcrumb"> 
-		                <li><a href="/">分析大厅</a></li>
-						<li class="active"><a href="#">排名清单</a></li>
-		            </ul>
-			        
-		            <ul class="alt-buttons">
-						<li class="dropdown"><a href="#" title="" data-toggle="dropdown"><i class="icon-warning-sign"></i><span>告警</span> <strong>(+5)</strong></a>
-							<ul class="dropdown-menu pull-right">
-								<li><a href="#" title=""><i class="icon-info-sign"></i>告警1</a><li>
-								<li><a href="#" title=""><i class="icon-info-sign"></i>告警2</a><li>
-								<li><a href="#" title=""><i class="icon-info-sign"></i>告警3</a><li>
-								<li><a href="#" title=""><i class="icon-list"></i>更多...</a><li>
-							</ul>
-						</li>
-		            </ul>
-			    </div>
-			    <!-- /breadcrumbs line -->
 
-			    <!-- Page header -->
-			    <div class="page-header">
-			    	<div class="page-title">
-				    	<h5>流程超时排名明细(日)</h5>
-				    	<span>早上好, 唐治!</span>
-			    	</div>
-
-			    	<ul class="page-stats">
-			    		<li>
-			    			<div class="showcase">
-			    				<span>日访问量</span>
-								<h2>12</h2>
-			    			</div>
-							<div id="total-visits" class="chart">10,14,8,45,23,41,22,31,19,12, 28, 21, 24, 20</div>
-			    		</li>
-			    		<li>
-			    			<div class="showcase">
-			    				<span>总访问量</span>
-			    				<h2>264</h2>
-			    			</div>
-			    			<div id="balance" class="chart">10,14,8,45,23,41,22,31,19,12, 28, 21, 24, 20</div>
-			    		</li>
-			    	</ul>
-			    </div>
-			    <!-- /page header -->
-
+                <!-- Content head -->
+			        <% include ../includes/contentHead.html %>	
+			    <!-- /Content head -->
 			    
-		    
                 <h5 class="widget-name"></h5>
 
+                <input type="hidden" name="queryUrl" value="<%= queryUrl %>"/>
 				<div class="widget">
                 	<div class="navbar">
                     	<div class="navbar-inner">
-                        	<h6>流程超时排名明细(日)</h6>
+                        	<h6><%= headTile %></h6>
                             <div class="nav pull-right">
                                 <a href="#" class="dropdown-toggle navbar-icon" data-toggle="dropdown"><i class="icon-cog"></i></a>
                                 <ul class="dropdown-menu pull-right">
@@ -237,17 +106,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-								<% list.forEach(function(item,idx){ %>
-								<tr>
-									<% colNames.forEach(function(col){ %> 
-									    <% if(col == '#') { %>
-										<td><%= idx+1 %></td>
-										<% } else { %>
-										<td><%= item[col] %></td>
-										<% } %>
-									<% }) %>
-								</tr>
-								<% }) %>
+
                             </tbody>
                         </table>
                     </div>
@@ -265,13 +124,7 @@
 
 
 	<!-- Footer -->
-	<div id="footer">
-		<div class="copyrights">&copy;  Asaiinfo-Linkage 2013.</div>
-		<ul class="footer-links">
-			<li><a href="javscript:void(0)" title="Version: 0.1.0"><i class="icon-cogs"></i>Version: 0.1.0</a></li>
-			<li><a href="mailto:tangzhi@asiainfo-linkage.com?subject=关于LAP的Bug" title=""><i class="icon-screenshot"></i>反馈Bug</a></li>
-		</ul>
-	</div>
+	    <% include ../includes/foot.html %>	
 	<!-- /footer -->
 
 </body>

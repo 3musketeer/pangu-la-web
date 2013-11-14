@@ -3,8 +3,8 @@
 
 	        <!-- Sidebar user -->
 	        <div class="sidebar-user widget">
-				<div class="navbar"><div class="navbar-inner"><h6>欢迎你, 唐治!</h6></div></div>
-	            <a href="#" title="" class="user"><img src="http://placehold.it/210x110" alt="" /></a>
+				<div class="navbar"><div class="navbar-inner"><h6>欢迎你, <% if(current_user){ %> <%= current_user.nick_name %>! <% } %></h6></div></div>
+	            <a href="#" title="" class="user"><img src="/getHeadPicture" onload = imgLoad(this,210,110); alt="" /></a>
 	            <ul class="user-links">
 	            	<li><a href="" title="">今日调用总数<strong>5929312</strong></a></li>
 	            	<li><a href="" title="">今日异常总数<strong>2964</strong></a></li>

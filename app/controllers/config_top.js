@@ -66,15 +66,58 @@ exports.cfgTop = {
 
 exports.cfgDetail = {
 	TuxStateTimeOutTop : {
-		titles: ['排名', '流程名', '耗时(s)', '归属服务', '主机', '统计时间'],
+		titles: ['排名','流程名', '耗时(s)', '归属服务', '主机', '统计时间'],
 		colNames: ['#', 'TRANSCODE', 'MAX', 'SVRNAME', 'host', 'STARTTIME'],
+		filterColNames: ['TRANSCODE', 'SVRNAME', 'host', 'STARTTIME'],
 		sort: {'MAX':-1}
 	},
 
 	TuxStateCalledSumByLcu : {
 		titles: [ '排名', '流程名', '次数' ],
 		colNames: [ '#', 'TRANSCODE', '_count' ],
+		filterColNames: ['TRANSCODE'],
 		filter : {TRANSCODE: {$exists: true}, host: 'all'},
 		sort: {'_count' : -1}
+	},
+	
+	TuxStateFailedSumByLcu: {
+		titles: [ '排名', '流程名', '次数' ],
+		colNames: [ '#', 'TRANSCODE', '_count' ],
+		filterColNames: ['TRANSCODE'],
+		filter : {TRANSCODE: {$exists: true}, host: 'all'},
+		sort: {'_count' : -1}
+	},
+	
+	TuxStateAllTimeByLcu: {
+		titles: [ '排名', '流程名', '总时长' ],
+		colNames: [ '#', 'TRANSCODE', '_count' ],
+		filterColNames: ['TRANSCODE'],
+		filter : {TRANSCODE: {$exists: true}, host: 'all'},
+		sort: {'_count' : -1}
+	},
+	
+	TuxStateCalledSumBySvr: {
+		titles: [ '排名', '服务名', '次数' ],
+		colNames: [ '#', 'SVRNAME', '_count' ],
+		filterColNames: ['SVRNAME'],
+		filter : {SVRNAME: {$exists: true}, host: 'all'},
+		sort: {'_count' : -1}
+	},
+	
+	TuxStateAllTimeBySvr: {
+		titles: [ '排名', '服务名', '总时长' ],
+		colNames: [ '#', 'SVRNAME', '_count' ],
+		filterColNames: ['SVRNAME'],
+		filter : {SVRNAME: {$exists: true}, host: 'all'},
+		sort: {'_count' : -1}
+	},
+	
+	TuxStateFailedSumBySvr: {
+		titles: [ '排名', '服务名', '次数' ],
+		colNames: [ '#', 'SVRNAME', '_count' ],
+		filterColNames: ['SVRNAME'],
+		filter : {SVRNAME: {$exists: true}, host: 'all'},
+		sort: {'_count' : -1}
 	}
+	
 }

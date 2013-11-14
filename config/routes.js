@@ -21,7 +21,9 @@ module.exports = function (app) {
 	app.get('/top/list.html', auth.requiresLogin, laTop.list); 
 
 	//排名明细
+	app.get('/detail.html', auth.requiresLogin,laTop.initDetail); 
 	app.get('/top/detail.html', auth.requiresLogin, laTop.detail); 
+	
 
 	//总数统计列表
 	app.get('/sum/list.html', auth.requiresLogin, laSum.list); 
@@ -43,6 +45,8 @@ module.exports = function (app) {
 	//调用头像
 	app.get('/getHeadPicture',auth.getHeadPicture);
 	
+	//分页查询
+	app.get('/getPageDataAction',auth.getHeadPicture);
 	
 	//退出
 	app.get('/logout',auth.logout); 

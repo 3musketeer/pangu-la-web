@@ -27,8 +27,18 @@ var methods = {
 			.limit(option.prePage||option.limit||0)
 			.skip(option.prePage?option.page*option.prePage:option.skip||0)
 			.exec(cb)
-	}
-
+	},
+	
+	getCount : function(option,cb) { 
+        var count = 0;
+        this.count(option.filter||{}, function (err, cnt) {  
+            if(err){
+                throw new Error(err);
+            }
+            console.log("cnt="+ cnt);
+           cb(cnt);
+        });
+    }           	
 }
 
 var clone = function(target, source) {
@@ -36,8 +46,7 @@ var clone = function(target, source) {
 		target[key] = source[key]
 }
 
+
 clone(QueryResultSchema.statics, methods)
 
 mongoose.model('QueryResult', QueryResultSchema);
-
-

@@ -221,7 +221,7 @@
 			    <div class="page-header">
 			    	<div class="page-title">
 				    	<h5>分析大厅</h5>
-				    	<span>早上好, 唐治!</span>
+				    	<span>早上好, <% if(current_user){ %> <%= current_user.nick_name %> ！ <% } %></span>
 			    	</div>
 
 			    	<ul class="page-stats">
