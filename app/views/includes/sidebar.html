@@ -1,9 +1,10 @@
+
 <!-- Sidebar -->
 		<div id="sidebar">
 
 	        <!-- Sidebar user -->
 	        <div class="sidebar-user widget">
-				<div class="navbar"><div class="navbar-inner"><h6>欢迎你, <% if(current_user){ %> <%= current_user.nick_name %>! <% } %></h6></div></div>
+				<div class="navbar"><div class="navbar-inner"><h6>欢迎您, <% if(locals.current_user){ %> <%= locals.current_user.nick_name %>! <% } %></h6></div></div>
 	            <a href="#" title="" class="user"><img src="/getHeadPicture" onload = imgLoad(this,210,110); alt="" /></a>
 	            <ul class="user-links">
 	            	<li><a href="" title="">今日调用总数<strong>5929312</strong></a></li>
@@ -25,50 +26,32 @@
 		        	<li><strong>99.96%</strong></li>
 		        </ul>
 		    </div>
-
+		    
 		    <!-- Main navigation -->
 	        <ul class="navigation widget">
-	            <li><a href="index.html" title=""><i class="icon-home"></i>分析大厅</a></li>
-	            <li class="active"><a href="#" title="" class="expand" id="current"><i class="icon-signal"></i>排名<strong>8</strong></a>
-	                <ul>
-	                    <li><a href="forms.html" title="" class="current">流程调用超时排名</a></li>
-	                    <li><a href="wysiwyg.html" title="">流程调用次数排名</a></li>
-	                    <li><a href="form_wizards.html" title="">流程调用异常排名</a></li>
-	                </ul>
-	            </li>
-	            <li><a href="#" title="" class="expand"><i class="icon-tasks"></i>流程分析<strong>4</strong></a>
-	                <ul>
-	                    <li><a href="components.html" title="">流程分析</a></li>
-	                    <li><a href="content_grid.html" title="">Content grid</a></li>
-	                    <li><a href="blank.html" title="">Blank page</a></li>
-	                </ul>
-	            </li>
-				<li><a href="#" title="" class="expand"><i class="icon-tasks"></i>服务分析<strong>4</strong></a>
-	                <ul>
-	                    <li><a href="components.html" title="">服务分析</a></li>
-	                    <li><a href="content_grid.html" title="">Content grid</a></li>
-	                    <li><a href="blank.html" title="">Blank page</a></li>
-	                </ul>
-	            </li>
-	            <li><a href="media.html" title=""><i class="icon-picture"></i>自定义视图</a></li>
-				<li><a href="#" title="" class="expand"><i class="icon-list-alt"></i>数据预测<strong>4</strong></a>
-	                <ul>
-	                    <li><a href="components.html" title="">服务分析</a></li>
-	                    <li><a href="content_grid.html" title="">Content grid</a></li>
-	                    <li><a href="blank.html" title="">Blank page</a></li>
-	                </ul>
-	            </li>
-				<li><a href="#" title="" class="expand"><i class="icon-warning-sign"></i>数据告警<strong>4</strong></a>
-	                <ul>
-	                    <li><a href="components.html" title="">服务分析</a></li>
-	                    <li><a href="content_grid.html" title="">Content grid</a></li>
-	                    <li><a href="blank.html" title="">Blank page</a></li>
-	                </ul>
-	            </li>
-	            <li><a href="icons.html" title=""><i class="icon-thumbs-up"></i>健康检查</a></li>
+	        
+	            <li><a href="/index.html" title=""><i class="icon-home"></i>分析大厅</a></li> 
+	            <% locals.menus.forEach(function(menu){ %>
+					 <li class=""><a <% if(menu.url != undefined){ %> href="<%= menu.url %>"  data-pjax='#content' <% } %> title="" <% if(menu.list.length>0){ %> class="expand" <% }else{ %> class="" <% } %>  ><i class=<%= menu.class %>></i><%= menu.title %>  <% if(menu.list.length>0){ %> <strong><%= menu.list.length %></strong><% } %></a>
+    					 <ul>
+        					 <% menu.list.forEach(function(item){ %>
+        					    <li><a href="<%= item.url %>" data-pjax='#content'><%= item.title %></a></li>
+        					 <% }) %>
+    					 </ul>
+					 </li>
+			    <% }) %> 
+	           
 	        </ul>
 	        <!-- /main navigation -->
 	        
-		</div>
 		<!-- /sidebar -->
-
+		 <!-- Datepicker -->
+    	<div class="widget">
+    		<h6 class="widget-name"><i class="icon-calendar"></i><strong>统计日期<strong></h6>
+            <div  class="inlinepicker datepicker-liquid"></div>
+            <a href="" data-pjax='#content' id="pickerDataUrl"></a>
+            <input type="hidden" id="datepicker" value="<% now = new Date()%><%= now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate() %>" />
+        </div>
+	    <!-- /datepicker -->
+		
+   </div>

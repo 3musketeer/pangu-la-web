@@ -4,7 +4,7 @@
 		<ul class="stats-details">
 			<li>
 				<strong>统计日期:</strong>
-				<span>2013-06-18</span>
+				<span><%= caculateDate %></span>
 			</li>
 			<li>
 				<div class="number">
@@ -18,7 +18,7 @@
 				</div>
 			</li>
 		</ul>
-		<div class="graph" id="chart1">[<% item[item.scopes[0]].forEach(function(data, idx){ %> 
+		<div class="graph" id="chart-area-1">[<% item[item.scopes[0]].forEach(function(data, idx){ %> 
 			<% if (idx != 0 ) { %>,<% } %>
 			[<%= data.hours %>, <%= data._count %>]	
 			<% }) %>]</div>

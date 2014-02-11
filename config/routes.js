@@ -18,15 +18,17 @@ module.exports = function (app) {
 	app.get('/index.html', auth.requiresLogin, main.index); 
 
 	//排名清单
-	app.get('/top/list.html', auth.requiresLogin, laTop.list); 
+	app.get('/lcuTopList.html', auth.requiresLogin, laTop.lcuList); 
+	app.get('/svcTopList.html', auth.requiresLogin, laTop.svcList);
+	//app.get('/lcuErrorAnalysis.html', auth.requiresLogin, laTop.lcuAnalysis); 
 
 	//排名明细
 	app.get('/detail.html', auth.requiresLogin,laTop.initDetail); 
-	app.get('/top/detail.html', auth.requiresLogin, laTop.detail); 
+	app.get('/topDetail.html', auth.requiresLogin, laTop.detail); 
 	
 
 	//总数统计列表
-	app.get('/sum/list.html', auth.requiresLogin, laSum.list); 
+	app.get('/sumList.html', auth.requiresLogin, laSum.list); 
 	
 	//注册用户
 	app.get('/register',auth.registerUser); 
@@ -38,8 +40,8 @@ module.exports = function (app) {
 	app.post('/auditAction/:checkValue',auth.audit);
 	
 	 //用户资料修改
-	app.get('/editUser',user_auth.editUser);
-	app.post('/editUserAction',user_auth.editUser);
+	app.get('/editUser',auth.requiresLogin,user_auth.editUser);
+	app.post('/editUserAction',auth.requiresLogin,user_auth.editUser);
 	
 	
 	//调用头像
@@ -47,6 +49,7 @@ module.exports = function (app) {
 	
 	//分页查询
 	app.get('/getPageDataAction',auth.getHeadPicture);
+
 	
 	//退出
 	app.get('/logout',auth.logout); 

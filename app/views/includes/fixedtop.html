@@ -1,3 +1,5 @@
+
+
 <script>
         
     function imgLoad(obj,maxWidth,maxHeight){   
@@ -29,13 +31,13 @@
 				<li><a class="showmenu"></a></li>
 				<li><a href="#" title="" class="messages"><i class="new-message"></i></a></li>
 				<li class="dropdown">
-					<a class="user-menu" data-toggle="dropdown"><img src="/getHeadPicture" onload = imgLoad(this,20,30);alt="" /><span>你好, <% if(current_user){ %> <%= current_user.nick_name %> ！ <% } %> <b class="caret"></b></span></a>
+					<a class="user-menu" data-toggle="dropdown"><img src="/getHeadPicture" onload = imgLoad(this,20,30);alt="" /><span>您好, <% if(locals.current_user){ %> <%= locals.current_user.nick_name %> ！ <% } %> <b class="caret"></b></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="#" title=""><i class="icon-user"></i>个人资料</a></li>
 						<li><a href="#" title=""><i class="icon-inbox"></i>消息<span class="badge badge-info">9</span></a></li>
 						<li><a href="/editUser" title=""><i class="icon-cog"></i>设置</a></li>
-						<% if(current_user){ %>
-						    <% if(current_user.is_admin){ %>	
+						<% if(locals.current_user){ %>
+						    <% if(locals.current_user.is_admin){ %>	
 							    <li><a href="/auditUser" title=""><i class="icon-cog"></i>审核</a></li>
 					    	<% } %>
 				        <% } %>
@@ -46,4 +48,3 @@
 		</div>
 	</div>
 	<!-- /fixed top -->
-

@@ -5,10 +5,8 @@ var mongoose = require('mongoose')
   , config = require('./config_sum').config
 
 var formatNum = function(num) {
-	result = num/1000000 
-	if (result >= 1) return result.toFixed(1)+'m+';
-	result = num/1000
-	if (result >= 1) return result.toFixed(1)+'k+';
+	if (num > 1000000) return (num/1000000).toFixed(1)+'M';
+	if (num > 1000) return (num/1000).toFixed(1)+'k';
 	return num
 }
 
@@ -24,18 +22,22 @@ var accumulate = function(data) {
 			count += list[i]._count
 		}
 
-		data[key].count = formatNum(count)
+		data[key]._count = formatNum(count)
+		data[key].count = count
 	}
 }
 
 exports.list = function(req, res) {
-	var list = [ {mode:'TuxState', type:'CalledSumByTime', subtype: 'AtHours'},
-				 {mode:'TuxState', type:'FailedSumByTime', subtype: 'AtHours'}	]
+    var value = req.query.value;
+	var list = [ {mode:'TuxState', type:'CalledSumByTime', subtype: 'AtHours',value:value},
+				 {mode:'TuxState', type:'CalledSumByTime', subtype: 'AtDay',value:value},
+				 {mode:'TuxState', type:'FailedSumByTime', subtype: 'AtHours',value:value},
+				 {mode:'TuxState', type:'FailedSumByTime', subtype: 'AtDay',value:value}	]
 
 	query.multiQuery(list, config, function(err, docs) {
 		accumulate(docs)
 		debug("doc:%s", util.inspect(docs))
-		res.render('sum/list', {all: docs})
+		res.renderPjax('sum/list', {all: docs,caculateDate:value})
 	})
 	
 }

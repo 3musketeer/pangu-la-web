@@ -1,7 +1,11 @@
 var express = require('express')
   , flash = require('connect-flash')
   , mongoStore = require('connect-mongo')(express)
-
+  , pjax = require('express-pjax')
+  , partials = require('express-partials')
+  , plugin = require('plugin')
+  , auth = require('../app/controllers/auth')
+  , solr = require('solr');
 module.exports = function (app, config) {
 
     app.set('showStackError', true)
@@ -26,6 +30,9 @@ module.exports = function (app, config) {
 	app.engine('html', require('ejs').__express)
     app.set('views', config.root + '/app/views')
     app.set('view engine', 'html')
+    
+    app.use(partials());
+    app.use(pjax());
 
 
     // cookieParser should be above session
@@ -35,6 +42,8 @@ module.exports = function (app, config) {
     // bodyParser should be above methodOverride
     app.use(express.bodyParser())
     app.use(express.methodOverride())
+    
+    
 
 	app.use(function(req, res, next){
 		res.on('header', function() {
@@ -54,7 +63,9 @@ module.exports = function (app, config) {
         collection : 'sessions'
       })
     }))
-	
+    
+    
+    
 	// connect flash for flash messages - should be declared after sessions
     app.use(flash())
 
@@ -67,9 +78,34 @@ module.exports = function (app, config) {
       res.locals.csrf_token = req.session._csrf
       next()
     })
+    
+    
+    //menu Plug-in technology    
+    var menus = [];
+    require('../app/controllers/menu').loadMenu(config.root+'/app/controllers/menu',function(m){menus = m;});
+    
+      
+    //Public Response Information 
+    app.use(function(req, res, next){         
+        if (req.session.user){ 
+            res.locals.menus = menus;
+            res.locals.current_user = req.session.user;
+        }else{
+           if(req.url != "/login.html" && req.url != "/auth.html"){
+                return res.redirect('/login.html')
+            }
+        }
+        return next();   
+    });
+
+                
+    //Plug-in technology    
+    plugin(app).require(config.root+'/app/controllers/plugin').load();
 
     // routes should be at the last
     app.use(app.router)
+    
+    
 
     // assume "not found" in the error msgs
     // is a 404. this is somewhat silly, but

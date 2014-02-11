@@ -20,46 +20,6 @@ $(function() {
 
 
 
-	//===== Form wizards =====//
-
-	$("#wizard1").formwizard({
-		formPluginEnabled: false, 
-		validationEnabled: false,
-		focusFirstInput : false,
-		disableUIStyles : true
-	});
-
-	$("#wizard2").formwizard({
-		formPluginEnabled: true, 
-		validationEnabled: false,
-		focusFirstInput : false,
-		disableUIStyles : true,
-	
-		formOptions :{
-			success: function(data){$("#status1").fadeTo(500,1,function(){ $(this).html("<span>Form was submitted!</span>").fadeTo(5000, 0); })},
-			beforeSubmit: function(data){$("#data1").html("<span>Form was submitted with ajax. Data sent to the server: " + $.param(data) + "</span>");},
-			resetForm: true
-		}
-	});
-
-	$("#wizard3").formwizard({ 
-	 	formPluginEnabled: true,
-	 	validationEnabled: false,
-	 	focusFirstInput : false,
-	 	formOptions :{
-			success: function(data){$("#status2").fadeTo(500,1,function(){ $(this).html("<span>Form was submitted!</span>").fadeTo(5000, 0); })},
-			beforeSubmit: function(data){$("#data2").html("<span>Form was submitted with ajax. Data sent to the server: " + $.param(data) + "</span>");},
-			resetForm: true
-	 	},
-	 	inAnimation : {height: 'show'},
-        outAnimation: {height: 'hide'},
-		inDuration : 400,
-		outDuration: 400,
-		easing: 'easeInBack'	//see e.g. http://gsgd.co.uk/sandbox/jquery/easing/ for information on easing
-	 }
-	);
-
-
 
 	//===== File manager =====//	
 	
@@ -124,58 +84,20 @@ $(function() {
 	var y = date.getFullYear();
 	
 	$('#calendar').fullCalendar({
+
 		header: {
 			left: 'prev,next',
 			center: 'title',
 			right: 'month,agendaWeek,agendaDay'
 		},
 		editable: true,
-		events: [
-			{
-				title: 'All Day Event',
-				start: new Date(y, m, 1)
-			},
-			{
-				title: 'Long Event',
-				start: new Date(y, m, d-5),
-				end: new Date(y, m, d-2)
-			},
-			{
-				id: 999,
-				title: 'Repeating Event',
-				start: new Date(y, m, d-3, 16, 0),
-				allDay: false
-			},
-			{
-				id: 999,
-				title: 'Repeating Event',
-				start: new Date(y, m, d+4, 16, 0),
-				allDay: false
-			},
-			{
-				title: 'Meeting',
-				start: new Date(y, m, d, 10, 30),
-				allDay: false
-			},
-			{
-				title: 'Lunch',
-				start: new Date(y, m, d, 12, 0),
-				end: new Date(y, m, d, 14, 0),
-				allDay: false
-			},
-			{
-				title: 'Birthday Party',
-				start: new Date(y, m, d+1, 19, 0),
-				end: new Date(y, m, d+1, 22, 30),
-				allDay: false
-			},
-			{
-				title: 'Click for Google',
-				start: new Date(y, m, 28),
-				end: new Date(y, m, 29),
-				url: 'http://google.com/'
-			}
-		]
+		dayClick: function() {
+
+            alert('a day has been clicked!');
+
+        },
+
+		
 	});
 
 
@@ -233,40 +155,51 @@ $(function() {
 	//===== Date pickers =====//
 
 	$( ".datepicker" ).datepicker({
-				defaultDate: +7,
+				defaultDate: "+1w",
 		showOtherMonths:true,
+		changeMonth: false,
 		autoSize: true,
+			numberOfMonths: 1,
 		appendText: '(yyyy-mm-dd)',
 		dateFormat: 'yyyy-mm-dd'
-		});
+    });
 		
 	$('.inlinepicker').datepicker({
+	    defaultDate: "+1w",
         inline: true,
-		showOtherMonths:true
+		showOtherMonths:true,
+		dateFormat: 'yy-mm-dd',
+		onSelect: function(dateText, inst) {
+		    $("#datepicker").val(dateText);  
+		    var param = "";
+		    var reg = new RegExp("[?&]" + "value" + "=([^&]*)(&|$)", "gi");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null){ 
+        		param = window.location.search.replace(reg,"");
+        }
+		    $('#pickerDataUrl').attr('href',window.location.pathname+param);     
+		    $('#pickerDataUrl').click();
+			}
     });
 
 	var dates = $( "#fromDate, #toDate" ).datepicker({
 		defaultDate: "+1w",
 		changeMonth: false,
 		showOtherMonths:true,
-		numberOfMonths: 3,
+		numberOfMonths: 1,
 		onSelect: function( selectedDate ) {
+		    alert(selectedDate);
 			var option = this.id == "fromDate" ? "minDate" : "maxDate",
 				instance = $( this ).data( "datepicker" ),
 				date = $.datepicker.parseDate(
 					instance.settings.dateFormat ||
 					$.datepicker._defaults.dateFormat,
 					selectedDate, instance.settings );
+					alert(date);
 			dates.not( this ).datepicker( "option", option, date );
+			
 		}
 	});
-	
-	$( "#datepicker-icon, .navbar-datepicker" ).datepicker({
-		showOn: "button",
-		buttonImage: "img/icons/date_picker.png",
-		buttonImageOnly: true
-	});
-
 
 
 	//===== Modals and dialogs =====//
@@ -718,36 +651,7 @@ $(function() {
 
 	//===== Datatables =====//
 
-	oTable = $('#data-table').dataTable({
-		"bJQueryUI": false,
-		"bAutoWidth": false,
-		"sPaginationType": "full_numbers",
-		"sDom": '<"datatable-header"fl>t<"datatable-footer"ip>',
-		"oLanguage": {
-			"sSearch": "<span>Filter records:</span> _INPUT_",
-			"sLengthMenu": "<span>Show entries:</span> _MENU_",
-			"oPaginate": { "sFirst": "First", "sLast": "Last", "sNext": ">", "sPrevious": "<" }
-		}
-    });
-
-
-	oTable = $(".media-table").dataTable({
-		"bJQueryUI": false,
-		"bAutoWidth": false,
-		"sPaginationType": "full_numbers",
-		"sDom": '<"datatable-header"fl>t<"datatable-footer"ip>',
-		"oLanguage": {
-			"sSearch": "<span>Filter records:</span> _INPUT_",
-			"sLengthMenu": "<span>Show entries:</span> _MENU_",
-			"oPaginate": { "sFirst": "First", "sLast": "Last", "sNext": ">", "sPrevious": "<" }
-		},
-		"aoColumnDefs": [
-	      { "bSortable": false, "aTargets": [ 0, 4 ] }
-	    ]
-    });
-
-
-
+	
 	//===== Fancybox =====//
 	
 	$(".lightbox").fancybox({
@@ -827,11 +731,24 @@ $(function() {
 		cssOpen: 'subOpened',
 		cssClose: 'subClosed',
 		speed: 200
+
 	});
-
-
+	
+	
+  $('a[data-pjax]').pjax(
+      {
+          container: '#content',
+          cache: true,
+          storage: true,
+          timeout: 6500,
+          url:this.href
+      }
+   
+   );
+   
+  
 	//===== Form elements styling =====//
 	
 	$(".ui-datepicker-month, .styled, .dataTables_length select").uniform({ radioClass: 'choice' });
-	
+		
 });

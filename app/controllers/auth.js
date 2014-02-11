@@ -2,6 +2,7 @@ var userAuth = require('./user_auth');
 var gridfs = require('./gridfs');
 
 exports.requiresLogin = function (req, res, next) {
+    console.log("123");
     if (!req.session || req.session.hasAuth !== true) {
       //req.session.returnTo = req.originalUrl
       return res.redirect('/login.html')
@@ -11,6 +12,7 @@ exports.requiresLogin = function (req, res, next) {
 
 exports.login = function(req, res) {
 	res.render('auth/login',{
+	    layout: false,
 		errors: req.flash('error') 
 	})
 }
@@ -31,6 +33,7 @@ exports.session = function(req, res) {
 
 exports.registerUser = function (req, res) {
      res.render('user/register',{
+                layout: false,
 				errors: req.flash('error') 
 			})
 }

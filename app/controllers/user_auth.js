@@ -149,6 +149,7 @@ exports.auditUser = function(req, res){
 	
 	var render = function(users){	
     	 res.render('user/AuditUser',{
+    	    layout: false,
 	        users: users, 
 			errors: req.flash('error')
 	     });
@@ -197,6 +198,7 @@ exports.editUser = function(req, res, next){
     var method = req.method.toLowerCase();
     if(method == 'get'){
         res.render('user/edituser',{
+            layout: false,
             current_user:req.session.user,
 		    errors: req.flash('error'),
 		    Prompts: req.flash('Prompt')

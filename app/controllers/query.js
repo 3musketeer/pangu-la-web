@@ -4,18 +4,25 @@ var mongoose = require('mongoose')
 var getTable = function(mode, type, scope, value) {
 
 	if (!mode || !type || !scope) throw new Error('参数不全');
+	console.log(mode);
+	console.log(type);
+	console.log(scope);
 
+  var dt;
 	if (!value) {
-		var dt = new Date('2013-06-18') //debug
-		var YY = ("00"+dt.getFullYear()%100).substr(-2)
-		  , MM = ("00"+(dt.getMonth() + 1)).substr(-2)
-		  , DD = ("00"+dt.getDate()).substr(-2)
-		  , HH = ("00"+dt.getHours()).substr(-2);
-		if (scope=="hours") value= YY+MM+DD+HH; 
-		if(scope=="day") value = YY+MM+DD;
-		if(scope=="month") value = YY+MM;
-		if (scope=="year") value = YY;
+		dt = new Date('2013-06-18') //debug
+	}else{
+	    dt = new Date(value)
 	}
+	
+	var YY = ("00"+dt.getFullYear()%100).substr(-2)
+	  , MM = ("00"+(dt.getMonth() + 1)).substr(-2)
+	  , DD = ("00"+dt.getDate()).substr(-2)
+	  , HH = ("00"+dt.getHours()).substr(-2);
+	if (scope=="hours") value= YY+MM+DD+HH; 
+	if(scope=="day") value = YY+MM+DD;
+	if(scope=="month") value = YY+MM;
+	if (scope=="year") value = YY;
 
 	var collection = mode + type + scope.toUpperCase() + value;
 	debug('collection:%s.', collection)

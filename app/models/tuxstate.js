@@ -16,7 +16,9 @@ var QueryResultSchema = new Schema({
 	hours: {type: Number},
 	day: {type:Number},
 	_count: {type:Number},
-	MAX: {type:Number}
+	MAX: {type:Number},
+	ERRORDETAIL: {type: String},
+	ERRORID: {type: String}
 });
 
 var methods = {
@@ -35,7 +37,6 @@ var methods = {
             if(err){
                 throw new Error(err);
             }
-            console.log("cnt="+ cnt);
            cb(cnt);
         });
     }           	
