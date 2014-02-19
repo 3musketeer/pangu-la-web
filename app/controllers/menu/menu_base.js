@@ -2,7 +2,7 @@ module.exports = [
     {title:'业务',menuId:'current',class:'icon-signal',list:[    {title:'工单积压',url:''},
                                                 {title:'错单',url:'/historyTopDetail.html?chartList=historyTopDetailList'},
                                                 {title:'流程超时(历史)',url:'/lcuTimeOutDetail.html?chartList=historyTopDetailList'},
-                                                {title:'流程超时(实时)',url:''},
+                                                {title:'流程超时(实时)',url:'/realtimeLcuTimeOutDetail.html?chartList=realtimeLcuTimeoutDetailList'},
                                                 {title:'流程调用总量(历史)',url:'/historyComPareGraph.html?chartList=historyLcuSumChart&formTag=true'},                 
                                                 {title:'流程调用总量(实时)',url:'/realtimeGraph.html?chartList=realTimeLcuSumChart'},                            
                                                 {title:'流程调用异常(历史)',url:''},   
