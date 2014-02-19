@@ -10,7 +10,34 @@
           	<div class="navbar-inner">
               	<h6>实时曲线图</h6>
               </div>
-          </div>
+         </div>
+          <form action="#" class="form-horizontal">
+             <fieldset>
+                   <div class="control-group">
+                      
+                      <div class="span6"">
+                        <label class="control-label">流程名：</label>
+                          <select id="transcodeValue" class="select">
+                              <option value="">所有流程</option>
+                              <% for(var indexTr=0;indexTr<coreTranscodeList.length;indexTr++){ %>
+                                <option value="<%= coreTranscodeList[indexTr] %>"><%= coreTranscodeList[indexTr] %></option>
+                              <% } %> 
+                          </select>
+                          </div>
+                           <div class="span6"">
+                           <label class="control-label">采集时间：</label>
+                          <select id="collectTime" class="select">
+                              <option value="">当前时间</option>
+                              <% for(var indexTi=0;indexTi<collectTimeList.length;indexTi++){ %>
+                                <option value="<%= collectTimeList[indexTi] %>"><%= collectTimeList[indexTi] %>分钟前</option>
+                              <% } %> 
+                          </select>
+                      </div>
+                     
+                     </div>
+              
+              </fieldset>
+          </form>
 	           	              
           <div class="well body">
             <div  id="label"></div>

@@ -7,9 +7,10 @@ exports.graphConfig = {
 		scopeNames: scopeNames,
 		colNames : [ 'timestamp', '_count' ], 
 		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:true},host:'132.34.11.29'},
-		filterColNames: ['timestamp'],
+		filterColNames: ['timestamp','TRANSCODE'],
 		color: "#f0471a",
 		delayTime:5000,
+		collectTimeList: [30,60,90,120,150,180,210,240,270,300,330,360,390,420,450,480,510,540,570,600],
 		sort: {'timestamp' : 1}
 	},
 	TuxStateCalledSumByRealTimeAt28: {
@@ -21,6 +22,7 @@ exports.graphConfig = {
 		filterColNames: ['timestamp'],
 		color: "#46bb00",
 		delayTime:5000,
+		collectTimeList: [30,60,90,120,150,180,210,240,270,300,330,360,390,420,450,480,510,540,570,600],
 		sort: {'timestamp' : 1}
 	}
 }
@@ -31,9 +33,6 @@ exports.graphList = {
 	realTimeLcuSumChart1:[ {mode:'TuxState', type:'CalledSumByRealTime',subtype:'AtDay'},{mode:'TuxState', type:'CalledSumByRealTime',subtype:'At28'}]
 
 }
-
-
-
 
 exports.detailConfig = {
     
@@ -52,3 +51,18 @@ exports.detailConfig = {
 exports.detailList = {  
 	realtimeTopDetailList:[ {mode:'TuxState', type:'TimeOutTop',subtype:''}],
 }
+
+
+
+
+
+
+
+
+exports.coreTranscodeList = 
+[
+    'ITF_CRM_GetRecvLog',
+    'ITF_CRM_GetRecvLog1',
+    'ITF_CRM_GetRecvLog2',
+]
+

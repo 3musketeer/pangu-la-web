@@ -20,7 +20,7 @@ $(function () {
         $.ajax({  
             type:"GET",  
             url:"/getRealTimeData",  
-            data:"time="+time+"&value="+value+"&chartList="+$('#chart-list')[0].innerText,  
+            data:"time="+time+"&value="+value+"&chartList="+$('#chart-list')[0].innerText+"&TRANSCODE="+$("#transcodeValue").val()+"&collectTime="+$("#collectTime").val(),  
             dataType:"json",  
             success:function(data1){  
                 for(var item in data1){ 
@@ -85,7 +85,7 @@ $(function () {
         },
          legend: {
 					show: true,
-					container: $('#label'),
+					//container: $('#label'),
 					noColumns: 1,
 					labelBoxBorderColor: "#ccc", 
 					backgroundOpacity: 0.85,
