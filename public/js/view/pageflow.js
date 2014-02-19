@@ -1,19 +1,7 @@
 ﻿$(function (){
-    var data = {
-       '1': {'symbolType':'start','symbolText':'开始','symbolDesc':'','symbolLink':''},
-       '2': {'symbolType':'condition','symbolText':'是否明确\n故障主机','symbolLink':''},
-       '3': {'symbolType':'operation','symbolText':'显示主机对比图','symbolLink':''},
-       '4': {'symbolType':'operation','symbolText':'输入主机IP','symbolLink':'/inputIp.html'},
-       '5': {'symbolType':'operation','symbolText':'选择指标','symbolLink':'/selectTarget.html'},
-       '6': {'symbolType':'operation','symbolText':'查看指标','symbolDesc':'查看各项指标，排名、仪表盘、曲线图、对比图、柱状图等'},
-       '7': {'symbolType':'condition','symbolText':'是否查看\n其他指标','symbolLink':'/initQueryTopDetail.html'},
-       '8': {'symbolType':'end','symbolText':'结束','symbolLink':''},
-       'flowStep1': '1->2',
-       'flowStep2': '2(yes)->4->5->6->7',
-       'flowStep3': '2(no, bottom)->3->4',
-       'flowStep4': '7(yes)->5',
-       'flowStep5': '7(no, right)->8'
-    };               
+
+    var data = JSON.parse($("#flowInfo").attr("value")); 
+                 
     var o = {
         'line-width': 4,
         'line-length': 30,
@@ -61,7 +49,7 @@
                 pageHtml.push("</select>");
                 pageHtml.push("</div>")
             } 
-            pageHtml.push("<input type='hidden' id='stepData"+flowData.key+"' value='' />");              
+                          
             pageHtml.push("</fieldset>");
         }
         
@@ -93,6 +81,7 @@
             pageHtml.push("</fieldset>");
         }
     }
+    pageHtml.push("<input type='hidden' id='stepAllData' value='' />");
     $("#flowStep").html(pageHtml.join(""));
        
     //drawFlowChart
@@ -135,6 +124,7 @@
            if(chart.symbols[data.currentStep].symbolType != 'condition')
                getAjaxStepHtml(chart.symbols[data.currentStep].link,data.previousStep,data.currentStep)
         }
+
         for(var item in chart.symbols){   
             if(item == data.currentStep){
                 if(chart.symbols[item].symbolType == 'condition'){
@@ -170,23 +160,29 @@
                     el.attr({ stroke: '#d5d5d5'}); 
             }                     
         }); 
+        
+        //删除可能存在的定时任务     
+        if(typeof(timeId) !='undefined'){ 
+            clearTimeout(timeId);
+            delete timeId;
+        }
                          
     });
     
     
     function getAjaxStepHtml(stepUrl,preNode,nodeId){
-        alert($('#stepData'+preNode).attr("value"));
+
         if(stepUrl != ''){
             $.ajax({  
                 type:"GET",  
                 url:stepUrl,  
-                data:"value="+$("#datepicker").attr("value")+"&requestParam="+$('#stepData'+preNode).attr("value")+"&stepId="+nodeId,  
+                data:"value="+$("#datepicker").attr("value")+"&stepAllData="+$('#stepAllData').attr("value")+"&stepId="+nodeId,  
                 dataType:"html",  
                 success:function(data){ 
                   $('#stepDiv'+nodeId).html(data);  
                 },  
-                error:function(){  
-                  alert("ajax exception!");  
+                error:function(xhr,status,errMsg){  
+                  alert(errMsg);  
                 }  
             }); 
         } 

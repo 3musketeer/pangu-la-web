@@ -11,7 +11,7 @@
                           <div class="control-group">
                               <label class="control-label">主机IP: <span class="text-error">*</span></label>
                               <div class="controls">
-                                  <input type="text" class="span4 required" value=""  onblur="$('#stepData'+<%= stepId %>).val(<%= preStepData %>+'~~'+this.value)"/>
+                                  <input type="text" class="span4 required" value="" StepAllValue="<%= stepAllData %>"  onblur="var data=JSON.parse(this.getAttribute('StepAllValue'));data['IP']=this.value;$('#stepAllData').val(JSON.stringify(data))"/>
                               </div>
                           </div>            
                    </div>
