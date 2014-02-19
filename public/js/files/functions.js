@@ -746,6 +746,14 @@ $(function() {
    
    );
    
+   //updating ctrol begin
+   $(document).on('start.pjax', function (e) { 
+       if(typeof(timeId) !='undefined'){ 
+            clearTimeout(timeId);
+            delete timeId;
+       }
+   });
+   //updating ctrol end
   
 	//===== Form elements styling =====//
 	

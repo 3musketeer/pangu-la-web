@@ -18,7 +18,8 @@ var QueryResultSchema = new Schema({
 	_count: {type:Number},
 	MAX: {type:Number},
 	ERRORDETAIL: {type: String},
-	ERRORID: {type: String}
+	ERRORID: {type: String},
+	timestamp: {type:Number}
 });
 
 var methods = {

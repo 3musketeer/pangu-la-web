@@ -5,26 +5,29 @@ exports.config = {
 		name: '调用量',
 		scopes: ['day'],
 		scopeNames: scopeNames,
-		colNames : [ 'STARTTIME', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:true}},
-		filterColNames: ['STARTTIME'],
+		colNames : [ 'timestamp', '_count' ], 
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:true},host:'132.34.11.29'},
+		filterColNames: ['timestamp'],
 		color: "#f0471a",
-		sort: {'STARTTIME' : 1}
+		delayTime:5000,
+		sort: {'timestamp' : 1}
 	},
-	TuxStateCalledSumByTimeAtHours: {
-		name: '调用总数',
+	TuxStateCalledSumByRealTimeAt28: {
+		name: '调用量1',
 		scopes: ['day'],
 		scopeNames: scopeNames,
-		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false}},
-		filterColNames: [],
-		color: "1",
-		sort: {'hours' : 1}
+		colNames : [ 'timestamp', '_count' ], 
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:true},host:'132.34.11.28'},
+		filterColNames: ['timestamp'],
+		color: "#46bb00",
+		delayTime:5000,
+		sort: {'timestamp' : 1}
 	}
 }
 
 exports.list = {
     
-	realTimeLcuSumChart:[ {mode:'TuxState', type:'CalledSumByRealTime',subtype:'AtDay'}]
+	realTimeLcuSumChart:[ {mode:'TuxState', type:'CalledSumByRealTime',subtype:'AtDay'}],
+	realTimeLcuSumChart1:[ {mode:'TuxState', type:'CalledSumByRealTime',subtype:'AtDay'},{mode:'TuxState', type:'CalledSumByRealTime',subtype:'At28'}]
 
 }

@@ -1,7 +1,7 @@
 $(function () {
     var data = [];
     var dataset;
-    var totalPoints = 10;
+    var totalPoints = 20;
     var updateInterval = 1000;
     var now = new Date().getTime() - 5000;
     function GetData(cb) {     
@@ -28,18 +28,24 @@ $(function () {
                 for(var item in data1){ 
 
                    if (data.length < totalPoints){
-                       if ((data1[item][data1[item].scopes[0]]).length >0) 
-                           var temp = [now, (data1[item][data1[item].scopes[0]])[0][data1[item].colNames[1]]];
-                       else
+                       if ((data1[item][data1[item].scopes[0]]).length >0){ 
+                           var temp = [now, (data1[item][data1[item].scopes[0]])[0][data1[item].colNames[1]]];//曲线图当前时间就一条数据
+                           data.push(temp);
+   
+                       }else{
                             var temp = [now, 0];
-                       data.push(temp);
+                            data.push(temp);
+                       }
+                      
                    }else{
                        data.shift();  
-                       if ((data1[item][data1[item].scopes[0]]).length >0) 
-                               var temp = [now, (data1[item][data1[item].scopes[0]])[0][data1[item].colNames[1]]];
-                           else
-                                var temp = [now, 0];                 
-                       data.push(temp);  
+                       if ((data1[item][data1[item].scopes[0]]).length >0){ 
+                           var temp = [now, (data1[item][data1[item].scopes[0]])[0][data1[item].colNames[1]]];
+                           data.push(temp);
+                       }else{
+                           var temp = [now, 0];                 
+                           data.push(temp);
+                       }  
                     }
                     cb(data1[item].name,data1[item].color);
                 }
@@ -76,7 +82,7 @@ $(function () {
             tickFormatter: function (v, axis) {
                 var date = new Date(v);
     
-                if (date.getSeconds() % 1 == 0) {
+                if (date.getSeconds() % 10 == 0) {
                     var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
                     var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
                     var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
@@ -90,8 +96,7 @@ $(function () {
             axisLabelUseCanvas: true,
             axisLabelFontSizePixels: 12,
             axisLabelFontFamily: 'Verdana, Arial',
-            axisLabelPadding: 10
-        },
+            axisLabelPadding: 10        },
         yaxis: {
             tickFormatter: function (v, axis) {
                 if (v % 5 == 0) {
@@ -167,8 +172,7 @@ $(function () {
 
     function update() {
         GetData(cb);
-        setTimeout(update, updateInterval);
-    }
-
-    update();  
+        timeId = setTimeout(update, updateInterval);//此处必须定义全局timeId
+    }    
+    update();
 	});

@@ -9,7 +9,16 @@ module.exports = {
     admins: {tangsz: true},
     
 	  db: 'mongodb://localhost/tuxlog',
-	  root: rootPath
+	  root: rootPath,
+	  
+	  client_opts: {
+        url: 'http://localhost:8082',
+        sockjs_opts: {
+            devel: true,
+            debug: true,
+            websocket:true
+        }
+    }
 		
   }
 }

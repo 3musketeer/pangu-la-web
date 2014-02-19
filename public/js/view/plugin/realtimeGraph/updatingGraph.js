@@ -1,11 +1,11 @@
 $(function () {
     var data = [];
     var dataset;
-    var totalPoints = 10;
-    var updateInterval = 1000;
-    var now = new Date().getTime() - 5000;
+    var updateInterval = 2000;
+    var now = new Date().getTime();
+    
     function GetData(cb) {     
-        
+
         var dateCa = new Date(now);
         var hours = dateCa.getHours() < 10 ? "0" + dateCa.getHours() : dateCa.getHours();
         var minutes = dateCa.getMinutes() < 10 ? "0" + dateCa.getMinutes() : dateCa.getMinutes();
@@ -23,32 +23,19 @@ $(function () {
             data:"time="+time+"&value="+value+"&chartList="+$('#chart-list')[0].innerText,  
             dataType:"json",  
             success:function(data1){  
-                
-
                 for(var item in data1){ 
-
-                   if (data.length < totalPoints){
-                       if ((data1[item][data1[item].scopes[0]]).length >0) 
-                           var temp = [now, (data1[item][data1[item].scopes[0]])[0][data1[item].colNames[1]]];
-                       else
-                            var temp = [now, 0];
-                       data.push(temp);
-                   }else{
-                       data.shift();  
-                       if ((data1[item][data1[item].scopes[0]]).length >0) 
-                               var temp = [now, (data1[item][data1[item].scopes[0]])[0][data1[item].colNames[1]]];
-                           else
-                                var temp = [now, 0];                 
-                       data.push(temp);  
-                    }
-                    cb(data1[item].name,data1[item].color);
+                       if ((data1[item][data1[item].scopes[0]]).length >0){ 
+                           for (var i =0;i<(data1[item][data1[item].scopes[0]]).length; i++){
+                               var temp = [(data1[item][data1[item].scopes[0]])[i][data1[item].colNames[0]], (data1[item][data1[item].scopes[0]])[i][data1[item].colNames[1]]];
+                               data.push(temp);
+                           }
+                       }
+                       cb(data1[item].name,data1[item].color);
+                       data = [];
                 }
-
-               
-                now += updateInterval;
             },  
-            error:function(){  
-               now += updateInterval;  
+            error:function(){ 
+                 
             }  
         }); 
     }
@@ -85,13 +72,8 @@ $(function () {
                 } else {
                     return "";
                 }
-            },
-            axisLabel: "Time",
-            axisLabelUseCanvas: true,
-            axisLabelFontSizePixels: 12,
-            axisLabelFontFamily: 'Verdana, Arial',
-            axisLabelPadding: 10
-        },
+            }        
+         },
         yaxis: {
             tickFormatter: function (v, axis) {
                 if (v % 5 == 0) {
@@ -99,28 +81,27 @@ $(function () {
                 } else {
                     return "";
                 }
-            },
-            axisLabel: "",
-            axisLabelUseCanvas: true,
-            axisLabelFontSizePixels: 12,
-            axisLabelFontFamily: 'Verdana, Arial',
-            axisLabelPadding: 10
+            }
         },
-        legend: {        
-            labelBoxBorderColor: "#fff"
-        },
+         legend: {
+					show: true,
+					container: $('#label'),
+					noColumns: 1,
+					labelBoxBorderColor: "#ccc", 
+					backgroundOpacity: 0.85,
+					labelFormatter:function(label){return "<FONT COLOR =#97694F SIZE=2>"+label+"</FONT>"}
+				},
         grid: { hoverable: true, clickable: true }
     };
-    
-    
-	  GetData(cb);
 
     function cb(name,color){
         dataset = [
             { label: name, data: data, color: color}
         ];
 
+        //alert(JSON.stringify(dataset));
         $.plot($("#updating"), dataset, options);
+         
     }
     
 		function showTooltip(x, y, contents) {
@@ -167,8 +148,7 @@ $(function () {
 
     function update() {
         GetData(cb);
-        setTimeout(update, updateInterval);
-    }
-
-    update();  
+        timeId = setTimeout(update, updateInterval);//此处必须定义全局timeId
+    }    
+    update();
 	});

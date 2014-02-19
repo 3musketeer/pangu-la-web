@@ -1,11 +1,10 @@
 $(function () {
-    var data = [];
-    var dataset;
-    var totalPoints = 10;
-    var updateInterval = 1000;
-    var now = new Date().getTime() - 5000;
+    
+    var dataset =[];
+    var dataobj = {};
+    var updateInterval = 2000;
+    var now = new Date().getTime(); 
     function GetData(cb) {     
-        
         var dateCa = new Date(now);
         var hours = dateCa.getHours() < 10 ? "0" + dateCa.getHours() : dateCa.getHours();
         var minutes = dateCa.getMinutes() < 10 ? "0" + dateCa.getMinutes() : dateCa.getMinutes();
@@ -19,36 +18,40 @@ $(function () {
 
         $.ajax({  
             type:"GET",  
-            url:"/getRealTimeData",  
+            url:"/getRealTimeCompareData",  
             data:"time="+time+"&value="+value+"&chartList="+$('#chart-list')[0].innerText,  
             dataType:"json",  
             success:function(data1){  
                 
-
                 for(var item in data1){ 
-
-                   if (data.length < totalPoints){
-                       if ((data1[item][data1[item].scopes[0]]).length >0) 
-                           var temp = [now, (data1[item][data1[item].scopes[0]])[0][data1[item].colNames[1]]];
-                       else
-                            var temp = [now, 0];
-                       data.push(temp);
-                   }else{
-                       data.shift();  
-                       if ((data1[item][data1[item].scopes[0]]).length >0) 
-                               var temp = [now, (data1[item][data1[item].scopes[0]])[0][data1[item].colNames[1]]];
-                           else
-                                var temp = [now, 0];                 
-                       data.push(temp);  
-                    }
-                    cb(data1[item].name,data1[item].color);
+                   
+                   if ((data1[item][data1[item].scopes[0]]).length >0){ 
+                        for (var i =0;i<(data1[item][data1[item].scopes[0]]).length; i++){
+                            var data = [];
+                            var temp =[];
+                            temp = [(data1[item][data1[item].scopes[0]])[i][data1[item].colNames[0]],(data1[item][data1[item].scopes[0]])[i][data1[item].colNames[1]]];
+                            if(typeof(dataobj[item]) == 'undefined'){
+                               data.push(temp);
+                               var obj ={};
+                               obj.label = data1[item].name;
+                               obj.color = data1[item].color;
+                               obj.data = data;              
+                               dataobj[item] = obj;
+                               
+                            }else{
+                               dataobj[item].data.push(temp);
+                            }
+                        }
+                   }
                 }
-
+                cb();
+                dataset = [];
+                dataobj ={};  
                
-                now += updateInterval;
+               
             },  
             error:function(){  
-               now += updateInterval;  
+                
             }  
         }); 
     }
@@ -57,7 +60,7 @@ $(function () {
         series: {
             lines: { 
 							lineWidth: 1,
-							fill: true,
+							fill: false,
 							fillColor: { colors: [ { opacity: 0.5 }, { opacity: 0.2 } ] },
 							show: true
 						},
@@ -85,12 +88,7 @@ $(function () {
                 } else {
                     return "";
                 }
-            },
-            axisLabel: "Time",
-            axisLabelUseCanvas: true,
-            axisLabelFontSizePixels: 12,
-            axisLabelFontFamily: 'Verdana, Arial',
-            axisLabelPadding: 10
+            }
         },
         yaxis: {
             tickFormatter: function (v, axis) {
@@ -99,28 +97,29 @@ $(function () {
                 } else {
                     return "";
                 }
-            },
-            axisLabel: "",
-            axisLabelUseCanvas: true,
-            axisLabelFontSizePixels: 12,
-            axisLabelFontFamily: 'Verdana, Arial',
-            axisLabelPadding: 10
+            }
         },
-        legend: {        
-            labelBoxBorderColor: "#fff"
-        },
+        legend: {
+					show: true,
+					container: $('#label'),
+					labelBoxBorderColor: "#ccc", 
+					backgroundOpacity: 0.85,
+					labelFormatter:function(label){return "<FONT COLOR =#97694F SIZE=2>"+label+"</FONT>"}
+					 
+				},
         grid: { hoverable: true, clickable: true }
     };
     
     
-	  GetData(cb);
+	  //GetData(cb);
 
-    function cb(name,color){
-        dataset = [
-            { label: name, data: data, color: color}
-        ];
+    function cb(){
+        
+        for(var item in dataobj){ 
+            dataset.push(dataobj[item]);
+        }
 
-        $.plot($("#updating"), dataset, options);
+        $.plot($("#updatingGraph"), dataset, options);
     }
     
 		function showTooltip(x, y, contents) {
@@ -135,11 +134,11 @@ $(function () {
     }
 
     var previousPoint = null;
-    $("#updating").bind("plothover", function (event, pos, item) {
+    $("#updatingGraph").bind("plothover", function (event, pos, item) {
         $("#x").text(pos.x.toFixed(2));
         $("#y").text(pos.y.toFixed(2));
 
-        if ($("#updating").length > 0) {
+        if ($("#updatingGraph").length > 0) {
             if (item) {
                 if (previousPoint != item.dataIndex) {
                     previousPoint = item.dataIndex;
@@ -167,8 +166,7 @@ $(function () {
 
     function update() {
         GetData(cb);
-        setTimeout(update, updateInterval);
+        timeId = setTimeout(update, updateInterval); //此处必须定义全局timeId
     }
-
-    update();  
+    update();      
 	});

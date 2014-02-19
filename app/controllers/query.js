@@ -4,9 +4,6 @@ var mongoose = require('mongoose')
 var getTable = function(mode, type, scope, value) {
 
 	if (!mode || !type || !scope) throw new Error('参数不全');
-	console.log(mode);
-	console.log(type);
-	console.log(scope);
 
   var dt;
 	if (!value) {
@@ -14,6 +11,7 @@ var getTable = function(mode, type, scope, value) {
 	}else{
 	    dt = new Date(value)
 	}
+	
 	
 	var YY = ("00"+dt.getFullYear()%100).substr(-2)
 	  , MM = ("00"+(dt.getMonth() + 1)).substr(-2)
