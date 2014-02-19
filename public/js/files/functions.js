@@ -738,9 +738,8 @@
 		cssOpen: 'subOpened',
 		cssClose: 'subClosed',
 		speed: 200
-
 	});
-	
+
 	
   $('a[data-pjax]').pjax(
       {
