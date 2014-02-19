@@ -118,8 +118,18 @@
     );
     
     $("#wizard3").bind("step_shown", function(event, data){
+        
+         //删除可能存在的定时任务     
+        if(typeof(timeId) !='undefined'){ 
+            clearTimeout(timeId);
+            delete timeId;
+        }
+        if(chart.symbols[data.previousStep].symbolType != 'condition')
+            $('#stepDiv'+data.previousStep).html("");
+        
         if(data.isBackNavigation == true){
-            
+            if(chart.symbols[data.currentStep].symbolType != 'condition')
+               getAjaxStepHtml(chart.symbols[data.currentStep].link,data.previousStep,data.currentStep)
         }else{
            if(chart.symbols[data.currentStep].symbolType != 'condition')
                getAjaxStepHtml(chart.symbols[data.currentStep].link,data.previousStep,data.currentStep)
@@ -160,13 +170,7 @@
                     el.attr({ stroke: '#d5d5d5'}); 
             }                     
         }); 
-        
-        //删除可能存在的定时任务     
-        if(typeof(timeId) !='undefined'){ 
-            clearTimeout(timeId);
-            delete timeId;
-        }
-                         
+                       
     });
     
     

@@ -15,7 +15,8 @@ $(function() {
               var tempData = [temp.hours,temp._count];
               var bars = {
                   show: true, 
-                  barWidth: 0.2, 
+                  barWidth: 0.0001, 
+                  lineWidth: 10
               };
               if(typeof(dataobj[item]) == 'undefined'){         
                   var obj ={};

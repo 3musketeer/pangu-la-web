@@ -100,7 +100,7 @@ $(function () {
         ];
 
         //alert(JSON.stringify(dataset));
-        $.plot($("#SvcCalledSumUpdating"), dataset, options);
+        $.plot($("#ShowQueueSumUpdating"), dataset, options);
          
     }
     
@@ -116,11 +116,11 @@ $(function () {
     }
 
     var previousPoint = null;
-    $("#SvcCalledSumUpdating").bind("plothover", function (event, pos, item) {
+    $("#ShowQueueSumUpdating").bind("plothover", function (event, pos, item) {
         $("#x").text(pos.x.toFixed(2));
         $("#y").text(pos.y.toFixed(2));
 
-        if ($("#SvcCalledSumUpdating").length > 0) {
+        if ($("#ShowQueueSumUpdating").length > 0) {
             if (item) {
                 if (previousPoint != item.dataIndex) {
                     previousPoint = item.dataIndex;
