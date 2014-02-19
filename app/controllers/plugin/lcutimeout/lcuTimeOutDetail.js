@@ -2,22 +2,22 @@ var mongoose = require('mongoose')
   , debug = require('debug')('pangu:top')
   , util = require("util")
   , query = require('../../query')
-  , config = require('../../plugin_config/errororders/config_history').config
-  , chart_list = require('../../plugin_config/errororders/config_history').list
+  , config = require('../../plugin_config/lcutimeout/config_history').config
+  , chart_list = require('../../plugin_config/lcutimeout/config_history').list
   , EventProxy = require('eventproxy').EventProxy
   , extend = require('extend');
 
 exports.plugin = function(server) {
 
-   server.get('/historyTopDetail.html', function(req, res) { 
+   server.get('/lcuTimeOutDetail.html', function(req, res) { 
         var chartList = req.query.chartList;
         var value = req.query.value;           
         var list = chart_list[chartList];  
         
         var headTile = config[list[0].mode+list[0].type+list[0].subtype].name;
         var scope = config[list[0].mode+list[0].type+list[0].subtype].scopes[0];        
-        var queryUrl = "/historyTopDetailData?mode="+list[0].mode+"&type="+list[0].type+"&scope="+scope+"&subtype="+list[0].subtype+"&value="+value;
-    		res.renderPjax('plugin/errororders/historyTopDetail',{    
+        var queryUrl = "/lcuTimeOutDetailData?mode="+list[0].mode+"&type="+list[0].type+"&scope="+scope+"&subtype="+list[0].subtype+"&value="+value;
+    		res.renderPjax('plugin/lcutimeout/lcuTimeOutDetail',{    
     		    titles: config[list[0].mode+list[0].type+list[0].subtype].titles, 
             queryUrl:queryUrl,
             headTile:headTile
@@ -25,7 +25,7 @@ exports.plugin = function(server) {
    });
    
    
-   server.get('/historyTopDetailData', function(req, res) {
+   server.get('/lcuTimeOutDetailData', function(req, res) {
     	var mode = req.query.mode
     	  , type = req.query.type
     	  , scope = req.query.scope
@@ -50,21 +50,23 @@ exports.plugin = function(server) {
     	var tempConfig ={};	
       extend(true,tempConfig,config[mode+type]);
      
-      if (sSearch && sSearch != ""){
-            var filter ={}; 
-            if(tempConfig.filter)
-                    filter= tempConfig.filter;
-            filter.$or = [];    
+
+        var filter ={}; 
+        if(tempConfig.filter)
+                filter= tempConfig.filter;
+         
+       if (sSearch && sSearch != ""){
+            filter.$or = [];
             tempConfig.filterColNames.forEach(function(col){
-              
+                
                     var obj = {};
                     obj[col] = new RegExp(sSearch);
                     filter.$or.push(obj);
                  
                  
-            });     
-            tempConfig.filter = filter;
-       }
+            }); 
+        }     
+        tempConfig.filter = filter;
         
         
          
