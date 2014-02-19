@@ -1,5 +1,4 @@
 ﻿$(function (){
-
     var data = JSON.parse($("#flowInfo").attr("value")); 
                  
     var o = {
@@ -22,7 +21,7 @@
         }
     };
     
-    chart = flowchart.parse(data);                  
+    chart = flowchart.parse(data);                
     var  pageHtml = [];
     
     //drawPageFlow

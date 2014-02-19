@@ -1,6 +1,6 @@
 module.exports = [
     {title:'业务',menuId:'current',class:'icon-signal',list:[    {title:'工单积压',url:''},
-                                                {title:'错单',url:''},
+                                                {title:'错单',url:'/historyTopDetail.html?chartList=historyTopDetailList'},
                                                 {title:'流程超时(历史)',url:''},
                                                 {title:'流程超时(实时)',url:''},
                                                 {title:'流程调用总量(历史)',url:'/historyComPareGraph.html?chartList=historyLcuSumChart&formTag=true'},                 
@@ -14,7 +14,7 @@ module.exports = [
    
     {title:'中间件TUXEDO',class:'icon-tasks',list:[ {title:'问题定位',url:'/flowInfoAnalysis.html?flowId=/lcuErrorAnalysis.html'},
                                                     {title:'主机对比(历史)',url:'/historyComPareGraph.html?chartList=historyLcuSumCompareChart'}, 
-                                                    {title:'主机对比(实时)',url:'/realtimeCompareGraph.html?chartList=realTimeLcuSumCompareChart'},
+                                                    {title:'主机对比(实时)',url:'/realtimeHostCompareGraph.html?chartList=realTimeLcuSumCompareChart'},
                                                     {title:'服务队列(历史)',url:''}, 
                                                     {title:'服务队列(实时)',url:''},
                                                     {title:'服务僵死',url:''},                                            

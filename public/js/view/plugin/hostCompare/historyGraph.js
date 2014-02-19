@@ -139,7 +139,8 @@ $(function () {
     					//container: $('#label'+index),
     					labelBoxBorderColor: "#ccc", 
     					backgroundOpacity: 0.85,
-    					noColums: 10,			   
+    					noColums: 10,	
+    					margin: 2, 		   
     					labelFormatter:function(label){return "<FONT COLOR =#97694F SIZE=2>"+label+"</FONT>"}
     					 
     				},
@@ -152,7 +153,7 @@ $(function () {
         for(var item in dataobj){ 
             dataset.push(dataobj[item]);
         }
-        options.legend.container = $('#label'+index);
+        //options.legend.container = $('#label'+index);
         $.plot($('#compGraph'+index), dataset, options);
     }
     
@@ -170,8 +171,10 @@ $(function () {
     var previousPoint = null;
     for(var m=0;m<parseInt($('#chart-listCnt')[0].innerText);m++){
         $('#compGraph'+m).bind("plothover", (function(idx){return function (event, pos, item) {
-            $("#x").text(pos.x.toFixed(2));
-            $("#y").text(pos.y.toFixed(2));
+            if(pos.x && pos.y){
+                $("#x").text(pos.x.toFixed(2));
+                $("#y").text(pos.y.toFixed(2));
+            }
             if ($('#compGraph'+idx).length > 0) {
                 if (item) {
                     if (previousPoint != item.dataIndex) {

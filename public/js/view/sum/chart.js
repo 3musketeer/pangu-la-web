@@ -4,47 +4,48 @@ $(function() {
 		if(obj.length == 1) {
 			
 			data = jQuery.parseJSON($('#chart-area-data'+_idx)[0].innerText)
-
-			var plot = $.plot(obj, data, {
-				xaxis: {
-					show: true,
-					min: data[0].data[0][0],
-					max: data[0].data[data[0].data.length-1][0],
-					//mode: "time",
-					//tickSize: [1, "month"],
-					//monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-					//tickLength: 1,
-					axisLabel: 'Hours',
-					axisLabelFontSizePixels: 11
-				},
-				yaxis: {
-					//axisLabel: 'Amount',
-					axisLabelUseCanvas: true,
-					axisLabelFontSizePixels: 11,
-					autoscaleMargin: 0.01,
-					axisLabelPadding: 5
-				},
-				series: {
-					lines: {
-						show: true, 
-						fill: true,
-						fillColor: { colors: [ { opacity: 0.5 }, { opacity: 0.2 } ] },
-						lineWidth: 1.5
-					},
-					points: {
-						show: true,
-						radius: 2.5,
-						fill: true,
-						fillColor: "#ffffff",
-						symbol: "circle",
-						lineWidth: 1.1
-					}
-				},
-			   grid: { hoverable: true, clickable: true },
-				legend: {
-					show: false
-				}
-			});
+      if(data[0].data[0]){
+    			var plot = $.plot(obj, data, {
+    				xaxis: {
+    					show: true,
+    					min: data[0].data[0][0],
+    					max: data[0].data[data[0].data.length-1][0],
+    					//mode: "time",
+    					//tickSize: [1, "month"],
+    					//monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    					//tickLength: 1,
+    					axisLabel: 'Hours',
+    					axisLabelFontSizePixels: 11
+    				},
+    				yaxis: {
+    					//axisLabel: 'Amount',
+    					axisLabelUseCanvas: true,
+    					axisLabelFontSizePixels: 11,
+    					autoscaleMargin: 0.01,
+    					axisLabelPadding: 5
+    				},
+    				series: {
+    					lines: {
+    						show: true, 
+    						fill: true,
+    						fillColor: { colors: [ { opacity: 0.5 }, { opacity: 0.2 } ] },
+    						lineWidth: 1.5
+    					},
+    					points: {
+    						show: true,
+    						radius: 2.5,
+    						fill: true,
+    						fillColor: "#ffffff",
+    						symbol: "circle",
+    						lineWidth: 1.1
+    					}
+    				},
+    			   grid: { hoverable: true, clickable: true },
+    				legend: {
+    					show: false
+    				}
+    			});
+    	}
 
 			function showTooltip(x, y, contents) {
 				$('<div id="tooltip" class="chart-tooltip">' + contents + '</div>').css( {

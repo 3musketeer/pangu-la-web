@@ -28,7 +28,8 @@ $(function() {
                 ticksMajor: { interval: data.interval, size: '10%' },
                 border: {visible: true}
             });
-            objDiv.jqxGauge('setValue',data[data.scopes[0]][0][data.colNames[0]]);
+            if(data[data.scopes[0]][0])
+                objDiv.jqxGauge('setValue',data[data.scopes[0]][0][data.colNames[0]]);
         }
          	
 		}else{

@@ -18,6 +18,11 @@ module.exports = {
             debug: true,
             websocket:true
         }
+    },
+    
+    redis: {
+        host:'127.0.0.1',
+        port:'6379'
     }
 		
   }

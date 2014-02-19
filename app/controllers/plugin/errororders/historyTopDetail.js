@@ -1,9 +1,9 @@
 var mongoose = require('mongoose')
   , debug = require('debug')('pangu:top')
   , util = require("util")
-  , query = require('../query')
-  , config = require('../config_history').config
-  , chart_list = require('../config_history').list
+  , query = require('../../query')
+  , config = require('../../plugin_config/errororders/config_history').config
+  , chart_list = require('../../plugin_config/errororders/config_history').list
   , EventProxy = require('eventproxy').EventProxy
   , extend = require('extend');
 

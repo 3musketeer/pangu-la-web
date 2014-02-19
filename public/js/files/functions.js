@@ -752,6 +752,7 @@
       }
    
    );
+
    
    //updating ctrol begin
    $(document).on('start.pjax', function (e) { 
@@ -761,6 +762,26 @@
        }
    });
    //updating ctrol end
+   
+   
+   //刷新数据统计
+   $.ajax({  
+        type:"GET",  
+        url:"/getStatData.html",  
+        data:"value="+$("#datepicker").attr("value"),  
+        dataType:"json",  
+        success:function(data){ 
+          $('#DayCalledSum').html('今日调用总数<strong>'+data.DayCalledSum+'</strong>');  
+          $('#DayFailedSum').html('今日调用总数<strong>'+data.DayFailedSum+'</strong>');  
+          $('#DaySuccessRate').html('今日调用总数<strong>'+data.DaySuccessRate+'</strong>');  
+          $('#MonCalledSum').html('<strong>'+data.MonCalledSum+'</strong>'); 
+          $('#MonFailedSum').html('<strong>'+data.MonFailedSum+'</strong>'); 
+          $('#MonSuccessRate').html('<strong>'+data.MonSuccessRate+'</strong>'); 
+        },  
+        error:function(xhr,status,errMsg){  
+          alert('加载调用统计失败！');  
+        }  
+    }); 
   
 	//===== Form elements styling =====//
 	

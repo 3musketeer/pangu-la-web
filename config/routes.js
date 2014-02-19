@@ -16,6 +16,7 @@ module.exports = function (app) {
 	//首页
 	app.get('/', auth.requiresLogin, main.index); 
 	app.get('/index.html', auth.requiresLogin, main.index); 
+	app.get('/getStatData.html', auth.requiresLogin, main.getStatData); 
 	
 
 	//排名清单

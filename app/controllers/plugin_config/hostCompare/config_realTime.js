@@ -30,25 +30,9 @@ exports.graphConfig = {
 
 exports.graphList = {
     
-	realTimeLcuSumChart:[ {mode:'TuxState', type:'CalledSumByRealTime',subtype:'AtDay'}],
-	realTimeLcuSumCompareChart:[ {mode:'TuxState', type:'CalledSumByRealTime',subtype:'AtDay'},{mode:'TuxState', type:'CalledSumByRealTime',subtype:'At28'}]
-
-}
-
-exports.detailConfig = {
-    
-	TuxStateTimeOutTop : {
-	  name: '实时流程超时明细',
-	  scopes: ['day'],
-	  delayTime:2000,
-	  displayLength:50,
-		titles: ['排名','流程名', '耗时(s)', '归属服务', '主机', '统计时间'],
-		colNames: ['#', 'TRANSCODE', 'MAX', 'SVRNAME', 'host', 'STARTTIME'],
-		filterColNames: ['TRANSCODE', 'SVRNAME', 'host', 'STARTTIME','timestamp'],
-		sort: {'MAX':-1}
-	}
-}
-
-exports.detailList = {  
-	realtimeTopDetailList:[ {mode:'TuxState', type:'TimeOutTop',subtype:''}],
+	realTimeLcuSumCompareChart:[
+	                               [ {mode:'TuxState', type:'CalledSumByRealTime',subtype:'AtDay',value:'2014-02-18',hostName: '主机28'},{mode:'TuxState', type:'CalledSumByRealTime',subtype:'At28',value:'2014-02-18',hostName: '主机28'}],
+	                               [ {mode:'TuxState', type:'CalledSumByRealTime',subtype:'AtDay',value:'2014-02-18',hostName: '主机29'},{mode:'TuxState', type:'CalledSumByRealTime',subtype:'At28',value:'2014-02-18',hostName: '主机29'}],
+	                               [ {mode:'TuxState', type:'CalledSumByRealTime',subtype:'AtDay',value:'2014-02-18',hostName: '主机29'},{mode:'TuxState', type:'CalledSumByRealTime',subtype:'At28',value:'2014-02-18',hostName: '主机29'}]
+	                           ]
 }

@@ -1,10 +1,10 @@
 var mongoose = require('mongoose')
   , debug = require('debug')('pangu:top')
   , util = require("util")
-  , query = require('../query')
-  , config = require('../config_history').config
-  , chart_list = require('../config_history').list
-  , transcode_list = require('../config_coreTranscodeList').coreTranscodeList
+  , query = require('../../query')
+  , config = require('../../plugin_config/hostCompare/config_history').config
+  , chart_list = require('../../plugin_config/hostCompare/config_history').list
+  , transcode_list = require('../../config_coreTranscodeList').coreTranscodeList
   , extend = require('extend');
 
 exports.plugin = function(server) {
@@ -12,12 +12,9 @@ exports.plugin = function(server) {
    server.get('/historyComPareGraph.html', function(req, res) { 
         var chartList = req.query.chartList;
         var isWhere = req.query.isWhere||'false';
-        var listCnt = chart_list[chartList].length; 
-        var module = req.query.module||'false';
-        if(module == 'true')
-    		    res.renderPjax('plugin/historyGraph/historyGraph',{layout: false,chartList:chartList,listCnt:listCnt,coreTranscodeList:transcode_list,isWhere:isWhere,module:module})   
-    		else
-    		    res.renderPjax('plugin/historyGraph/historyGraph',{chartList:chartList,listCnt:listCnt,coreTranscodeList:transcode_list,isWhere:isWhere,module:module})    	              
+        var listIndex = chart_list[chartList];  
+        var listCnt = chart_list[chartList].length;      
+    		res.renderPjax('plugin/hostCompare/historyGraph',{chartList:chartList,listIndex:listIndex,listCnt:listCnt,coreTranscodeList:transcode_list,isWhere:isWhere})    	              
    });
    
    
