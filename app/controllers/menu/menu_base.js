@@ -7,7 +7,7 @@ module.exports = [
                                                 {title:'流程调用总量(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeLcuCalledSumChart'},                            
                                                 {title:'流程调用异常(历史)',url:'/lcuCalledSum.html?chartList=lcuFailedSumList'},   
                                                 {title:'流程调用异常(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeLcuFailSumChart'},
-                                                {title:'流程调用成功率',url:'/sumList.html'}                                      
+                                                {title:'流程调用成功率',url:'/sumList.html?chartList=lcuCalledSumChart'}                                      
                                                                                                                         
                                             ]
     },
@@ -17,15 +17,15 @@ module.exports = [
                                                     {title:'主机对比(实时)',url:'/realtimeHostCompareGraph.html?chartList=realTimeLcuSumCompareChart'},
                                                     {title:'服务队列(历史)',url:''}, 
                                                     {title:'服务队列(实时)',url:''},
-                                                    {title:'服务僵死',url:''},                                            
+                                                    {title:'服务僵死',url:'/realtimeQueryDetail.html?chartList=realTimeSvcDeadDetailList'},                                            
                                                     {title:'内存占用',url:''},  
-                                                    {title:'服务超时(历史)',url:''},     
-                                                    {title:'服务超时(实时)',url:''},      
-                                                    {title:'服务调用总量(历史)',url:''},    
-                                                    {title:'服务调用总量(实时)',url:''},  
-                                                    {title:'服务调用异常(历史)',url:''},  
-                                                    {title:'服务调用异常(实时)',url:''},  
-                                                    {title:'服务调用成功率',url:''}    
+                                                    {title:'服务超时(历史)',url:'/historyQueryDetail.html?chartList=historySvcTimeOutDetailList'},     
+                                                    {title:'服务超时(实时)',url:'/realtimeQueryDetail.html?chartList=realTimeSvcTimeOutDetailList'},      
+                                                    {title:'服务调用总量(历史)',url:'/lcuCalledSum.html?chartList=svcCalledSumList'},    
+                                                    {title:'服务调用总量(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeSvcCalledSumChart'},  
+                                                    {title:'服务调用异常(历史)',url:'/lcuCalledSum.html?chartList=svcFailedSumList'},  
+                                                    {title:'服务调用异常(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeSvcFailedSumChart'},  
+                                                    {title:'服务调用成功率',url:'/sumList.html?chartList=svcCalledSumChart'}    
                                                     
                                                   ]
     },

@@ -3,6 +3,9 @@ var mongoose = require('mongoose')
   , util = require("util")
   , query = require('./query')
   , config = require('./config_sum').config
+  , cfgList = require('./config_sum').list
+  , logger = require('./log').logger
+  , extend = require('extend');
 
 var formatNum = function(num) {
 	if (num > 1000000) return (num/1000000).toFixed(1)+'M';
@@ -28,16 +31,49 @@ var accumulate = function(data) {
 }
 
 exports.list = function(req, res) {
-    var value = req.query.value;
-	  var list = [ {mode:'TuxState', type:'CalledSumByTime', subtype: 'AtHours',value:value},
-				 {mode:'TuxState', type:'CalledSumByTime', subtype: 'AtDay',value:value},
-				 {mode:'TuxState', type:'FailedSumByTime', subtype: 'AtHours',value:value},
-				 {mode:'TuxState', type:'FailedSumByTime', subtype: 'AtDay',value:value}	]
+    var value = req.query.value||'';
+    var chartList = req.query.chartList;
+    var chart_list = cfgList[chartList]; 
+    
+    if(value == ''){
+        var now = new Date().getTime();
+        var dateCa = new Date(now);
+        var date = dateCa.getDate() < 10 ? "0" + dateCa.getDate() : dateCa.getDate();
+        var month = (dateCa.getMonth()+1) < 10 ? "0" + (dateCa.getMonth()+1) : (dateCa.getMonth()+1);
+        var year = dateCa.getFullYear();     
+        value = year+"-"+month+"-"+date; 
+    }
+    
+    var tempConfig ={};	
+    extend(true,tempConfig,config);
 
-	query.multiQuery(list, config, function(err, docs) {
+    var tempList = [];
+    extend(true,tempList,chart_list); 
+    
+    tempList.forEach(function(item){
+         if(!item.value)
+            item.value = value;
+            
+         var filter ={}; 
+         if(tempConfig[item.mode+item.type+item.subtype].filter)
+            filter = tempConfig[item.mode+item.type+item.subtype].filter;
+         tempConfig[item.mode+item.type+item.subtype].filterColNames.forEach(function(col){   
+             var obj = {};
+             if(req.query[col]||'' != '')
+                filter[col] = req.query[col];  
+         });
+         
+         tempConfig[item.mode+item.type+item.subtype].filter = filter;  
+         tempConfig[item.mode+item.type+item.subtype].caculateDate = value;  
+         headTitle = tempConfig[item.mode+item.type+item.subtype].name;
+         logger.debug("tempConfig.filter=%s",JSON.stringify(tempConfig[item.mode+item.type+item.subtype].filter));
+         logger.debug("item.value=%s",item.value);
+    });  
+
+	query.multiQuery(tempList, tempConfig, function(err, docs) {
 		accumulate(docs)
 		debug("doc:%s", util.inspect(docs))
-		res.renderPjax('sum/list', {all: docs,caculateDate:value})
+		res.renderPjax('sum/'+chartList+'/list', {all: docs,caculateDate:value})
 	})
 	
 }
