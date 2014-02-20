@@ -7,7 +7,7 @@ module.exports = [
                                                 {title:'流程调用总量(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeLcuCalledSumChart'},                            
                                                 {title:'流程调用异常(历史)',url:'/lcuCalledSum.html?chartList=lcuFailedSumList'},   
                                                 {title:'流程调用异常(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeLcuFailSumChart'},
-                                                {title:'流程调用成功率',url:''}                                      
+                                                {title:'流程调用成功率',url:'/sumList.html'}                                      
                                                                                                                         
                                             ]
     },
