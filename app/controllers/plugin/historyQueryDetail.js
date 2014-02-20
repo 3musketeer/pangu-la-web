@@ -1,23 +1,23 @@
 var mongoose = require('mongoose')
   , debug = require('debug')('pangu:top')
   , util = require("util")
-  , query = require('../../query')
-  , config = require('../../plugin_config/lcutimeout/config_history').config
-  , chart_list = require('../../plugin_config/lcutimeout/config_history').list
+  , query = require('../query')
+  , config = require('../plugin_config/config_historyDetail').config
+  , chart_list = require('../plugin_config/config_historyDetail').list
   , EventProxy = require('eventproxy').EventProxy
   , extend = require('extend');
 
 exports.plugin = function(server) {
 
-   server.get('/lcuTimeOutDetail.html', function(req, res) { 
+   server.get('/historyQueryDetail.html', function(req, res) { 
         var chartList = req.query.chartList;
         var value = req.query.value;           
         var list = chart_list[chartList];  
         
         var headTile = config[list[0].mode+list[0].type+list[0].subtype].name;
         var scope = config[list[0].mode+list[0].type+list[0].subtype].scopes[0];        
-        var queryUrl = "/lcuTimeOutDetailData?mode="+list[0].mode+"&type="+list[0].type+"&scope="+scope+"&subtype="+list[0].subtype+"&value="+value;
-    		res.renderPjax('plugin/lcutimeout/lcuTimeOutDetail',{    
+        var queryUrl = "/historyQueryDetailData?mode="+list[0].mode+"&type="+list[0].type+"&scope="+scope+"&subtype="+list[0].subtype+"&value="+value;
+    		res.renderPjax('plugin/historyQueryDetail',{    
     		    titles: config[list[0].mode+list[0].type+list[0].subtype].titles, 
             queryUrl:queryUrl,
             headTile:headTile
@@ -25,7 +25,7 @@ exports.plugin = function(server) {
    });
    
    
-   server.get('/lcuTimeOutDetailData', function(req, res) {
+   server.get('/historyQueryDetailData', function(req, res) {
     	var mode = req.query.mode
     	  , type = req.query.type
     	  , scope = req.query.scope

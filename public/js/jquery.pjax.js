@@ -255,9 +255,15 @@
     if ( $.isFunction(options.url) ) {
       options.url = options.url();
     }
-
-    if($("#datepicker"))
+    
+    if($("#datepicker")){
+        var reg = new RegExp("[?&]" + "value" + "=([^&]*)(&|$)", "gi");
+        var r = options.url.match(reg);
+        if (r != null){ 
+        		options.url = options.url.replace(reg,"");
+        }
     		options.url = options.url + (/\?/.test(options.url) ? "&" : "?") +"value="+$("#datepicker").attr("value");
+     }
 
     options.context = $container
 

@@ -53,6 +53,10 @@ function ctrolAjax(idx) {
             delete timeId;
           }
       }else{ 
+         if(typeof(timeId) !='undefined'){ 
+            clearTimeout(timeId);
+            delete timeId;
+         }
          oTable.fnPageChange( 'next' )
          timeId = setTimeout(ctrolAjax, 3000); //此处必须定义全局timeId
     }

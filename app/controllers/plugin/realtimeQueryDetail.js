@@ -1,25 +1,35 @@
 var mongoose = require('mongoose')
   , debug = require('debug')('pangu:top')
   , util = require("util")
-  , query = require('../../query')
-  , config = require('../../plugin_config/lcutimeout/config_realTime').detailConfig
-  , chart_list = require('../../plugin_config/lcutimeout/config_realTime').detailList
+  , query = require('../query')
+  , config = require('../plugin_config/config_realTimeDetail').detailConfig
+  , chart_list = require('../plugin_config/config_realTimeDetail').detailList
   , EventProxy = require('eventproxy').EventProxy
   , extend = require('extend')
-  , logger = require('../../log').logger;
+  , logger = require('../log').logger;
 
 exports.plugin = function(server) {
 
-   server.get('/realtimeLcuTimeOutDetail.html', function(req, res) { 
+   server.get('/realtimeQueryDetail.html', function(req, res) { 
         var chartList = req.query.chartList;
-        var value = req.query.value;           
-        var list = chart_list[chartList];  
+        var value = req.query.value||'';           
+        var list = chart_list[chartList]; 
         
+        if(value == ''){
+            var now = new Date().getTime();
+            var dateCa = new Date(now);
+            var date = dateCa.getDate() < 10 ? "0" + dateCa.getDate() : dateCa.getDate();
+            var month = (dateCa.getMonth()+1) < 10 ? "0" + (dateCa.getMonth()+1) : (dateCa.getMonth()+1);
+            var year = dateCa.getFullYear();     
+            value = year+"-"+month+"-"+date; 
+        }
+        logger.debug("value=%s",value);
         var headTile = config[list[0].mode+list[0].type+list[0].subtype].name;
         var displayLength = config[list[0].mode+list[0].type+list[0].subtype].displayLength;
         var scope = config[list[0].mode+list[0].type+list[0].subtype].scopes[0];        
-        var queryUrl = "/realtimeLcuTimeOutDetailData?mode="+list[0].mode+"&type="+list[0].type+"&scope="+scope+"&subtype="+list[0].subtype+"&value="+value+"&iDisplayLength="+displayLength;
-    		res.renderPjax('plugin/lcutimeout/realtimeTimeOutDetail',{    
+        var queryUrl = "/realtimeQueryDetailData?mode="+list[0].mode+"&type="+list[0].type+"&scope="+scope+"&subtype="+list[0].subtype+"&value="+value+"&iDisplayLength="+displayLength;
+    		logger.debug("queryUrl------------=%s",queryUrl);
+    		res.renderPjax('plugin/realtimeQueryDetail',{    
     		    titles: config[list[0].mode+list[0].type+list[0].subtype].titles, 
             queryUrl:queryUrl,
             headTile:headTile,
@@ -28,7 +38,7 @@ exports.plugin = function(server) {
    });
    
    
-   server.get('/realtimeLcuTimeOutDetailData', function(req, res) {
+   server.get('/realtimeQueryDetailData', function(req, res) {
     	var mode = req.query.mode
     	  , type = req.query.type
     	  , scope = req.query.scope
@@ -39,7 +49,7 @@ exports.plugin = function(server) {
         , sSearch = req.query.sSearch
     
       if(!iDisplayStart) iDisplayStart = 0;
-      iDisplayLength = config[mode+type].displayLength;
+      iDisplayLength = config[mode+type+subtype].displayLength;
       
       var now = new Date().getTime();
       
@@ -47,8 +57,12 @@ exports.plugin = function(server) {
     
     	type += subtype;
     
+      logger.debug("value------------=%s",value);
+      logger.debug("mode------------=%s",mode);
+      logger.debug("type------------=%s",type);
+      logger.debug("subtype------------=%s",subtype);
     	if (!config[mode+type])
-    		return next(new Error('not found'));
+    		throw new  Error('not found');
     	
     	var tempConfig ={};	
       extend(true,tempConfig,config[mode+type]);

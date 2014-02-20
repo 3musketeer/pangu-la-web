@@ -22,7 +22,7 @@ $(function() {
             dataType:"json",  
             success:function(data1){  
              
-              for(var item in data1){ 
+              for(var item in data1){   
                    $('#caculateDateId').html("统计日期:"+data1[item].caculateDate);  
                    draw(data1[item][data1[item].scopes[0]]);
 

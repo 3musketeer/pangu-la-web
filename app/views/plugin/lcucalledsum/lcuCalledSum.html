@@ -11,14 +11,14 @@
 			    
 			    
         <div class="widget-title">
-		          <h5 class="widget-name"><i class="icon-bar-chart"></i>流程调用总量(日)</h5>
+		          <h5 class="widget-name"><i class="icon-bar-chart"></i><%= headTitle %></h5>
 		    </div>
 		    <div style="display:none" id="chart-list"><%= chartList %></div>
         <form action="#" class="form-horizontal">
              <fieldset>
-                   <div class="control-group">
+                    <div class="row-fluid">
                       
-                      <div class="span6"">
+                      <div class="span6">
                         <label class="control-label">流程名：</label>
                           <select id="transcodeValue">
                               <option value="">所有流程</option>
@@ -26,21 +26,36 @@
                                 <option value="<%= transcode_list[indexTr] %>"><%= transcode_list[indexTr] %></option>
                               <% } %> 
                           </select>
-                          </div>
+                      </div>
+                     
                      </div>
               
               </fieldset>
          </form>
 		    <div class="row-fluid">
-					  <div class="span12">
-					      	  <% var colChartIdx = 0 %>
-        						<% var item = all['TuxStateCalledSumByTimeAtday'], 
-        							mode='TuxState', type='CalledSumByTime',subtype='Atday';
-        						%>
-        						<% include ./chart-cloumn.html %>	
-			       </div>  
-			      
-			     
+		        
+			        <% for(var allItem in all){ 
+			             var item = all[allItem],
+			             mode=all[allItem].mode, type=all[allItem].type,subtype=all[allItem].subtype;
+			        %>
+			            <%           
+    		           if(all[allItem].displayType == 'bar'){
+    		          %>
+    		     
+        		           <div class="span6"> 
+            		           <% include ./chart-cloumn.html %>	
+            						    &nbsp;
+        						   </div> 
+			             <% }else if(all[allItem].displayType == 'top'){ %>
+			                  <div class="span6">    		
+                						&nbsp;
+                						&nbsp;
+                						<% include ./top.html %>					
+                						&nbsp;
+        			          </div>  
+			             
+			             <% } %>
+			        <% } %>
 			  </div>
 			  
 	</div>
