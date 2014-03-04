@@ -2,8 +2,8 @@ var mongoose = require('mongoose')
   , debug = require('debug')('pangu:top')
   , util = require("util")
   , query = require('../query')
-  , config = require('../config_realTime').config
-  , chart_list = require('../config_realTime').list
+  , config = require('../config_realTime').graphConfig
+  , chart_list = require('../config_realTime').graphList
   , extend = require('extend');
 
 exports.plugin = function(server) {
@@ -128,7 +128,6 @@ exports.plugin = function(server) {
                  }                 
              });
              tempConfig[item.mode+item.type+item.subtype].filter = filter; 
-             console.log("filter:%s", JSON.stringify(tempConfig[item.mode+item.type+item.subtype].filter))
       });
            
     	query.multiQuery(list, tempConfig, function(err, docs) {

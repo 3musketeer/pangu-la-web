@@ -1,6 +1,6 @@
 var scopeNames = {'day':'日', 'month':'月', 'year':'年'}
 
-exports.config = {
+exports.graphConfig = {
 	TuxStateCalledSumByRealTimeAtDay: {
 		name: '调用量',
 		scopes: ['day'],
@@ -25,9 +25,30 @@ exports.config = {
 	}
 }
 
-exports.list = {
+exports.graphList = {
     
 	realTimeLcuSumChart:[ {mode:'TuxState', type:'CalledSumByRealTime',subtype:'AtDay'}],
 	realTimeLcuSumChart1:[ {mode:'TuxState', type:'CalledSumByRealTime',subtype:'AtDay'},{mode:'TuxState', type:'CalledSumByRealTime',subtype:'At28'}]
 
+}
+
+
+
+
+exports.detailConfig = {
+    
+	TuxStateTimeOutTop : {
+	  name: '实时流程超时明细',
+	  scopes: ['day'],
+	  delayTime:2000,
+	  displayLength:50,
+		titles: ['排名','流程名', '耗时(s)', '归属服务', '主机', '统计时间'],
+		colNames: ['#', 'TRANSCODE', 'MAX', 'SVRNAME', 'host', 'STARTTIME'],
+		filterColNames: ['TRANSCODE', 'SVRNAME', 'host', 'STARTTIME','timestamp'],
+		sort: {'MAX':-1}
+	}
+}
+
+exports.detailList = {  
+	realtimeTopDetailList:[ {mode:'TuxState', type:'TimeOutTop',subtype:''}],
 }

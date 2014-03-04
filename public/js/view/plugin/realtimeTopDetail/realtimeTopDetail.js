@@ -11,6 +11,7 @@ $(function() {
 		"bAutoWidth": false,
 		"bSort": false,
 		"sPaginationType": "full_numbers",
+		"aLengthMenu": [[parseInt($("input[name='displayLength']").val())], [parseInt($("input[name='displayLength']").val())]],
 		"oLanguage": {
 			"sSearch": "<span>关键字过滤:</span> _INPUT_",
 			"sLengthMenu": "<span>每页显示数:</span> _MENU_",
@@ -18,18 +19,18 @@ $(function() {
 		    "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录"
 		},
 		"fnDrawCallback": function () {
-     },
-     
-     "fnInitComplete": function(oSettings, json) {       
-        this.$('tr').click(function (){
-            var data = oTable.fnGetData(this);
-            if ($("#flowInProvided"))
-                $("#flowInProvided").val(JSON.stringify(data));  
-            //alert(JSON.stringify(data))
-        });
+           
      }
   });
   
+  var oSettings = oTable.fnSettings();
+  oSettings._iDisplayLength = parseInt($("input[name='displayLength']").val());
+  function updateAjax() {
+     oTable.fnPageChange( 'next' );
+     timeId = setTimeout(updateAjax, 3000); //此处必须定义全局timeId
+  }
+  updateAjax();
+
 	//===== Sparklines =====//
 	
 	$('#total-visits').sparkline(
@@ -44,3 +45,16 @@ $(function() {
 	}).resize();
 
 });
+
+
+function ctrolAjax(idx) {
+      if(idx == '0'){
+          if(typeof(timeId) !='undefined'){ 
+            clearTimeout(timeId);
+            delete timeId;
+          }
+      }else{ 
+         oTable.fnPageChange( 'next' )
+         timeId = setTimeout(ctrolAjax, 3000); //此处必须定义全局timeId
+    }
+}
