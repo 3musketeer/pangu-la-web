@@ -75,7 +75,7 @@ module.exports = function (app, config) {
     }
 
     app.use(function(req, res, next){
-      res.locals.csrf_token = req.session._csrf
+      res.locals.csrf_token = req.csrfToken();
       next()
     })
     

@@ -5,21 +5,24 @@ var mongoose = require('mongoose')
 
 exports.plugin = function(server) {
 
-   server.get('/lcuErrorAnalysis.html', function(req, res) {
+   server.get('/flowInfoAnalysis.html', function(req, res) {
         
 	       
 	       var render = function(flowInfo){
-            res.renderPjax('plugin/lcuErrorAnalysis',{
+            res.renderPjax('plugin/flowInfoAnalysis',{
                   flowInfo:flowInfo, 
                   errors: req.flash('error')
             });
 	       }	    
 	        
+	       var flowId = req.query.flowId||'';
+	       if(flowId == '')
+	           throw new Error('flowId ²»ÄÜÎª¿Õ£¡');
 	       var proxy = new EventProxy();
 	       proxy.assign('flowInfo', render);  
 	       
          var table = mongoose.model('FlowInfo','flow');        
-         table.findOne({'flowId': '/lcuErrorAnalysis.html'}, function(err, resultRow){
+         table.findOne({'flowId': flowId}, function(err, resultRow){
             if(err) return next(err);		
             if(resultRow){
                  proxy.trigger('flowInfo', JSON.stringify(resultRow.flowInfo));

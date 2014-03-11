@@ -29,7 +29,7 @@ var accumulate = function(data) {
 
 exports.list = function(req, res) {
     var value = req.query.value;
-	var list = [ {mode:'TuxState', type:'CalledSumByTime', subtype: 'AtHours',value:value},
+	  var list = [ {mode:'TuxState', type:'CalledSumByTime', subtype: 'AtHours',value:value},
 				 {mode:'TuxState', type:'CalledSumByTime', subtype: 'AtDay',value:value},
 				 {mode:'TuxState', type:'FailedSumByTime', subtype: 'AtHours',value:value},
 				 {mode:'TuxState', type:'FailedSumByTime', subtype: 'AtDay',value:value}	]

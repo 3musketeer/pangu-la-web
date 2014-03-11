@@ -8,9 +8,29 @@
     <div class="widget">
       	<div class="navbar">
           	<div class="navbar-inner">
-              	<h6>实时曲线图</h6>
+              	<h6>曲线图</h6>
               </div>
           </div>
+          
+          <% if(formTag != ''){ %>
+              <form action="#" class="form-horizontal">
+                 <fieldset>
+                       <div class="control-group">
+                          
+                          <div class="span6"">
+                            <label class="control-label">流程名：</label>
+                              <select id="transcodeValue" class="select">
+                                  <option value="">所有流程</option>
+                                  <% for(var indexTr=0;indexTr<coreTranscodeList.length;indexTr++){ %>
+                                    <option value="<%= coreTranscodeList[indexTr] %>"><%= coreTranscodeList[indexTr] %></option>
+                                  <% } %> 
+                              </select>
+                              </div>
+                         </div>
+                  
+                  </fieldset>
+              </form>
+         <% }%>
 	           	              
           <div class="well body">
             
@@ -21,6 +41,7 @@
           	<% } %>
           	<div style="display:none" id="chart-list"><%= chartList %></div>
           	<div style="display:none" id="chart-listCnt"><%= listCnt %></div>
+          	<input type="hidden" id="form-Tag" value="<%= formTag %>">
           </div>
       </div>
       <!-- /updating chart -->

@@ -4,14 +4,16 @@ var mongoose = require('mongoose')
   , query = require('../query')
   , config = require('../config_history').config
   , chart_list = require('../config_history').list
+  , transcode_list = require('../config_coreTranscodeList').coreTranscodeList
   , extend = require('extend');
 
 exports.plugin = function(server) {
 
    server.get('/historyComPareGraph.html', function(req, res) { 
         var chartList = req.query.chartList;
+        var formTag = req.query.formTag||'';
         var listCnt = chart_list[chartList].length; 
-    		res.renderPjax('plugin/historyGraph/historyGraph',{chartList:chartList,listCnt:listCnt})     	              
+    		res.renderPjax('plugin/historyGraph/historyGraph',{chartList:chartList,listCnt:listCnt,coreTranscodeList:transcode_list,formTag:formTag})     	              
    });
    
    
@@ -19,7 +21,9 @@ exports.plugin = function(server) {
 
       var chartList = req.query.chartList
          ,value = req.query.value
-         ,index = req.query.index||0;
+         ,index = req.query.index||0
+         ,transCode =req.query.TRANSCODE||'';
+         
                   
       var tempConfig ={};	
       extend(true,tempConfig,config);
@@ -27,6 +31,7 @@ exports.plugin = function(server) {
       var list = [];
       var tempList = chart_list[chartList][index]; 
       extend(true,list,tempList); 
+      
       
       list.forEach(function(item){
              if(!item.value)

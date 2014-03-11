@@ -30,7 +30,7 @@ exports.graphConfig = {
 exports.graphList = {
     
 	realTimeLcuSumChart:[ {mode:'TuxState', type:'CalledSumByRealTime',subtype:'AtDay'}],
-	realTimeLcuSumChart1:[ {mode:'TuxState', type:'CalledSumByRealTime',subtype:'AtDay'},{mode:'TuxState', type:'CalledSumByRealTime',subtype:'At28'}]
+	realTimeLcuSumCompareChart:[ {mode:'TuxState', type:'CalledSumByRealTime',subtype:'AtDay'},{mode:'TuxState', type:'CalledSumByRealTime',subtype:'At28'}]
 
 }
 
@@ -51,18 +51,3 @@ exports.detailConfig = {
 exports.detailList = {  
 	realtimeTopDetailList:[ {mode:'TuxState', type:'TimeOutTop',subtype:''}],
 }
-
-
-
-
-
-
-
-
-exports.coreTranscodeList = 
-[
-    'ITF_CRM_GetRecvLog',
-    'ITF_CRM_GetRecvLog1',
-    'ITF_CRM_GetRecvLog2',
-]
-

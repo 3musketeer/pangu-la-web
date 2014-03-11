@@ -4,7 +4,7 @@ var mongoose = require('mongoose')
   , query = require('../query')
   , config = require('../config_realTime').graphConfig
   , chart_list = require('../config_realTime').graphList
-  , transcode_list = require('../config_realTime').coreTranscodeList
+  , transcode_list = require('../config_coreTranscodeList').coreTranscodeList
   , extend = require('extend');
 
 exports.plugin = function(server) {

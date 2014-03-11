@@ -11,15 +11,20 @@ $(function () {
     
     if($("#datepicker") && $("#datepicker").attr("value") != ""){        
         value = $("#datepicker").attr("value");
-     }
-    
+    }
+
+   var param = "";
+    $('#transcodeValue').change(function(){
+        param=$(this).children('option:selected').val();
+        GetData(cb);     
+    });  
+
     function GetData(cb) { 
            
-
         $.ajax({  
             type:"GET",  
             url:"/getHistoryGraphData",  
-            data:"value="+value+"&chartList="+$('#chart-list')[0].innerText+"&index="+index,  
+            data:"value="+value+"&chartList="+$('#chart-list')[0].innerText+"&index="+index+"&TRANSCODE="+param,  
             dataType:"json",  
             success:function(data1){  
                 
@@ -50,6 +55,8 @@ $(function () {
                 index = index +1;
                 if(index < parseInt($('#chart-listCnt')[0].innerText))
                     GetData(cb)
+                else
+                    index = 0;
 
             },  
             error:function(){  
@@ -58,44 +65,86 @@ $(function () {
         }); 
         
     }
-
-    var options = {
-        series: {
-            lines: { 
-							lineWidth: 1,
-							fill: false,
-							fillColor: { colors: [ { opacity: 0.5 }, { opacity: 0.2 } ] },
-							show: true
-						},
-            points: {
-              show: true,
-              radius: 2.5,
-              fill: true,
-              fillColor: "#ffffff",
-              symbol: "circle",
-              lineWidth: 1.5
-            }
-        },
-        xaxis: {
-					show: true,
-					axisLabelFontSizePixels: 11
-				},
-				yaxis: {
-					axisLabelUseCanvas: true,
-					axisLabelFontSizePixels: 11,
-					autoscaleMargin: 0.01,
-					axisLabelPadding: 5
-				},
-        legend: {
-					show: true,
-					//container: $('#label'+index),
-					labelBoxBorderColor: "#ccc", 
-					backgroundOpacity: 0.85,
-					labelFormatter:function(label){return "<FONT COLOR =#97694F SIZE=2>"+label+"</FONT>"}
-					 
-				},
-        grid: { hoverable: true, clickable: true }
-    };
+    
+    var options = {};
+    
+    if($("#form-Tag").attr("value") != ""){  
+        options = {
+            series: {
+                lines: { 
+    							lineWidth: 1,
+    							fill: true,
+    							fillColor: { colors: [ { opacity: 0.5 }, { opacity: 0.2 } ] },
+    							show: true
+    						},
+                points: {
+                  show: true,
+                  radius: 2.5,
+                  fill: true,
+                  fillColor: "#ffffff",
+                  symbol: "circle",
+                  lineWidth: 1.5
+                }
+            },
+            xaxis: {
+    					show: true,
+    					axisLabelFontSizePixels: 11
+    				},
+    				yaxis: {
+    					axisLabelUseCanvas: true,
+    					axisLabelFontSizePixels: 11,
+    					autoscaleMargin: 0.01,
+    					axisLabelPadding: 5
+    				},
+            legend: {
+    					show: true,
+    					//container: $('#label'+index),
+    					labelBoxBorderColor: "#ccc", 
+    					backgroundOpacity: 0.85,
+    					labelFormatter:function(label){return "<FONT COLOR =#97694F SIZE=2>"+label+"</FONT>"}
+    					 
+    				},
+            grid: { hoverable: true, clickable: true }
+        };
+    }else{
+        options = {
+            series: {
+                lines: { 
+    							lineWidth: 1,
+    							fill: false,
+    							fillColor: { colors: [ { opacity: 0.5 }, { opacity: 0.2 } ] },
+    							show: true
+    						},
+                points: {
+                  show: true,
+                  radius: 2.5,
+                  fill: true,
+                  fillColor: "#ffffff",
+                  symbol: "circle",
+                  lineWidth: 1.5
+                }
+            },
+            xaxis: {
+    					show: true,
+    					axisLabelFontSizePixels: 11
+    				},
+    				yaxis: {
+    					axisLabelUseCanvas: true,
+    					axisLabelFontSizePixels: 11,
+    					autoscaleMargin: 0.01,
+    					axisLabelPadding: 5
+    				},
+            legend: {
+    					show: true,
+    					//container: $('#label'+index),
+    					labelBoxBorderColor: "#ccc", 
+    					backgroundOpacity: 0.85,
+    					labelFormatter:function(label){return "<FONT COLOR =#97694F SIZE=2>"+label+"</FONT>"}
+    					 
+    				},
+            grid: { hoverable: true, clickable: true }
+        };
+    }
     
     function cb(){
         
@@ -143,5 +192,6 @@ $(function () {
         }})(m));
     }
 
-    GetData(cb);    
+   GetData(cb);  
+    
 	});
