@@ -14,8 +14,11 @@ module.exports = function (app) {
 	app.post('/auth.html', auth.auth, auth.session);
 
 	//首页
-	app.get('/', auth.requiresLogin, main.index); 
-	app.get('/index.html', auth.requiresLogin, main.index); 
+	//app.get('/', auth.requiresLogin, main.index); 
+	//app.get('/index.html', auth.requiresLogin, main.index); 
+	
+	app.get('/', auth.requiresLogin, laSum.list); 
+	app.get('/index.html', auth.requiresLogin, laSum.list);
 
 	//排名清单
 	app.get('/lcuTopList.html', auth.requiresLogin, laTop.lcuList); 
