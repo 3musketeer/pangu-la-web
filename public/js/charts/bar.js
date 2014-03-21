@@ -1,6 +1,6 @@
 $(function () {
     var previousPoint;
- 
+ alert(1)
     var d1 = [];
     for (var i = 0; i <= 10; i += 1)
         d1.push([i, parseInt(Math.random() * 30)]);
@@ -55,7 +55,8 @@ $(function () {
             opacity: 0.8
         }).prependTo(rootElt).show();
     }
-                
+               
+               
     //Display graph
     $.plot($("#placeholder1"), ds, {
         grid:{

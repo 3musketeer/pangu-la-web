@@ -24,6 +24,8 @@ $(document).ready(function() {
   });
   
 
+  
+
 	//===== Sparklines =====//
 	
 	$('#total-visits').sparkline(
