@@ -4,6 +4,7 @@ var mongoose = require('mongoose')
   , query = require('./query')
   , config = require('./config_sum').config
   , cfgTop = require('./config_top').cfgTop
+  , cfgDetail = require('./config_top').cfgDetail
   , barCfg = require('./config_column').config
   , meterCfg = require('./config_meter').config
   , extend = require('extend');
@@ -56,17 +57,17 @@ exports.index = function(req, res) {
 				        {mode:'TuxState', type:'CalledSumByTime', subtype: 'AtHours2',value:value},]
 				        
 				        
-
+    var queryUrl = "/topDetail.html?mode=TuxState"+"&type=TimeOutTop"+"&scope=day"+"&value="+value;
 	  query.multiQuery(list, config, function(err, docs) {   
 	      query.multiQuery(list1, cfgTop, 10, function(err, docs1) {
 	          extend(true,docs1,docs);
 	          query.multiQuery(list2, barCfg, function(err, docs2) {
     	          extend(true,docs2,docs1);
     	          query.multiQuery(list3, meterCfg, function(err, docs3) {
-    	              console.log(JSON.stringify(docs3));
+    	             // console.log(JSON.stringify(docs3));
         	          extend(true,docs3,docs2);
         	          accumulate(docs3)
-            		    res.renderPjax('main/index', {all: docs3,caculateDate:value})
+            		    res.renderPjax('main/index', {all: docs3,caculateDate:value, queryUrl:queryUrl,titles: cfgDetail['TuxStateTimeOutTop'].titles, })
 	              })         
 	          })
 	      })

@@ -5,7 +5,7 @@
 	        <!-- Sidebar user -->
 	        <div class="sidebar-user widget">
 				<div class="navbar"><div class="navbar-inner"><h6>欢迎您, <% if(locals.current_user){ %> <%= locals.current_user.nick_name %>! <% } %></h6></div></div>
-	            <a href="#" title="" class="user"><img src="" alt="" /></a>
+	            <a href="#" title="" class="user"><img src="/getHeadPicture" onload = imgLoad(this,210,110); alt="" /></a> 
 	            <ul class="user-links">
 	            	<li><a href="" title="">今日调用总数<strong>5929312</strong></a></li>
 	            	<li><a href="" title="">今日异常总数<strong>2964</strong></a></li>
@@ -32,7 +32,7 @@
 	        
 	            <li><a href="/index.html" title=""><i class="icon-home"></i>分析大厅</a></li> 
 	            <% locals.menus.forEach(function(menu){ %>
-					 <li class=""><a <% if(menu.url != undefined){ %> href="<%= menu.url %>"  data-pjax='#content' <% } %> title="" <% if(menu.list.length>0){ %> class="expand" <% }else{ %> class="" <% } %>  ><i class=<%= menu.class %>></i><%= menu.title %>  <% if(menu.list.length>0){ %> <strong><%= menu.list.length %></strong><% } %></a>
+					 <li class=""><a <% if(menu.url != undefined){ %> href="<%= menu.url %>"  data-pjax='#content' <% } %> title="" <% if(menu.list.length>0){ %> class="expand" <% if(menu.menuId != undefined){ %> id="<%= menu.menuId %>" <%} }else{ %> class="" <% } %>  ><i class=<%= menu.class %>></i><%= menu.title %>  <% if(menu.list.length>0){ %> <strong><%= menu.list.length %></strong><% } %></a>
     					 <ul>
         					 <% menu.list.forEach(function(item){ %>
         					    <li><a href="<%= item.url %>" data-pjax='#content'><%= item.title %></a></li>

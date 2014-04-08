@@ -4,44 +4,46 @@ exports.config = {
 	
 	TuxStateCalledSumByTimeAtHours0: {
 		name: '工单积压',
+		innerName: '工单积压',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : ['_count'], 
 		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},hours: 10},
-		max: 500000,
-		interval: 50000,
-		interval: 50000,
-		endValue1: 150000,
-		endValue2: 300000,
-		endValue3: 500000,
+		max: 220,
+		interval: 15,
+		endValue1: 100,
+		endValue2: 158,
+		endValue3: 220,
 		sort: {'hours' : 1}
 	},
 	
 	TuxStateCalledSumByTimeAtHours1: {
 		name: '服务队列积压',
+		innerName: '服务队列积压',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : ['_count'], 
 		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},hours: 16},
-		max: 500000,
-		interval: 50000,
-		endValue1: 150000,
-		endValue2: 300000,
-		endValue3: 500000,
+		max: 220,
+		interval: 15,
+		endValue1: 100,
+		endValue2: 158,
+		endValue3: 220,
 		sort: {'hours' : 1}
 	},
 	
 	TuxStateCalledSumByTimeAtHours2: {
 		name: '工单失败率',
+		innerName: '工单失败率(%)',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : ['_count'], 
 		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},hours: 12},
-		max: 500000,
-		interval: 50000,
-		endValue1: 150000,
-		endValue2: 300000,
-		endValue3: 500000,
+		max: 100,
+		interval: 10,
+		endValue1: 30,
+		endValue2: 60,
+		endValue3: 100,
 		sort: {'hours' : 1}
 	}
 }

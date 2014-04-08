@@ -1,10 +1,11 @@
 <script type="text/javascript" src="/js/view/plugin/historyGraph/historyGraph.js"></script>
+<% if(module != 'true'){ %>
 	    <div class="wrapper">
             <!-- Content head -->
 		        <% include ../../includes/contentHead.html %>	
 		    <!-- /Content head -->
 	    </div>
-
+<% }%>
     <div class="widget">
       	<div class="navbar">
           	<div class="navbar-inner">
@@ -12,7 +13,7 @@
               </div>
           </div>
           
-          <% if(formTag != ''){ %>
+          <% if(isWhere == 'true'){ %>
               <form action="#" class="form-horizontal">
                  <fieldset>
                        <div class="control-group">
@@ -41,7 +42,7 @@
           	<% } %>
           	<div style="display:none" id="chart-list"><%= chartList %></div>
           	<div style="display:none" id="chart-listCnt"><%= listCnt %></div>
-          	<input type="hidden" id="form-Tag" value="<%= formTag %>">
+          	<input type="hidden" id="form-Tag" value="<%= isWhere %>">
           </div>
       </div>
       <!-- /updating chart -->

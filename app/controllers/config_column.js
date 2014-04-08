@@ -3,7 +3,7 @@ var scopeNames = {'day':'日', 'month':'月', 'year':'年'}
 exports.config = {
 	
 	TuxStateCalledSumByTimeAt28: {
-		name: '调用量',
+		name: '流程调用量',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count', 'host' ], 
@@ -12,7 +12,7 @@ exports.config = {
 	},
 	
 	TuxStateCalledSumByTimeAt28a: {
-		name: '异常量',
+		name: '流程异常量',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count', 'host' ], 

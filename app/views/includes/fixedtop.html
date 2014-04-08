@@ -25,13 +25,14 @@
 <!-- Fixed top -->
 	<div id="top">
 		<div class="fixed">
-			<a href="index.html" title="" class="logo"><img src="/img/logo.png" alt="" /></a>
+			<a href="index.html" title="" class="logo"><img src="/img/logo.png" alt="" /></a>	
 			<ul class="top-menu">
+			   
 				<li><a class="fullview"></a></li>
 				<li><a class="showmenu"></a></li>
 				<li><a href="#" title="" class="messages"><i class="new-message"></i></a></li>
 				<li class="dropdown">
-					<a class="user-menu" data-toggle="dropdown"><img src="" alt="" /><span>您好, <% if(locals.current_user){ %> <%= locals.current_user.nick_name %> ！ <% } %> <b class="caret"></b></span></a>
+					<a class="user-menu" data-toggle="dropdown"><img src="/getHeadPicture" onload = imgLoad(this,20,30); alt="" /><span>您好, <% if(locals.current_user){ %> <%= locals.current_user.nick_name %> ！ <% } %> <b class="caret"></b></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="#" title=""><i class="icon-user"></i>个人资料</a></li>
 						<li><a href="#" title=""><i class="icon-inbox"></i>消息<span class="badge badge-info">9</span></a></li>

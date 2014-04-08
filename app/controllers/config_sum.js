@@ -2,7 +2,7 @@ var scopeNames = {'day':'日', 'month':'月', 'year':'年'}
 
 exports.config = {
 	TuxStateCalledSumByTimeAtHours: {
-		name: '调用总数',
+		name: '流程调用总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
@@ -20,7 +20,7 @@ exports.config = {
 	},
 
 	TuxStateFailedSumByTimeAtHours: {
-		name: '异常总数',
+		name: '流程异常总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
@@ -29,7 +29,7 @@ exports.config = {
 	},
 		
 	TuxStateFailedSumByTimeAtDay: {
-		name: '异常总数',
+		name: '流程异常总数',
 		scopes: ['month'],
 		scopeNames: scopeNames,
 		colNames : [ 'day', '_count' ], 

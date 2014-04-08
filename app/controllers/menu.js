@@ -14,10 +14,12 @@ exports.loadMenu = function(dir,cb){
         }
 
         files.forEach(function(filename) {
-            var filepath = [ dir, filename ].join('/');
-            var tmp = require(filepath);
-            for (m in tmp){
-                menusTemp.push(tmp[m]);
+            if(filename.substring(filename.length-3) == '.js'){
+                var filepath = [ dir, filename ].join('/');
+                var tmp = require(filepath);
+                for (m in tmp){
+                    menusTemp.push(tmp[m]);
+                }
             }
         });  
              

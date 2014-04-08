@@ -4,14 +4,14 @@ $(function() {
 		if(objDiv.length == 1) {	
         var data = jQuery.parseJSON($('#meterChart-data'+_idx)[0].innerText);
         if ((data.scopes[0]).length >0){ 
-            var labels = { visible: true, position: 'inside', interval: 2000,position: 'outside'};
+            var labels = { visible: true, position: 'inside', interval: 2000,position: 'inside'};
             var caption = { offset: [0, -25], position: 'bottom' };
-            caption.value = data.name;
+            caption.value = data.innerName;
             labels.interval = data.interval;
             objDiv.jqxGauge({
-                ranges: [{ startValue: 0, endValue: data.endValue1, style: { fill: '#01DF01', stroke: '#01DF01' }, startDistance: '5%', endDistance: '5%', endWidth: 13, startWidth: 13 },
-                         { startValue: data.endValue1, endValue: data.endValue2, style: { fill: '#F7FE2E', stroke: '#F7FE2E' }, startDistance: '5%', endDistance: '5%', endWidth: 13, startWidth: 13 },
-                         { startValue: data.endValue2, endValue: data.endValue3, style: { fill: '#FF0000', stroke: '#FF0000' }, startDistance: '5%', endDistance: '5%', endWidth: 13, startWidth: 13 }
+                ranges: [{ startValue: 0, endValue: data.endValue1, style: { fill: '#52ac52', stroke: '#52ac52' }, startDistance: '5%', endDistance: '5%', endWidth: 13, startWidth: 13 },
+                         { startValue: data.endValue1, endValue: data.endValue2, style: { fill: '#feeb31', stroke: '#feeb31' }, startDistance: '5%', endDistance: '5%', endWidth: 13, startWidth: 13 },
+                         { startValue: data.endValue2, endValue: data.endValue3, style: { fill: '#d03e3e', stroke: '#d03e3e' }, startDistance: '5%', endDistance: '5%', endWidth: 13, startWidth: 13 }
                         ],
                 cap: { radius: 0.04 },
                 caption: caption,
@@ -26,7 +26,7 @@ $(function() {
                 height: '100%',
                 ticksMinor: { interval: data.interval/2, size: '5%' },
                 ticksMajor: { interval: data.interval, size: '10%' },
-                border: {visible: false}
+                border: {visible: true}
             });
             objDiv.jqxGauge('setValue',data[data.scopes[0]][0][data.colNames[0]]);
         }

@@ -80,7 +80,7 @@ $(function() {
                }
  
                var y = item.datapoint[1];
-               showTooltip(item.pageX+5, item.pageY+5,item.series.label+':<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+x + ' = ' + y);
+               showTooltip(item.pageX+5, item.pageY+5,'主机'+item.series.label+':<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+x + '时调用(异常)量为:'+ y);
 						}
 					}
 					else {

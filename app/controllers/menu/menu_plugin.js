@@ -1,6 +1,6 @@
-module.exports = [
-    {title:'定制模块',class:'icon-signal',list:[    {title:'核心流程实时调用曲线图',url:'/realtimeGraph.html?chartList=realTimeLcuSumChart'},
-                                                    {title:'核心流程历史调用曲线图',url:'/historyComPareGraph.html?chartList=historyLcuSumChart&formTag=1'},
+﻿module.exports = [
+    {title:'调试模块',class:'icon-signal',list:[    {title:'核心流程实时调用曲线图',url:'/realtimeGraph.html?chartList=realTimeLcuSumChart'},
+                                                    {title:'核心流程历史调用曲线图',url:'/historyComPareGraph.html?chartList=historyLcuSumChart&formTag=true'},
                                                     {title:'实时对比',url:'/realtimeCompareGraph.html?chartList=realTimeLcuSumCompareChart'},
                                                     {title:'历史对比',url:'/historyComPareGraph.html?chartList=historyLcuSumCompareChart'},
                                                     {title:'实时超时明细',url:'/realtimeTopDetail.html?chartList=realtimeTopDetailList'},

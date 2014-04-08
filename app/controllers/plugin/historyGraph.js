@@ -11,9 +11,13 @@ exports.plugin = function(server) {
 
    server.get('/historyComPareGraph.html', function(req, res) { 
         var chartList = req.query.chartList;
-        var formTag = req.query.formTag||'';
+        var isWhere = req.query.isWhere||'false';
         var listCnt = chart_list[chartList].length; 
-    		res.renderPjax('plugin/historyGraph/historyGraph',{chartList:chartList,listCnt:listCnt,coreTranscodeList:transcode_list,formTag:formTag})     	              
+        var module = req.query.module||'false';
+        if(module == 'true')
+    		    res.renderPjax('plugin/historyGraph/historyGraph',{layout: false,chartList:chartList,listCnt:listCnt,coreTranscodeList:transcode_list,isWhere:isWhere,module:module})   
+    		else
+    		    res.renderPjax('plugin/historyGraph/historyGraph',{chartList:chartList,listCnt:listCnt,coreTranscodeList:transcode_list,isWhere:isWhere,module:module})    	              
    });
    
    

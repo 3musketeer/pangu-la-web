@@ -175,11 +175,7 @@
   
   window.Flow = Flow;
   
-  
-
-}).call(this);
-
-function getAjaxStemHtml(stepUrl,nodeId,checkFunction){
+  function getAjaxStemHtml(stepUrl,nodeId,checkFunction){
     
     var param = "";
     if(nodeId != '1'){
@@ -207,4 +203,9 @@ function getAjaxStemHtml(stepUrl,nodeId,checkFunction){
         }  
     });  
   
-}
+    }
+    window.getAjaxStemHtml = getAjaxStemHtml;
+  
+
+})(this);
+

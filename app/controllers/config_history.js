@@ -8,7 +8,7 @@ exports.config = {
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
 		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'132.34.11.28'},
-		color: "#f0471a",
+		color: "#ef705b",
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
@@ -19,7 +19,7 @@ exports.config = {
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
 		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'132.34.11.29'},
-		color: "#46bb00",
+		color: "#4bb0ce",
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},

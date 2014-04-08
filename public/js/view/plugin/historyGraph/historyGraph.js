@@ -68,7 +68,7 @@ $(function () {
     
     var options = {};
     
-    if($("#form-Tag").attr("value") != ""){  
+    if($("#form-Tag").attr("value") == "true"){  
         options = {
             series: {
                 lines: { 
@@ -110,7 +110,7 @@ $(function () {
         options = {
             series: {
                 lines: { 
-    							lineWidth: 1,
+    							lineWidth: 3,
     							fill: false,
     							fillColor: { colors: [ { opacity: 0.5 }, { opacity: 0.2 } ] },
     							show: true
@@ -139,6 +139,7 @@ $(function () {
     					//container: $('#label'+index),
     					labelBoxBorderColor: "#ccc", 
     					backgroundOpacity: 0.85,
+    					noColums: 10,			   
     					labelFormatter:function(label){return "<FONT COLOR =#97694F SIZE=2>"+label+"</FONT>"}
     					 
     				},

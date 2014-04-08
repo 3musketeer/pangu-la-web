@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     
     
-    concat : {
+   /* concat : {
 
             domop : {
 
@@ -15,23 +15,23 @@ module.exports = function(grunt) {
 
             }
 
-    },
+    },*/
         
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       build: {
-        src: 'public/js/view/flow_plugin.js',
-        dest: 'public/js/view/flow.min.js'
+        src: 'public/js/view/flowchart-1.2.6.js',
+        dest: 'public/js/view/flowchart-1.2.6.min.js'
       }
     }
   });
 
   // Load the plugin that provides the "uglify" task.
-  grunt.loadNpmTasks('grunt-contrib-concat');
+//  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
   // Default task(s).
-  grunt.registerTask('default', ['concat','uglify']);
+  grunt.registerTask('default', ['uglify']);
 }

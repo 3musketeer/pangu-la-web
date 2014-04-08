@@ -102,7 +102,11 @@ exports.plugin = function(server) {
    
    server.get('/realtimeCompareGraph.html', function(req, res) { 
         var chartList = req.query.chartList
-    		res.renderPjax('plugin/realtimeCompareGraph/realtimeCompareGraph',{chartList:chartList})     	              
+        var module = req.query.module||'false'
+        if(module == 'true')
+    		    res.renderPjax('plugin/realtimeCompareGraph/realtimeCompareGraph',{layout: false,chartList:chartList,module:module}) 
+    		else
+    		    res.renderPjax('plugin/realtimeCompareGraph/realtimeCompareGraph',{chartList:chartList,module:module})     	              
    });
   
    
