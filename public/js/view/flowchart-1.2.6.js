@@ -94,6 +94,7 @@
     'text-margin': 10,
     'font-size': 14,
     'font-color': 'black',
+    'path-font-color': 'black',
     'line-color': 'black',
     'element-color': 'black',
     'fill': 'white',
@@ -177,7 +178,7 @@
     return symbol;
   }
   
-  function drawLine(chart, from, to, text) {
+  function drawLine(chart,id, from, to, text) {
     var i, len;
   
     if (Object.prototype.toString.call(to) !== '[object Array]') {
@@ -193,15 +194,17 @@
       pathValues.push(to[i].x);
       pathValues.push(to[i].y);
     }
-  
     var line = chart.paper.path(path, pathValues);
-    line.id = "path" + line.id;
+    if(id != "")
+        line.id = "path" + id;
+    else
+        line.id = "path" + line.id;
+        
     line.attr({
       stroke: chart.options['line-color'],
       'stroke-width': chart.options['line-width'],
       'arrow-end': chart.options['arrow-end']
     });
-  
     if (text) {
   
       var centerText = false;
@@ -255,7 +258,7 @@
       textPath.attr({
         'text-anchor': 'start',
         'font-size': chart.options['font-size'],
-        stroke: chart.options['font-color'],
+        stroke: chart.options['path-font-color'],
         x: x,
         y: y
       });
@@ -411,6 +414,7 @@
     this.group = this.chart.paper.set();
     this.connectedTo = [];
     this.symbolType = options.symbolType;
+    this.id = symbol.id;
   
     this.text = this.chart.paper.text(0, 0, options.text);
     this.text.id = "paperText" + this.text.id;
@@ -453,11 +457,17 @@
   
       this.group.push(symbol);
       symbol.insertBefore(this.text);
-  
-      this.text.attr({
-        'y': symbol.getBBox().height/2
-      });
-  
+      
+      if(this.symbolType == 'start'){
+          this.text.attr({
+            'y': symbol.getBBox().height/2+20,
+            'x': symbol.getBBox().height/2+20
+          });
+      }else{
+         this.text.attr({
+            'y': symbol.getBBox().height/2
+          });
+      }
       this.initialize();
     }
   }
@@ -526,10 +536,15 @@
     if (this.next) {
       var bottomPoint = this.getBottom();
       var topPoint = this.next.getTop();
+      
+      var rightPoint = this.getRight();
+      var leftPoint = this.next.getLeft();
   
       if (!this.next.isPositioned) {
-        this.next.shiftY(this.getY() + this.height + (this.chart.options.symbols[this.symbolType]['line-length'] || this.chart.options['line-length']));
-        this.next.setX(bottomPoint.x - this.next.width/2);
+       // this.next.shiftY(this.getY() + this.height + (this.chart.options.symbols[this.symbolType]['line-length'] || this.chart.options['line-length']));
+        //this.next.setX(bottomPoint.x - this.next.width/2);
+        this.next.setY(rightPoint.y - this.next.height/2);
+        this.next.shiftX(this.group.getBBox().x + this.width + (this.chart.options.symbols[this.symbolType]['line-length'] || this.chart.options['line-length']));
         this.next.isPositioned = true;
   
         this.next.render();
@@ -547,7 +562,6 @@
     if (this.connectedTo.indexOf(symbol) < 0) {
       this.connectedTo.push(symbol);
     }
-  
     var x = this.getCenter().x,
         y = this.getCenter().y,
         top = this.getTop(),
@@ -572,25 +586,26 @@
     var maxX = 0,
         line,
         lineLength = this.chart.options.symbols[this.symbolType]['line-length'] || this.chart.options['line-length'],
-        lineWith = this.chart.options.symbols[this.symbolType]['line-width'] || this.chart.options['line-width'];
+        lineWith = this.chart.options.symbols[this.symbolType]['line-width'] || this.chart.options['line-width'],
+        id = symbol.id?symbol.id:"";
   
     if ((!origin || origin === 'bottom') && isOnSameColumn && isUnder) {
-      line = drawLine(this.chart, bottom, symbolTop, text);
+      line = drawLine(this.chart,id, bottom, symbolTop, text);
       this.bottomStart = true;
       symbol.topEnd = true;
       maxX = bottom.x;
     } else if ((!origin || origin === 'right') && isOnSameLine && isRight) {
-      line = drawLine(this.chart, right, symbolLeft, text);
+      line = drawLine(this.chart,id, right, symbolLeft, text);
       this.rightStart = true;
       symbol.leftEnd = true;
       maxX = symbolLeft.x;
     } else if ((!origin || origin === 'left') && isOnSameLine && isLeft) {
-      line = drawLine(this.chart, left, symbolRight, text);
+      line = drawLine(this.chart,id, left, symbolRight, text);
       this.leftStart = true;
       symbol.rightEnd = true;
       maxX = symbolRight.x;
     } else if ((!origin || origin === 'right') && isOnSameColumn && isUpper) {
-      line = drawLine(this.chart, right, [
+      line = drawLine(this.chart,id, right, [
         {x: right.x + lineLength/2, y: right.y},
         {x: right.x + lineLength/2, y: symbolTop.y - lineLength/2},
         {x: symbolTop.x, y: symbolTop.y - lineLength/2},
@@ -600,7 +615,7 @@
       symbol.topEnd = true;
       maxX = right.x + lineLength/2;
     } else if ((!origin || origin === 'right') && isOnSameColumn && isUnder) {
-      line = drawLine(this.chart, right, [
+      line = drawLine(this.chart,id, right, [
         {x: right.x + lineLength/2, y: right.y},
         {x: right.x + lineLength/2, y: symbolTop.y - lineLength/2},
         {x: symbolTop.x, y: symbolTop.y - lineLength/2},
@@ -611,7 +626,7 @@
       maxX = right.x + lineLength/2;
     } else if ((!origin || origin === 'bottom') && isLeft) {
       if (this.leftEnd && isUpper) {
-        line = drawLine(this.chart, bottom, [
+        line = drawLine(this.chart,id, bottom, [
           {x: bottom.x, y: bottom.y + lineLength/2},
           {x: bottom.x + (bottom.x - symbolTop.x)/2, y: bottom.y + lineLength/2},
           {x: bottom.x + (bottom.x - symbolTop.x)/2, y: symbolTop.y - lineLength/2},
@@ -619,38 +634,35 @@
           {x: symbolTop.x, y: symbolTop.y}
         ], text);
       } else {
-        line = drawLine(this.chart, bottom, [
-          {x: bottom.x, y: symbolTop.y - lineLength/2},
-          {x: symbolTop.x, y: symbolTop.y - lineLength/2},
-          {x: symbolTop.x, y: symbolTop.y}
+        line = drawLine(this.chart,id, bottom, [
+          {x: x, y: bottom.y+lineLength/2},
+          {x: symbolBottom.x, y: bottom.y+lineLength/2},
+          {x: symbolBottom.x, y: symbolBottom.y}
         ], text);
       }
       this.bottomStart = true;
       symbol.topEnd = true;
       maxX = bottom.x + (bottom.x - symbolTop.x)/2;
     } else if ((!origin || origin === 'bottom') && isRight) {
-      line = drawLine(this.chart, bottom, [
-        {x: bottom.x, y: bottom.y + lineLength/2},
-        {x: bottom.x + (bottom.x - symbolTop.x)/2, y: bottom.y + lineLength/2},
-        {x: bottom.x + (bottom.x - symbolTop.x)/2, y: symbolTop.y - lineLength/2},
-        {x: symbolTop.x, y: symbolTop.y - lineLength/2},
-        {x: symbolTop.x, y: symbolTop.y}
+      line = drawLine(this.chart,id, right, [
+        {x: symbolX, y: y},
+        {x: symbolX, y: symbolBottom.y}
       ], text);
-      this.bottomStart = true;
+
+      this.rightStart = true;
       symbol.topEnd = true;
-      maxX = bottom.x + (bottom.x - symbolTop.x)/2;
+      maxX = right.x + lineLength/2;
     } else if ((origin && origin === 'right') && isLeft) {
-      line = drawLine(this.chart, right, [
-        {x: right.x + lineLength/2, y: right.y},
-        {x: right.x + lineLength/2, y: symbolTop.y - lineLength/2},
-        {x: symbolTop.x, y: symbolTop.y - lineLength/2},
+      line = drawLine(this.chart,id, top, [
+        {x: top.x, y: top.y - lineLength/2},
+        {x: symbolTop.x, y: top.y - lineLength/2},
         {x: symbolTop.x, y: symbolTop.y}
       ], text);
       this.rightStart = true;
       symbol.topEnd = true;
       maxX = right.x + lineLength/2;
     } else if ((origin && origin === 'right') && isRight) {
-      line = drawLine(this.chart, right, [
+      line = drawLine(this.chart,id, right, [
         {x: symbolRight.x + lineLength/2, y: right.y},
         {x: symbolRight.x + lineLength/2, y: symbolTop.y - lineLength/2},
         {x: symbolTop.x, y: symbolTop.y - lineLength/2},
@@ -660,7 +672,7 @@
       symbol.topEnd = true;
       maxX = symbolRight.x + lineLength/2;
     } else if ((origin && origin === 'bottom') && isOnSameColumn && isUpper) {
-      line = drawLine(this.chart, bottom, [
+      line = drawLine(this.chart,id, bottom, [
         {x: bottom.x, y: bottom.y + lineLength/2},
         {x: right.x + lineLength/2, y: bottom.y + lineLength/2},
         {x: right.x + lineLength/2, y: symbolTop.y - lineLength/2},
@@ -671,6 +683,7 @@
       symbol.topEnd = true;
       maxX = bottom.x + lineLength/2;
     }
+
   
     if (line) {
       var self = this;
@@ -753,7 +766,8 @@
     }
   };
   function Start(chart, options) {
-    var symbol = chart.paper.rect(0, 0, 0, 0, 20);
+    //var symbol = chart.paper.rect(0, 0, 0, 0, 20);
+    var symbol = chart.paper.image("/img/flowchart/grey_rec_bg.png", 30, 20, 0, 0);
     symbol.id = options.key;
     options = options || {};
     options.text = options.text || 'Start';
@@ -761,7 +775,7 @@
   }
   f.inherits(Start, Symbol);
   function End(chart, options) {
-    var symbol = chart.paper.rect(0, 0, 0, 0, 20);
+    var symbol = chart.paper.image("/img/flowchart/grey_rec_bg.png", 0, 0, 0, 0);
     symbol.id = options.key;
     options = options || {};
     options.text = options.text || 'End';
@@ -769,14 +783,14 @@
   }
   f.inherits(End, Symbol);
   function Operation(chart, options) {
-    var symbol = chart.paper.rect(0, 0, 0, 0);
+    var symbol = chart.paper.image("/img/flowchart/grey_rec_bg.png", 0, 0, 0, 0);
     symbol.id = options.key;
     options = options || {};
     Symbol.call(this, chart, options, symbol);
   }
   f.inherits(Operation, Symbol);
   function Subroutine(chart, options) {
-    var symbol = chart.paper.rect(0, 0, 0, 0);
+    var symbol = chart.paper.image("/img/flowchart/grey_rec_bg.png", 0, 0, 0, 0);
     symbol.id = options.key;
     options = options || {};
     Symbol.call(this, chart, options, symbol);
@@ -864,7 +878,9 @@
   };
   function Condition(chart, options) {
     options = options || {};
-    Symbol.call(this, chart, options);
+    var symbol = chart.paper.image("/img/flowchart/grey_bg.png", 0, 0, 0, 0);
+    symbol.id = options.key;
+    Symbol.call(this, chart, options,symbol);
   
     this.yes_direction = 'bottom';
     this.no_direction = 'right';
@@ -892,7 +908,7 @@
     this.yes_direction = this.yes_direction || 'bottom';
     this.no_direction = this.no_direction || 'right';
   
-    this.text.attr({
+  /*  this.text.attr({
       x: (this.chart.options.symbols[this.symbolType]['text-margin'] || this.chart.options['text-margin']) * 2
     });
   
@@ -916,25 +932,25 @@
       {x: startX - width/4, y: startY + height/4}
     ];
   
-    var symbol = drawPath(chart, start, points);
-    symbol.id = options.key;
+    // var symbol = drawPath(chart, start, points);
+   
   
     symbol.attr({
       stroke: (this.chart.options.symbols[this.symbolType]['element-color'] || this.chart.options['element-color']),
       'stroke-width': (this.chart.options.symbols[this.symbolType]['line-width'] || this.chart.options['line-width']),
       fill: (this.chart.options.symbols[this.symbolType]['fill'] || this.chart.options['fill'])
-    });
+    });*/
    // if (options.link) { symbol.attr('href', options.link); }
     //if (options.target) { symbol.attr('target', options.target); }
   
-    this.text.attr({
-      y: symbol.getBBox().height/2
-    });
+   // this.text.attr({
+  //    y: symbol.getBBox().height/2
+  //  });
   
-    this.group.push(symbol);
-    symbol.insertBefore(this.text);
+   // this.group.push(symbol);
+    //symbol.insertBefore(this.text);
   
-    this.initialize();
+    //this.initialize();
   }
   f.inherits(Condition, Symbol);
   
@@ -950,25 +966,12 @@
   
     var lineLength = this.chart.options.symbols[this.symbolType]['line-length'] || this.chart.options['line-length'];
   
-    if (this.bottom_symbol) {
-      var bottomPoint = this.getBottom();
-      var topPoint = this.bottom_symbol.getTop();
-  
-      if (!this.bottom_symbol.isPositioned) {
-        this.bottom_symbol.shiftY(this.getY() + this.height + lineLength);
-        this.bottom_symbol.setX(bottomPoint.x - this.bottom_symbol.width/2);
-        this.bottom_symbol.isPositioned = true;
-  
-        this.bottom_symbol.render();
-      }
-    }
+    
   
     if (this.right_symbol) {
       var rightPoint = this.getRight();
       var leftPoint = this.right_symbol.getLeft();
-  
       if (!this.right_symbol.isPositioned) {
-  
         this.right_symbol.setY(rightPoint.y - this.right_symbol.height/2);
         this.right_symbol.shiftX(this.group.getBBox().x + this.width + lineLength);
   
@@ -995,6 +998,19 @@
         this.right_symbol.isPositioned = true;
   
         this.right_symbol.render();
+      }
+    }
+    
+    if (this.bottom_symbol) {
+      var bottomPoint = this.getBottom();
+      var topPoint = this.bottom_symbol.getTop();
+  
+      if (!this.bottom_symbol.isPositioned) {
+        this.bottom_symbol.shiftY(this.getY() + this.height + lineLength);
+        this.bottom_symbol.setX(bottomPoint.x - this.bottom_symbol.width/2);
+        this.bottom_symbol.isPositioned = true;
+  
+        this.bottom_symbol.render();
       }
     }
   };
@@ -1127,7 +1143,7 @@
                 key: item,
                 symbolType: input[item].symbolType,
                 text: input[item].symbolText,
-                link: input[item].symbolLink?input[item].symbolLink:null,
+                link: input[item].symbolLink?input[item].symbolLink:'',
                 target: null,
                 desc: input[item].symbolDesc?input[item].symbolDesc:'无描述'
             };

@@ -1,34 +1,35 @@
 ﻿$(function (){
     var data = {
        '1': {'symbolType':'start','symbolText':'开始','symbolDesc':'','symbolLink':''},
-       '2': {'symbolType':'condition','symbolText':'是否明确故障主机','symbolLink':'/initQueryTopDetail.html'},
-       '3': {'symbolType':'operation','symbolText':'显示主机对比图','symbolLink':'/realtimeCompareGraph.html?chartList=realTimeLcuSumCompareChart&module=true'},
-       '4': {'symbolType':'operation','symbolText':'输入主机ip','symbolLink':'/historyComPareGraph.html?chartList=historyLcuSumCompareChart&module=true'},
+       '2': {'symbolType':'condition','symbolText':'是否明确\n故障主机','symbolLink':''},
+       '3': {'symbolType':'operation','symbolText':'显示主机对比图','symbolLink':''},
+       '4': {'symbolType':'operation','symbolText':'输入主机IP','symbolLink':''},
        '5': {'symbolType':'operation','symbolText':'选择指标'},
        '6': {'symbolType':'operation','symbolText':'查看指标','symbolDesc':'查看各项指标，排名、仪表盘、曲线图、对比图、柱状图等'},
-       '7': {'symbolType':'condition','symbolText':'是否查看其他指标','symbolLink':'/initQueryTopDetail.html'},
+       '7': {'symbolType':'condition','symbolText':'是否查看\n其他指标','symbolLink':'/initQueryTopDetail.html'},
        '8': {'symbolType':'end','symbolText':'结束','symbolLink':''},
        'flowStep1': '1->2',
        'flowStep2': '2(yes)->4->5->6->7',
-       'flowStep3': '2(no, right)->3->4->5',
+       'flowStep3': '2(no, bottom)->3->4',
        'flowStep4': '7(yes)->5',
        'flowStep5': '7(no, right)->8'
     };               
     var o = {
-        'line-width': 3,
+        'line-width': 4,
         'line-length': 30,
-        'text-margin': 10,
+        'text-margin': 13,
         'font-size': 16,
-        'font-color': 'a7a7a7',
-        'line-color': '#a7a7a7',  
+        'font-color': 'white',
+        'path-font-color': '#d5d5d5',
+        'line-color': '#d5d5d5',  
         'element-color': '#4ab0cd',      
         'fill': '#4ab0cd',
         'yes-text': 'yes',
         'no-text': 'no',
-        'arrow-end': 'block',
+        'arrow-end': 'none',
         'symbols': {     
-        'start': {
-                  
+        'condition': {
+            'text-margin': 30
             }
         }
     };
@@ -95,9 +96,16 @@
        
     //drawFlowChart
     chart.drawSVG('canvas',o);
-    chart.diagram.paper.getById(chart.start.next.key).attr({ fill: '#EF705B',stroke: '#EF705B'});
-      
-      
+    if(chart.start.next.symbolType == 'condition'){
+        chart.diagram.paper.getById(chart.start.next.key).attr({ src: '/img/flowchart/ask_bg.png'});
+    }else{
+        chart.diagram.paper.getById(chart.start.next.key).attr({ src:'/img/flowchart/bg.png' });
+    }
+    chart.diagram.paper.getById(chart.start.key).attr({ src: '/img/flowchart/bg.png'});
+    chart.diagram.paper.getById("path"+chart.start.next.key).attr({ stroke: '#4ab0cd'});
+    
+    
+    
     //===== Form wizards =====//
     $("#wizard3").formwizard({       
         formPluginEnabled: true,
@@ -126,27 +134,59 @@
         
         for(var item in chart.symbols){   
             if(item == data.currentStep){
-                chart.diagram.paper.getById(item).attr({ fill: '#EF705B',stroke: '#EF705B'});
+                if(chart.symbols[item].symbolType == 'condition'){
+                    chart.diagram.paper.getById(item).attr({ src: '/img/flowchart/ask_bg.png'});
+                }else{
+                    chart.diagram.paper.getById(item).attr({ src:'/img/flowchart/bg.png' });
+                }
             }else{
-                chart.diagram.paper.getById(item).attr({ fill: '#4ab0cd',stroke: '#4ab0cd'});
+                
+                if(parseInt(item) < parseInt(data.currentStep)){
+                    if(chart.symbols[item].symbolType == 'condition'){
+                        chart.diagram.paper.getById(item).attr({ src: '/img/flowchart/ask_bg.png'});
+                    }else{
+                        chart.diagram.paper.getById(item).attr({ src:'/img/flowchart/bg.png' });
+                    }
+                    
+                }else{
+                    if(chart.symbols[item].symbolType == 'condition'){
+                        chart.diagram.paper.getById(item).attr({ src: '/img/flowchart/grey_bg.png'});
+                    }else{
+                        chart.diagram.paper.getById(item).attr({ src:'/img/flowchart/grey_rec_bg.png' });
+                    }
+                }
             }
-        }                    
+        }
+        
+        var currentX =  chart.diagram.paper.getById(data.currentStep).getBBox().x + chart.diagram.paper.getById(data.currentStep).getBBox().width;
+        chart.diagram.paper.forEach(function (el) {
+            if(el.id.substring(0,4) == 'path'){
+                if(parseInt(el.id.substring(4)) <= parseInt(data.currentStep) && el.getBBox().x+el.getBBox().width < currentX)
+                    el.attr({ stroke: '#4ab0cd'}); 
+                else
+                    el.attr({ stroke: '#d5d5d5'}); 
+            }                     
+        }); 
+                         
     });
     
     
     function getAjaxStepHtml(stepUrl,nodeId){
-        $.ajax({  
-            type:"GET",  
-            url:stepUrl,  
-            data:"value="+$("#datepicker").attr("value")+"&requestParam="+"",  
-            dataType:"html",  
-            success:function(data){ 
-              $('#stepDiv'+nodeId).html(data);  
-            },  
-            error:function(){  
-              alert("ajax exception!");  
-            }  
-        });  
+
+        if(stepUrl != ''){
+            $.ajax({  
+                type:"GET",  
+                url:stepUrl,  
+                data:"value="+$("#datepicker").attr("value")+"&requestParam="+"",  
+                dataType:"html",  
+                success:function(data){ 
+                  $('#stepDiv'+nodeId).html(data);  
+                },  
+                error:function(){  
+                  alert("ajax exception!");  
+                }  
+            }); 
+        } 
     }
     window.getAjaxStepHtml = getAjaxStepHtml;
         
