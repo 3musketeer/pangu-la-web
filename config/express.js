@@ -5,6 +5,7 @@ var express = require('express')
   , partials = require('express-partials')
   , plugin = require('plugin')
   , auth = require('../app/controllers/auth')
+  , log = require('../app/controllers/log')
   , solr = require('solr');
 module.exports = function (app, config) {
 
@@ -27,7 +28,7 @@ module.exports = function (app, config) {
     }
 
     // set views path, template engine and default layout
-	app.engine('html', require('ejs').__express)
+	  app.engine('html', require('ejs').__express)
     app.set('views', config.root + '/app/views')
     app.set('view engine', 'html')
     
@@ -43,9 +44,10 @@ module.exports = function (app, config) {
     app.use(express.bodyParser())
     app.use(express.methodOverride())
     
-    
+    //log4js
+    log.use(app);
 
-	app.use(function(req, res, next){
+	 app.use(function(req, res, next){
 		res.on('header', function() {
 			if (!req.session) return;
 			if (req.session.cookie.expires==null) return;

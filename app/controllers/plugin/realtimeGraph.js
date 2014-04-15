@@ -9,6 +9,7 @@ var mongoose = require('mongoose')
 
 exports.plugin = function(server) {
 
+   //实时图表
    server.get('/realtimeGraph.html', function(req, res) { 
         var chartList = req.query.chartList;
         var list = chart_list[chartList]; 
@@ -99,7 +100,7 @@ exports.plugin = function(server) {
     	})                   
    });
    
-   
+   //实时对比
    server.get('/realtimeCompareGraph.html', function(req, res) { 
         var chartList = req.query.chartList
         var module = req.query.module||'false'

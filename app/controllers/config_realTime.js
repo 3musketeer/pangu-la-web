@@ -1,3 +1,4 @@
+//graph开头为曲线图配置，detail开头为明细配置，meter开头为仪表盘配置
 var scopeNames = {'day':'日', 'month':'月', 'year':'年'}
 
 exports.graphConfig = {

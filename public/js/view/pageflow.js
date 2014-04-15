@@ -3,8 +3,8 @@
        '1': {'symbolType':'start','symbolText':'开始','symbolDesc':'','symbolLink':''},
        '2': {'symbolType':'condition','symbolText':'是否明确\n故障主机','symbolLink':''},
        '3': {'symbolType':'operation','symbolText':'显示主机对比图','symbolLink':''},
-       '4': {'symbolType':'operation','symbolText':'输入主机IP','symbolLink':''},
-       '5': {'symbolType':'operation','symbolText':'选择指标'},
+       '4': {'symbolType':'operation','symbolText':'输入主机IP','symbolLink':'/inputIp.html'},
+       '5': {'symbolType':'operation','symbolText':'选择指标','symbolLink':'/selectTarget.html'},
        '6': {'symbolType':'operation','symbolText':'查看指标','symbolDesc':'查看各项指标，排名、仪表盘、曲线图、对比图、柱状图等'},
        '7': {'symbolType':'condition','symbolText':'是否查看\n其他指标','symbolLink':'/initQueryTopDetail.html'},
        '8': {'symbolType':'end','symbolText':'结束','symbolLink':''},
@@ -46,21 +46,22 @@
             pageHtml.push("<i>"+flowData.key+"</i>");
             pageHtml.push("<h5>"+flowData.text+"</h5>");
             pageHtml.push("<span>"+flowData.desc+"</span>");
-            if(!flowData.yes && !flowData.no)
-                pageHtml.push("<a onclick=\"getAjaxStepHtml('"+flowData.link+"','"+flowData.key+"')\""+" id='stepHref"+flowData.key+"'></a>");
+            //if(!flowData.yes && !flowData.no)
+               // pageHtml.push("<a onclick=\"getAjaxStepHtml('"+flowData.link+"','"+flowData.key+"')\""+" id='stepHref"+flowData.key+"'></a>");
             pageHtml.push("</div>");
             if(!flowData.yes && !flowData.no)
                 pageHtml.push("<div id='stepDiv"+flowData.key+"'></div>");
             else{
                 pageHtml.push("<div id='stepDiv"+flowData.key+"'>");
-                pageHtml.push("<label class=\"control-label\">"+flowData.text+"：</label>");
+                pageHtml.push("<label class=\"control-label\">"+flowData.text+"：<span class='text-error'>*</span></label>");
                 pageHtml.push("<select class=\"input_field_12em link required\" id='select"+flowData.key+"'>");
                 pageHtml.push("<option value=\"\">请选择</option>");
                 pageHtml.push("<option value='"+flowData.yes.key+"'>是</option>");
                 pageHtml.push("<option value='"+flowData.no.key+"'>否</option>");
                 pageHtml.push("</select>");
                 pageHtml.push("</div>")
-            }      
+            } 
+            pageHtml.push("<input type='hidden' id='stepData"+flowData.key+"' value='' />");              
             pageHtml.push("</fieldset>");
         }
         
@@ -103,14 +104,17 @@
     }
     chart.diagram.paper.getById(chart.start.key).attr({ src: '/img/flowchart/bg.png'});
     chart.diagram.paper.getById("path"+chart.start.next.key).attr({ stroke: '#4ab0cd'});
-    
+    
     
     
     //===== Form wizards =====//
     $("#wizard3").formwizard({       
         formPluginEnabled: true,
-        validationEnabled: false,
-        focusFirstInput : false,	 	
+        validationEnabled: true,
+        focusFirstInput : false,	
+        textSubmit : '结束',
+        textNext : '下一步',
+        textBack : '上一步',
         formOptions :{
         	success: function(data){$("#status2").fadeTo(500,1,function(){ $(this).html("<span>Form was submitted!</span>").fadeTo(5000, 0); })},
         	beforeSubmit: function(data){$("#data2").html("<span>Form was submitted with ajax. Data sent to the server: " + $.param(data) + "</span>");},
@@ -128,10 +132,9 @@
         if(data.isBackNavigation == true){
             
         }else{
-            $('#stepHref'+data.currentStep).click();
-            
+           if(chart.symbols[data.currentStep].symbolType != 'condition')
+               getAjaxStepHtml(chart.symbols[data.currentStep].link,data.previousStep,data.currentStep)
         }
-        
         for(var item in chart.symbols){   
             if(item == data.currentStep){
                 if(chart.symbols[item].symbolType == 'condition'){
@@ -171,13 +174,13 @@
     });
     
     
-    function getAjaxStepHtml(stepUrl,nodeId){
-
+    function getAjaxStepHtml(stepUrl,preNode,nodeId){
+        alert($('#stepData'+preNode).attr("value"));
         if(stepUrl != ''){
             $.ajax({  
                 type:"GET",  
                 url:stepUrl,  
-                data:"value="+$("#datepicker").attr("value")+"&requestParam="+"",  
+                data:"value="+$("#datepicker").attr("value")+"&requestParam="+$('#stepData'+preNode).attr("value")+"&stepId="+nodeId,  
                 dataType:"html",  
                 success:function(data){ 
                   $('#stepDiv'+nodeId).html(data);  
@@ -189,5 +192,39 @@
         } 
     }
     window.getAjaxStepHtml = getAjaxStepHtml;
+    
+   
+    jQuery.extend(jQuery.validator.messages, {
+ 
+        required: "此内容为必填项,请输入!",
+        remote: "内容输入错误!",
+        email: "E-mail格式错误,请重新输入!",
+        url: "网址格式错误,请重新输入!",
+        date: "日期格式错误,请重新输入!",
+        dateISO: "日期格式错误,请重新输入!",
+        number: "请输入合法的数字!",
+        digits: "请输入零或正整数!",
+        creditcard: "信用卡号格式错误,请重新输入!",
+        equalTo: "两次输入不一致,请重新输入!",
+        accept: "请输入拥有合法后缀名的字符串!",
+        maxlength: jQuery.validator.format("字符串长度不能大于{0}!"),
+        minlength: jQuery.validator.format("字符串长度不能小于{0}!"),
+        rangelength: jQuery.validator.format("字符串长度只允许在{0}-{1}之间!"),
+        range: jQuery.validator.format("输入的数值只允许在{0}-{1}之间!"),
+        max: jQuery.validator.format("输入的数值不允许大于{0}!"),
+        min: jQuery.validator.format("输入的数值不允许小于{0}!"),
+        integer: "请输入合法的整数!",
+        positive: "请输入合法的正数!",
+        positiveInteger: "请输入合法的正整数!",
+        mobile: "手机号码格式错误,请重新输入!",
+        phone: "电话号码格式错误,请重新输入!",
+        zipCode: "邮政编码格式错误,请重新输入!",
+        requiredTo: "此内容为必填项,请输入!",
+        username: "只允许包含中文、英文、数字和下划线!",
+        prefix: "请输入以 {0} 开头的字符串!",
+        lettersonly: "只允许包含字母!",
+        alphanumeric: "只允许包含英文、数字和下划线!"
+    }); 
+
         
 });

@@ -25,8 +25,10 @@
 
 /* Interaction Cues
 ----------------------------------*/
-.ui-state-disabled { cursor: default !important; }
+//.ui-state-disabled { cursor: default !important; }
 
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight  {border: 0px solid #fed22f; background: #ffe45c repeat-x; color: #363636; }
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { border: 1px solid #fbd850; background: #ffffff repeat-x; font-weight: bold; color: #eb8f00; }
 
 /* Icons
 ----------------------------------*/
