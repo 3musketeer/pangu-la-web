@@ -15,14 +15,14 @@ exports.plugin = function(server) {
         var value = req.query.value||'';           
         var list = chart_list[chartList]; 
         
-        if(value == ''){
+        //if(value == ''){
             var now = new Date().getTime();
             var dateCa = new Date(now);
             var date = dateCa.getDate() < 10 ? "0" + dateCa.getDate() : dateCa.getDate();
             var month = (dateCa.getMonth()+1) < 10 ? "0" + (dateCa.getMonth()+1) : (dateCa.getMonth()+1);
             var year = dateCa.getFullYear();     
             value = year+"-"+month+"-"+date; 
-        }
+       // }
         logger.debug("value=%s",value);
         var headTile = config[list[0].mode+list[0].type+list[0].subtype].name;
         var displayLength = config[list[0].mode+list[0].type+list[0].subtype].displayLength;
@@ -38,7 +38,7 @@ exports.plugin = function(server) {
    });
    
    
-   server.get('/realtimeQueryDetailData', function(req, res) {
+   server.get('/realtimeQueryDetailData', function(req, res,next) {
     	var mode = req.query.mode
     	  , type = req.query.type
     	  , scope = req.query.scope
@@ -62,7 +62,7 @@ exports.plugin = function(server) {
       logger.debug("type------------=%s",type);
       logger.debug("subtype------------=%s",subtype);
     	if (!config[mode+type])
-    		throw new  Error('not found');
+    		return next(new Error('not found'));
     	
     	var tempConfig ={};	
       extend(true,tempConfig,config[mode+type]);

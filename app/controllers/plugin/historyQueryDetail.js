@@ -25,7 +25,7 @@ exports.plugin = function(server) {
    });
    
    
-   server.get('/historyQueryDetailData', function(req, res) {
+   server.get('/historyQueryDetailData', function(req, res,next) {
     	var mode = req.query.mode
     	  , type = req.query.type
     	  , scope = req.query.scope

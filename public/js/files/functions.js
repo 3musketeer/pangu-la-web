@@ -95,7 +95,7 @@
 
             alert('a day has been clicked!');
 
-        },
+        }
 
 		
 	});
@@ -378,20 +378,7 @@
 		});
 	});
 
-	$("a.no-close-button").click(function(e) {
-		e.preventDefault();
-		bootbox.dialog("If a button's handler now explicitly returns <b>false</b>, the dialog will not be closed. Note that if anything <b>!== false</b> - e.g. nothing, true, null etc - is returned, the dialog will close.", [{
-			"I'll close on click": function() {
-				console.log("close on click");
-				return true;
-			},
-		}, {
-			"I won't!": function() {
-				console.log("returning false...");
-				return false;
-			}
-		}]);
-	});
+
 
 
 

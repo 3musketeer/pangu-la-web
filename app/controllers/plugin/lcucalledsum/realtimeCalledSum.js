@@ -28,7 +28,7 @@ exports.plugin = function(server) {
    server.get('/getRealtimeLcuCalledSumData', function(req, res) { 
 
       var chartList = req.query.chartList
-         ,value =  req.query.value||''
+         ,value =  ''
          ,collectTime = req.query.collectTime||'';
       var now = new Date().getTime();
       logger.debug("collectTime=%s",collectTime);
@@ -38,6 +38,13 @@ exports.plugin = function(server) {
       var tempConfig ={};	
       extend(true,tempConfig,config);
       
+      var now = new Date().getTime();
+      var dateCa = new Date(now);
+      var date = dateCa.getDate() < 10 ? "0" + dateCa.getDate() : dateCa.getDate();
+      var month = (dateCa.getMonth()+1) < 10 ? "0" + (dateCa.getMonth()+1) : (dateCa.getMonth()+1);
+      var year = dateCa.getFullYear();     
+      value = year+"-"+month+"-"+date; 
+    
       var list = [];             
       var tempList = chart_list[chartList];  
       extend(true,list,tempList);  
