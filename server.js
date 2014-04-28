@@ -59,7 +59,6 @@ if (cluster.isMaster) {
             }, 30000);
             killTimer.unref();
             if (cluster.worker) {
-                logger.debug('e+++++++++++++++++++++++++++++++++++++++');
                 cluster.worker.disconnect();
             }
         } catch (e) {
