@@ -15,6 +15,7 @@ exports.barConfig = {
 		colNames : [ 'hours', '_count'], 
 		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false}},
 		filterColNames: ['TRANSCODE'],
+		statType:'LCU',
 		sort: {'hours' : 1}
 	},
 	TuxStateFailedSumAtday: {
@@ -28,6 +29,7 @@ exports.barConfig = {
 		colNames : [ 'hours', '_count'], 
 		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false}},
 		filterColNames: ['TRANSCODE'],
+		statType:'LCU',
 		sort: {'hours' : 1}
 	},
 	
@@ -41,7 +43,8 @@ exports.barConfig = {
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count'], 
 		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false}},
-		filterColNames: ['TRANSCODE'],
+		filterColNames: ['SVRNAME'],
+		statType:'SVR',
 		sort: {'hours' : 1}
 	},
 	
@@ -55,7 +58,8 @@ exports.barConfig = {
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count'], 
 		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false}},
-		filterColNames: ['TRANSCODE'],
+		filterColNames: ['SVRNAME'],
+		statType:'SVR',
 		sort: {'hours' : 1}
 	}
 	
@@ -65,8 +69,8 @@ exports.barList = {
     
   lcuCalledSumList:[ {mode:'TuxState', type:'CalledSumByTime',subtype:'Atday'}],
   lcuFailedSumList:[ {mode:'TuxState', type:'FailedSum',subtype:'Atday'}],
-  svcCalledSumList:[ {mode:'TuxState', type:'CalledSumByTime',subtype:'Atday1'}],
-  svcFailedSumList:[ {mode:'TuxState', type:'CalledSumByTime',subtype:'Atday2'}]
+  svcCalledSumList:[ {mode:'TuxState', type:'CalledSum',subtype:'Atday1'}],
+  svcFailedSumList:[ {mode:'TuxState', type:'FailedSum',subtype:'Atday2'}]
 
 }
 

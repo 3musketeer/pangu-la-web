@@ -128,7 +128,8 @@
 		'showDuration': true
 	});
 	
-	$('#onselectExample').timepicker();
+
+
 	$('#onselectExample').on('changeTime', function() {
 		$('#onselectTarget').text($(this).val());
 	});
@@ -188,6 +189,7 @@
 		    $('#pickerDataUrl').click();
 			}
     });
+    
 
 	var dates = $( "#fromDate, #toDate" ).datepicker({
 		defaultDate: "+1w",
