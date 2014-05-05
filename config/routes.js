@@ -18,6 +18,8 @@ module.exports = function (app) {
 	app.get('/index.html', auth.requiresLogin, main.index); 
 	app.get('/getStatData.html', auth.requiresLogin, main.getStatData); 
 	app.get('/getUserSubscribeType.html', auth.requiresLogin, main.getUserSubscribeType);
+	app.get('/getInbox.html', auth.requiresLogin, main.getInbox);
+	app.get('/getMailDetail.html', auth.requiresLogin, main.getMailDetail);
 	
 
 	//排名清单

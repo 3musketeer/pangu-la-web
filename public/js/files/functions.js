@@ -750,7 +750,61 @@
    //updating ctrol end
    
    
+   var schedule = function(){
+       //收件箱 
+       $.ajax({  
+            type:"GET",  
+            url:"/getInbox.html",  
+            data:"",  
+            dataType:"json",  
+            success:function(data){
+                var innerHTML ='';
+                 data.forEach(function(row){ 
+                    var dateCa = new Date(row.SubscriptDate);                    
+                    var date = dateCa.getDate() < 10 ? "0" + dateCa.getDate() : dateCa.getDate();
+                    var month = (dateCa.getMonth()+1) < 10 ? "0" + (dateCa.getMonth()+1) : (dateCa.getMonth()+1);
+                    var year = dateCa.getFullYear();     
+                    var value = year+"-"+month+"-"+date;
+                    if(row.Unread == '0')   
+                        innerHTML = innerHTML + "<li><a href=\"javascript:getWarningDetail('"+row.SubscriptionId+"','"+value+"');\" title=''><i class='icon-info-sign'></i><strong>"+row.SubscriptionTitle+"</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><li>";
+                    else
+                        innerHTML = innerHTML + "<li><a href=\"javascript:getWarningDetail('"+row.SubscriptionId+"','"+value+"');\" title=''><i class='icon-info-sign'></i>"+row.SubscriptionTitle+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><li>";
+                }); 
+                innerHTML = innerHTML + "<li><a  data-pjax='#content' href='/getAllMail.html' title=''><i class='icon-list'></i>更多...</a><li>"; 
+                $('#InboxMenu').html(innerHTML);
+            },  
+            error:function(xhr,status,errMsg){  
+              alert('获取用户收件箱失败！');  
+            }  
+       }); 
+       if(typeof(InboxScheduletimeId) == 'undefined'){ 
+           var InboxScheduletimeId = setTimeout(schedule, 300000);
+       }
+   }
    
+   function getWarningDetail(warningId,value){
+       $.ajax({  
+            type:"GET",  
+            url:"/getMailDetail.html",  
+            data:"warningId="+warningId+"&value="+value,  
+            dataType:"json",  
+            success:function(data){
+                var content = '异常类型：'+'<font color=red>'+ data.type+'</font>'+'</br>';
+                content = content + '异常时间：'+ data.time +'</br>';
+                if(data.host !='all'){
+                    content = content + '异常主机：'+data.host +'</br>';
+                }
+                content = content + '异常内容：</br>' +'<font color=red>'+ data.detail +'</font>'+'</br></br>';
+                content = content + '-------------------------------------------------------------'+'</br>';
+                $.messager.lays(300, 300);
+        		    $.messager.show('<font color=red><strong>异常警告</strong></font>',content);
+            },  
+            error:function(xhr,status,errMsg){  
+              alert('获取用户邮件明细出错！');  
+            }  
+       });
+   }
+   window.getWarningDetail = getWarningDetail;
    
    var callbacks = $.Callbacks('once');
    
@@ -776,7 +830,8 @@
    })
     
    callbacks.add(function() {
-       //刷新用户订阅关系
+       //刷新用户订阅配置
+       var bayeux = new Faye.Client('http://localhost:8001/faye');   
        $.ajax({  
             type:"GET",  
             url:"/getUserSubscribeType.html",  
@@ -784,8 +839,7 @@
             dataType:"json",  
             success:function(data){ 
                 //subscribe the Warning message
-                data.forEach(function(row){  
-                    var bayeux = new Faye.Client('http://localhost:8001/faye');      
+                data.forEach(function(row){    
                     bayeux.subscribe('/SystemMessage/'+row.SubscripType, function(message) {
                         var content = '异常类型：'+'<font color=red>'+ message.type+'</font>'+'</br>';
                         content = content + '异常时间：'+ message.time +'</br>';
@@ -796,6 +850,7 @@
                         content = content + '-------------------------------------------------------------'+'</br>';
                         $.messager.lays(300, 500);
                 		    $.messager.show('<font color=red><strong>异常警告</strong></font>',content);
+                		    
                     }); 
                     
                 }); 
@@ -805,7 +860,11 @@
             }  
         }); 
    })
-    
+      
+   callbacks.add(function() {
+       schedule();
+   })
+
 	//===== Form elements styling =====//
 	
 	$(".ui-datepicker-month, .styled, .dataTables_length select").uniform({ radioClass: 'choice' });

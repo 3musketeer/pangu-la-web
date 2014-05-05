@@ -1,4 +1,4 @@
-var mongoose = require('mongoose')
+﻿var mongoose = require('mongoose')
   , debug = require('debug')('pangu:sum')
   , util = require("util")
   , query = require('./query')
@@ -120,15 +120,51 @@ exports.getStatData = function(req, res) {
 }
 
 
-
-exports.getUserSubscribeType = function(req, res) {
+//用户订阅类型
+exports.getUserSubscribeType = function(req, res,next) {
     
     var table = mongoose.model('UserSubscription','UserSubscription');  
     table.find({'state': '0','user_name':req.session.user.user_name}, function(err, resultRow){
-        if(err)  throw new Error(err);	
+        if(err)  return next(err);			
         if(resultRow){
             var response = JSON.stringify(resultRow);        
             res.send(response);  
+        }
+    });
+}
+
+//收件箱
+exports.getInbox = function(req, res,next) {
+    
+    var table = mongoose.model('UserSubscriptionRel','UserSubscriptionRel');  
+    table.find({'user_name':req.session.user.user_name}, function(err, resultRow){
+        if(err) return next(err);		
+        if(resultRow){
+            var response = JSON.stringify(resultRow);        
+            res.send(response);  
+        }
+    }).sort({'Unread' : -1}).limit(10);
+}
+
+//邮件信息
+exports.getMailDetail = function(req, res,next) {
+    
+    var warningType = {'error':'异常','timeOut':'超时'};
+    var dt = new Date(req.query.value);
+    var YY = ("00"+dt.getFullYear()%100).substr(-2),
+	      MM = ("00"+(dt.getMonth() + 1)).substr(-2),
+	      DD = ("00"+dt.getDate()).substr(-2),
+	      HH = ("00"+dt.getHours()).substr(-2);
+	      
+	  var collection = 'warning'+YY+MM+DD;
+	  logger.debug('collection=%s',collection);    
+	  var table = mongoose.model('warningInfo',collection);  
+    table.findOne({'_id': req.query.warningId}, function(err, warningInfo){
+        if(err)  return next(err);		
+        if(warningInfo){
+            warningInfo.type = warningType[warningInfo.type];
+           var response = JSON.stringify(warningInfo);        
+           res.send(response);  
         }
     });
 }
