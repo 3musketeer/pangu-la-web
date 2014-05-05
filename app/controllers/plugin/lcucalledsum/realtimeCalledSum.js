@@ -44,7 +44,6 @@ exports.plugin = function(server) {
       var tempConfig ={};	
       extend(true,tempConfig,config);
       
-      var now = new Date().getTime();
       var dateCa = new Date(now);
       var date = dateCa.getDate() < 10 ? "0" + dateCa.getDate() : dateCa.getDate();
       var month = (dateCa.getMonth()+1) < 10 ? "0" + (dateCa.getMonth()+1) : (dateCa.getMonth()+1);
