@@ -94,16 +94,15 @@ module.exports = function (app, config) {
             res.locals.menus = menus;
             res.locals.current_user = req.session.user;
         }else{ 
-           
-           if (req.url == "/getInbox.html"){
-               ContentType = "text/plain";
-               res.StatusCode =500;
-               res.write("会话超时，请重新登录！");
-               res.end();
-               return;
-           }
-                      
+                    
            if(req.url != "/login.html" && req.url != "/auth.html" && req.url != "/logout"){
+                if (req.url == "/getInbox.html"){
+                   ContentType = "text/plain";
+                   res.StatusCode =500;
+                   res.write("会话超时，请重新登录！");
+                   res.end();
+                   return;
+                }
                 return res.redirect('/login.html')
            }
         }
