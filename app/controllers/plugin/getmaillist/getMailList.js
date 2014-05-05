@@ -13,7 +13,7 @@ exports.plugin = function(server) {
 
    server.get('/getAllMail.html', function(req, res) { 
  
-        var headTile = "异常警告列表"; 
+        var headTile = "异常告警列表"; 
         var queryUrl = "/getAllMailData";
     		res.renderPjax('plugin/getmaillist/getMailList',{    
     		    titles: ['排名', '异常标题', '异常类型', '是否已读', '异常日期','异常id'],
