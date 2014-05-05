@@ -122,7 +122,6 @@ exports.getStatData = function(req, res) {
 
 //用户订阅类型
 exports.getUserSubscribeType = function(req, res,next) {
-    
     var table = mongoose.model('UserSubscription','UserSubscription');  
     table.find({'state': '0','user_name':req.session.user.user_name}, function(err, resultRow){
         if(err)  return next(err);			
@@ -136,8 +135,19 @@ exports.getUserSubscribeType = function(req, res,next) {
 //收件箱
 exports.getInbox = function(req, res,next) {
     
+    var user_name  = '';
+    try{
+        user_name = req.session.user.user_name;
+    }catch(error)
+    {
+         ContentType = "text/plain";
+         res.StatusCode =500;
+         res.write("会话超时，请重新登录！");
+         res.end();
+         return;
+    }
     var table = mongoose.model('UserSubscriptionRel','UserSubscriptionRel');  
-    table.find({'user_name':req.session.user.user_name}, function(err, resultRow){
+    table.find({'user_name':user_name}, function(err, resultRow){
         if(err) return next(err);		
         if(resultRow){
             var response = JSON.stringify(resultRow);        
@@ -149,6 +159,17 @@ exports.getInbox = function(req, res,next) {
 //邮件信息
 exports.getMailDetail = function(req, res,next) {
     
+    var user_name  = '';
+    try{
+        user_name = req.session.user.user_name;
+    }catch(error)
+    {
+         ContentType = "text/plain";
+         res.StatusCode =500;
+         res.write("会话超时，请重新登录！");
+         res.end();
+         return;
+    }
     var warningType = {'error':'异常','timeOut':'超时'};
     var dt = new Date(req.query.value);
     var YY = ("00"+dt.getFullYear()%100).substr(-2),
@@ -163,7 +184,7 @@ exports.getMailDetail = function(req, res,next) {
         if(err)  return next(err);		
         if(warningInfo){
             var table1 = mongoose.model('UserSubscriptionRel','UserSubscriptionRel');  
-            table1.update({'user_name':req.session.user.user_name,'SubscriptionId':req.query.warningId},{$set:{Unread:'1'}},function(err){
+            table1.update({'user_name':user_name,'SubscriptionId':req.query.warningId},{$set:{Unread:'1'}},function(err){
         		    if(err) return next(err);		    
             });
             warningInfo.type = warningType[warningInfo.type];

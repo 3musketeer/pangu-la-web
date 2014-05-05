@@ -778,7 +778,8 @@
                 $('#InboxMenu').html(innerHTML);
             },  
             error:function(xhr,status,errMsg){  
-              alert('获取用户收件箱失败！');  
+              alert(xhr.responseText);
+              window.location ='/logout';
             }  
        }); 
        if(typeof(InboxScheduletimeId) == 'undefined'){ 
@@ -802,8 +803,10 @@
                 $.messager.lays(300, 300);
         		    $.messager.show('<font color=red><strong>异常警告</strong></font>',content,0,'cover');
             },  
-            error:function(xhr,status,errMsg){  
-              alert('获取用户邮件明细出错！');  
+            error:function (XMLHttpRequest, textStatus, errorThrown) {
+              alert(XMLHttpRequest.responseText);
+              window.location ='/logout';
+              
             }  
        });
    }
@@ -859,7 +862,8 @@
                 }); 
             },  
             error:function(xhr,status,errMsg){  
-              alert('获取用户订阅关系失败！');  
+              alert(xhr.responseText);
+              window.location ='/logout'; 
             }  
         }); 
    })

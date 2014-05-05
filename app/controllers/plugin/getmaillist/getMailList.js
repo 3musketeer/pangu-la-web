@@ -24,13 +24,21 @@ exports.plugin = function(server) {
    
    
    server.get('/getAllMailData', function(req, res,next) {
+     // delete req.session.user;
+      var user_name  = '';
+      try{
+          user_name = req.session.user.user_name;
+      }catch(error)
+      {
+           throw new Error('会话超时，请重新登录！');
+      }     
     	var iDisplayStart = req.query.iDisplayStart
     	  , iDisplayLength = req.query.iDisplayLength
         , sSearch = req.query.sSearch
     
       if(!iDisplayStart) iDisplayStart = 0;
       if(!iDisplayLength) iDisplayLength = 10;
-      var filter = {'user_name':req.session.user.user_name};
+      var filter = {'user_name':user_name};
          
       if (sSearch && sSearch != ""){
             filter.$or = [];

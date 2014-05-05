@@ -56,9 +56,6 @@ module.exports = function (app) {
 	app.get('/getPageDataAction',auth.getHeadPicture);
 	
 	
-	//数据加载
-	app.post('/receive',auth.receiveData);
-	
 	//退出
 	app.get('/logout',auth.logout); 
 
