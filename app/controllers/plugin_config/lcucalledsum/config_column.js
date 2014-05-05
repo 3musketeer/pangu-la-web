@@ -33,7 +33,7 @@ exports.barConfig = {
 		sort: {'hours' : 1}
 	},
 	
-	TuxStateCalledSumByTimeAtday1: {
+	TuxStateCalledSumBySvc: {
 		name: '服务调用总量',
 		displayType:'bar',
 		mode:'TuxState',
@@ -48,7 +48,7 @@ exports.barConfig = {
 		sort: {'hours' : 1}
 	},
 	
-	TuxStateCalledSumByTimeAtday2: {
+	TuxStateFailedSumBySvc: {
 		name: '服务异常量',
 		displayType:'bar',
 		mode:'TuxState',
@@ -69,8 +69,8 @@ exports.barList = {
     
   lcuCalledSumList:[ {mode:'TuxState', type:'CalledSumByTime',subtype:'Atday'}],
   lcuFailedSumList:[ {mode:'TuxState', type:'FailedSum',subtype:'Atday'}],
-  svcCalledSumList:[ {mode:'TuxState', type:'CalledSum',subtype:'Atday1'}],
-  svcFailedSumList:[ {mode:'TuxState', type:'FailedSum',subtype:'Atday2'}]
+  svcCalledSumList:[ {mode:'TuxState', type:'CalledSum',subtype:'BySvc'}],
+  svcFailedSumList:[ {mode:'TuxState', type:'FailedSum',subtype:'BySvc'}]
 
 }
 
@@ -131,5 +131,5 @@ exports.topList =  {
     lcuCalledSumList:[ {mode:'TuxState', type:'CalledSum',subtype:'ByLcu'}],
     lcuFailedSumList:[ {mode:'TuxState', type:'FailedSum',subtype:'ByLcu'}],
     svcCalledSumList:[ {mode:'TuxState', type:'CalledSum',subtype:'BySvr'}],
-    svcFailedSumList:[ {mode:'TuxState', type:'CalledSum',subtype:'BySvr'}]
+    svcFailedSumList:[ {mode:'TuxState', type:'FailedSum',subtype:'BySvr'}]
 }

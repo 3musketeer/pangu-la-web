@@ -829,8 +829,8 @@
             dataType:"json",  
             success:function(data){ 
               $('#DayCalledSum').html('今日调用总数<strong>'+data.DayCalledSum+'</strong>');  
-              $('#DayFailedSum').html('今日调用总数<strong>'+data.DayFailedSum+'</strong>');  
-              $('#DaySuccessRate').html('今日调用总数<strong>'+data.DaySuccessRate+'</strong>');  
+              $('#DayFailedSum').html('今日异常总数<strong>'+data.DayFailedSum+'</strong>');  
+              $('#DaySuccessRate').html('今日成功率<strong>'+data.DaySuccessRate+'</strong>');  
               $('#MonCalledSum').html('<strong>'+data.MonCalledSum+'</strong>'); 
               $('#MonFailedSum').html('<strong>'+data.MonFailedSum+'</strong>'); 
               $('#MonSuccessRate').html('<strong>'+data.MonSuccessRate+'</strong>'); 
