@@ -14,7 +14,7 @@ var mongoose = require('mongoose')
   , logger = require('./log').logger
   , config_index = require('./config_index').config
   , list_index = require('./config_index').list
-  , EventProxy = require('eventproxy').EventProxy;;
+  , EventProxy = require('eventproxy').EventProxy;
 
 var formatNum = function(num) {
 	if (num > 1000000) return (num/1000000).toFixed(1)+'M';
@@ -41,6 +41,7 @@ var accumulate = function(data) {
 
 exports.getStatData = function(req, res) {
     var client = redis.createClient(redisCfg.port,redisCfg.host);
+    client.publish("foo", "Hello Mr Lee");
     try
     {
        

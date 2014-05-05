@@ -768,6 +768,15 @@
           alert('加载调用统计失败！');  
         }  
     }); 
+    
+    
+    //subscribe the Warning message
+    var bayeux = new Faye.Client('http://localhost:8001/faye');
+    
+    bayeux.subscribe('/SystemMessage/error', function(message) {
+        //alert(JSON.stringify(message));
+    });
+        
   
 	//===== Form elements styling =====//
 	
