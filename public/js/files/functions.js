@@ -805,9 +805,12 @@
         		    $.messager.show('<font color=red><strong>异常警告</strong></font>',content,0,'cover');
             },  
             error:function (XMLHttpRequest, textStatus, errorThrown) {
-              alert(XMLHttpRequest.responseText);
-              window.location ='/logout';
-              
+              if(typeof(XMLHttpRequest.StatusCode) !='undefined' && XMLHttpRequest.StatusCode == 500){ 
+                  alert(XMLHttpRequest.responseText);
+                  window.location ='/logout';
+              }else{
+                  alert("获取邮件明细出错！");
+              }              
             }  
        });
    }
