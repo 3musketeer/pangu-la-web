@@ -776,15 +776,16 @@
                 }); 
                 innerHTML = innerHTML + "<li><a  data-pjax='#content' href='/getAllMail.html' title=''><i class='icon-list'></i>更多...</a><li>"; 
                 $('#InboxMenu').html(innerHTML);
+                
+                if(typeof(InboxScheduletimeId) == 'undefined'){ 
+                   var InboxScheduletimeId = setTimeout(schedule, 300000);
+                }
             },  
             error:function(xhr,status,errMsg){  
               alert(xhr.responseText);
               window.location ='/logout';
             }  
-       }); 
-       if(typeof(InboxScheduletimeId) == 'undefined'){ 
-           var InboxScheduletimeId = setTimeout(schedule, 300000);
-       }
+       });      
    }
    
    function getWarningDetail(warningId,value){
