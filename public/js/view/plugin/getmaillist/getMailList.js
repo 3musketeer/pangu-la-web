@@ -11,6 +11,20 @@ $(function() {
 		"bAutoWidth": false,
 		"bSort": false,
 		"sPaginationType": "full_numbers",
+		"fnServerData": function ( sSource, aoData, fnCallback ) {
+        $.ajax({
+            "dataType": 'json',
+            "type": "get",
+            "url": sSource,
+            "data": aoData,
+            "success": fnCallback,
+            "error": function (XMLHttpRequest, textStatus, errorThrown) {
+              alert(XMLHttpRequest.responseText);
+              window.location ='/logout';
+            } 
+        });
+    },
+    
 		"oLanguage": {
 			"sSearch": "<span>关键字过滤:</span> _INPUT_",
 			"sLengthMenu": "<span>每页显示数:</span> _MENU_",

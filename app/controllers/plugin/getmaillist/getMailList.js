@@ -24,14 +24,18 @@ exports.plugin = function(server) {
    
    
    server.get('/getAllMailData', function(req, res,next) {
-     // delete req.session.user;
+
       var user_name  = '';
       try{
           user_name = req.session.user.user_name;
       }catch(error)
       {
-           throw new Error('会话超时，请重新登录！');
-      }     
+           ContentType = "text/plain";
+           res.StatusCode =500;
+           res.write("会话超时，请重新登录！");
+           res.end();
+           return;
+      } 
     	var iDisplayStart = req.query.iDisplayStart
     	  , iDisplayLength = req.query.iDisplayLength
         , sSearch = req.query.sSearch
@@ -103,5 +107,4 @@ exports.plugin = function(server) {
             }
       });
    });
-   
-}
+     
