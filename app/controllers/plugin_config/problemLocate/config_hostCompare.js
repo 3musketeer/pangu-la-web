@@ -2,7 +2,7 @@ var scopeNames = {'day':'日', 'month':'月', 'year':'年'}
 
 exports.config = {
 	
-	TuxStateCalledSumByRealTimeAt28: {
+	TuxStateLocateProblemCompareAt28: {
 		name: '主机132.34.11.28',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -14,7 +14,7 @@ exports.config = {
 		sort: {'timestamp' : 1}
 	},
 	
-	TuxStateCalledSumByRealTimeAt28a: {
+	TuxStateLocateProblemCompareAt28a: {
 		name: '主机132.34.11.28b',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -26,7 +26,7 @@ exports.config = {
 		sort: {'timestamp' : 1}
 	},
 
-	TuxStateCalledSumByRealTimeAt29: {
+	TuxStateLocateProblemCompareAt29: {
 		name: '主机132.34.11.29',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -41,7 +41,7 @@ exports.config = {
 
 
 exports.list = [
-    {mode:'TuxState', type:'CalledSumByRealTime', subtype: 'At28',name: '主机132.34.11.28',value:'2014-02-18'},
-    {mode:'TuxState', type:'CalledSumByRealTime', subtype: 'At28a',name: '主机132.34.11.281',value:'2014-02-18'},
-    {mode:'TuxState', type:'CalledSumByRealTime', subtype: 'At29',name: '主机132.34.11.29',value:'2014-02-18'}
+    {mode:'TuxState', type:'LocateProblemCompare', subtype: 'At28',name: '主机132.34.11.28',value:'2014-02-18'},
+    {mode:'TuxState', type:'LocateProblemCompare', subtype: 'At28a',name: '主机132.34.11.281',value:'2014-02-18'},
+    {mode:'TuxState', type:'LocateProblemCompare', subtype: 'At29',name: '主机132.34.11.29',value:'2014-02-18'}
 ]

@@ -147,7 +147,7 @@ exports.getInbox = function(req, res,next) {
     }
     var table = mongoose.model('UserSubscriptionRel','UserSubscriptionRel');  
     table.find({'user_name':user_name}, function(err, resultRow){
-        if(err) return next(err);		
+        if(err)  return next(err);	
         if(resultRow){
             var response = JSON.stringify(resultRow);        
             res.send(response);  
@@ -180,7 +180,7 @@ exports.getMailDetail = function(req, res,next) {
 	  logger.debug('collection=%s',collection);    
 	  var table = mongoose.model('warningInfo',collection);  
     table.findOne({'_id': req.query.warningId}, function(err, warningInfo){
-        if(err)  return next(err);		
+        if(err)  return next(err);	
         if(warningInfo){
             var table1 = mongoose.model('UserSubscriptionRel','UserSubscriptionRel');  
             table1.update({'user_name':user_name,'SubscriptionId':req.query.warningId},{$set:{Unread:'1'}},function(err){

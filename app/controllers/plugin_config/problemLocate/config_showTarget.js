@@ -18,7 +18,7 @@ exports.graphConfig = {
 
 exports.graphList = {   
 	ShowSvcCalledSum:[ {mode:'TuxState', type:'CalledSumByRealTime',subtype:'AtDay',value:'2014-02-18'}],
-	ShowFailedSum:[ {mode:'TuxState', type:'CalledSumByRealTime',subtype:'AtDay',value:'2014-02-18'}],
-	ShowQueueSum:[ {mode:'TuxState', type:'CalledSumByRealTime',subtype:'AtDay',value:'2014-02-18'}],
-	ShowTimeOutSum:[ {mode:'TuxState', type:'CalledSumByRealTime',subtype:'AtDay',value:'2014-02-18'}]
+	ShowFailedSum:[ {mode:'TuxState', type:'CalledFailedByRealTime',subtype:'AtDay',value:'2014-02-18'}],
+	ShowQueueSum:[ {mode:'TuxState', type:'CalledQueueByRealTime',subtype:'AtDay',value:'2014-02-18'}],
+	ShowTimeOutSum:[ {mode:'TuxState', type:'CalledTimeOutSumByRealTime',subtype:'AtDay',value:'2014-02-18'}]
 }
