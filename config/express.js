@@ -1,4 +1,4 @@
-var express = require('express')
+ï»¿var express = require('express')
   , flash = require('connect-flash')
   , mongoStore = require('connect-mongo')(express)
   , pjax = require('express-pjax')
@@ -99,7 +99,7 @@ module.exports = function (app, config) {
                 if (req.url == "/getInbox.html"){
                    ContentType = "text/plain";
                    res.StatusCode =500;
-                   res.write("»á»°³¬Ê±£¬ÇëÖØĞÂµÇÂ¼£¡");
+                   res.write("ä¼šè¯è¶…æ—¶ï¼Œè¯·é‡æ–°ç™»å½•ï¼");
                    res.end();
                    return;
                 }
