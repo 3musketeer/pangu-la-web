@@ -750,44 +750,66 @@
    //updating ctrol end
    
    
-   //刷新数据统计
-   $.ajax({  
-        type:"GET",  
-        url:"/getStatData.html",  
-        data:"value="+$("#datepicker").attr("value"),  
-        dataType:"json",  
-        success:function(data){ 
-          $('#DayCalledSum').html('今日调用总数<strong>'+data.DayCalledSum+'</strong>');  
-          $('#DayFailedSum').html('今日调用总数<strong>'+data.DayFailedSum+'</strong>');  
-          $('#DaySuccessRate').html('今日调用总数<strong>'+data.DaySuccessRate+'</strong>');  
-          $('#MonCalledSum').html('<strong>'+data.MonCalledSum+'</strong>'); 
-          $('#MonFailedSum').html('<strong>'+data.MonFailedSum+'</strong>'); 
-          $('#MonSuccessRate').html('<strong>'+data.MonSuccessRate+'</strong>'); 
-        },  
-        error:function(xhr,status,errMsg){  
-          alert('加载调用统计失败！');  
-        }  
-    }); 
+   
+   
+   var callbacks = $.Callbacks('once');
+   
+   callbacks.add(function() {
+       //刷新数据统计及
+       $.ajax({  
+            type:"GET",  
+            url:"/getStatData.html",  
+            data:"value="+$("#datepicker").attr("value"),  
+            dataType:"json",  
+            success:function(data){ 
+              $('#DayCalledSum').html('今日调用总数<strong>'+data.DayCalledSum+'</strong>');  
+              $('#DayFailedSum').html('今日调用总数<strong>'+data.DayFailedSum+'</strong>');  
+              $('#DaySuccessRate').html('今日调用总数<strong>'+data.DaySuccessRate+'</strong>');  
+              $('#MonCalledSum').html('<strong>'+data.MonCalledSum+'</strong>'); 
+              $('#MonFailedSum').html('<strong>'+data.MonFailedSum+'</strong>'); 
+              $('#MonSuccessRate').html('<strong>'+data.MonSuccessRate+'</strong>'); 
+            },  
+            error:function(xhr,status,errMsg){  
+              alert('加载调用统计失败！');  
+            }  
+        }); 
+   })
     
+   callbacks.add(function() {
+       //刷新用户订阅关系
+       $.ajax({  
+            type:"GET",  
+            url:"/getUserSubscribeType.html",  
+            data:"",  
+            dataType:"json",  
+            success:function(data){ 
+                //subscribe the Warning message
+                data.forEach(function(row){  
+                    var bayeux = new Faye.Client('http://localhost:8001/faye');      
+                    bayeux.subscribe('/SystemMessage/'+row.SubscripType, function(message) {
+                        var content = '异常类型：'+'<font color=red>'+ message.type+'</font>'+'</br>';
+                        content = content + '异常时间：'+ message.time +'</br>';
+                        if(message.host !='all'){
+                            content = content + '异常主机：'+message.host +'</br>';
+                        }
+                        content = content + '异常内容：</br>' +'<font color=red>'+ message.detail +'</font>'+'</br>';
+                        content = content + '-------------------------------------------------------------'+'</br>';
+                        $.messager.lays(300, 500);
+                		    $.messager.show('<font color=red><strong>异常警告</strong></font>',content);
+                    }); 
+                    
+                }); 
+            },  
+            error:function(xhr,status,errMsg){  
+              alert('获取用户订阅关系失败！');  
+            }  
+        }); 
+   })
     
-    //subscribe the Warning message
-    var bayeux = new Faye.Client('http://localhost:8001/faye');
-    
-    bayeux.subscribe('/SystemMessage/error', function(message) {
-        var content = '异常类型：'+'<font color=red>'+ message.type+'</font>'+'</br>';
-        content = content + '异常时间：'+ message.time +'</br>';
-        if(message.host !='all'){
-            content = content + '异常主机：'+message.host +'</br>';
-        }
-        content = content + '异常内容：</br>' +'<font color=red>'+ message.detail +'</font>'+'</br>';
-        content = content + '-------------------------------------------------------------'+'</br>';
-        $.messager.lays(300, 500);
-		    $.messager.show('<font color=red><strong>异常警告</strong></font>',content);
-    });
-        
-  
 	//===== Form elements styling =====//
 	
 	$(".ui-datepicker-month, .styled, .dataTables_length select").uniform({ radioClass: 'choice' });
+		
+	callbacks.fire(); 
 		
 });

@@ -120,6 +120,19 @@ exports.getStatData = function(req, res) {
 }
 
 
+
+exports.getUserSubscribeType = function(req, res) {
+    
+    var table = mongoose.model('UserSubscription','UserSubscription');  
+    table.find({'state': '0','user_name':req.session.user.user_name}, function(err, resultRow){
+        if(err)  throw new Error(err);	
+        if(resultRow){
+            var response = JSON.stringify(resultRow);        
+            res.send(response);  
+        }
+    });
+}
+
 exports.index = function(req, res) {
     
 
