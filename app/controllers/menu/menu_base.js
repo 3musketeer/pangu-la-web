@@ -48,6 +48,6 @@ module.exports = [
                                           ]
   },
   
-  {title:'告警',class:'ico-warning-sign',list:[],url:""}
+  {title:'告警',class:'ico-warning-sign',list:[],url:"/getAllMail.html"}
    
 ]
