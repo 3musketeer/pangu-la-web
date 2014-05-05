@@ -3,7 +3,7 @@ var scopeNames = {'day':'日', 'month':'月', 'year':'年'}
 exports.config = {
 	
 	TuxStateCalledSumByTimeAt28: {
-		name: '调用量',
+		name: '调用总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
@@ -13,8 +13,8 @@ exports.config = {
 		sort: {'hours' : 1}
 	},
 
-	TuxStateCalledSumByTimeAt29: {
-		name: '失败量',
+	TuxStateFailedSumByTimeAt29: {
+		name: '异常总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
@@ -24,8 +24,8 @@ exports.config = {
 		sort: {'hours' : 1}
 	},
 	
-	TuxStateCalledSumByTimeAt291: {
-		name: '失败量',
+	TuxStateQueueSumByTimeAt291: {
+		name: '队列总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
@@ -40,9 +40,9 @@ exports.config = {
 exports.list = {
     
 
-	historyLcuSumCompareChart:[ [{mode:'TuxState', type:'CalledSumByTime', subtype: 'At28',hostName: '主机28'},{mode:'TuxState', type:'CalledSumByTime', subtype: 'At29',hostName: '主机28'},{mode:'TuxState', type:'CalledSumByTime', subtype: 'At291',hostName: '主机28'}]
-	                           ,[{mode:'TuxState', type:'CalledSumByTime', subtype: 'At28',hostName: '主机29'},{mode:'TuxState', type:'CalledSumByTime', subtype: 'At29',hostName: '主机29'}]
-	                           ,[{mode:'TuxState', type:'CalledSumByTime', subtype: 'At28',hostName: '主机29'},{mode:'TuxState', type:'CalledSumByTime', subtype: 'At29',hostName: '主机29'}]
+	historyLcuSumCompareChart:[ [{mode:'TuxState', type:'CalledSum', subtype: 'ByTimeAt28',hostName: '主机28'},{mode:'TuxState', type:'CalledSum', subtype: 'ByTimeAt29',hostName: '主机28'},{mode:'TuxState', type:'CalledSum', subtype: 'ByTimeAt291',hostName: '主机28'}]
+	                           ,[{mode:'TuxState', type:'FailedSum', subtype: 'ByTimeAt28',hostName: '主机29'},{mode:'TuxState', type:'FailedSum', subtype: 'ByTimeAt29',hostName: '主机29'}]
+	                           ,[{mode:'TuxState', type:'QueueSum', subtype: 'ByTimeAt28',hostName: '主机29'},{mode:'TuxState', type:'QueueSum', subtype: 'ByTimeAt29',hostName: '主机29'}]
 	                          ]
 	                 
             

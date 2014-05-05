@@ -5,6 +5,7 @@ var mongoose = require('mongoose')
   , config = require('../../plugin_config/lcucalledsum/config_realTime').graphConfig
   , chart_list = require('../../plugin_config/lcucalledsum/config_realTime').graphList
   , transcode_list = require('../../config_coreTranscodeList').coreTranscodeList
+  , server_list = require('../../config_coreServerList').coreServerList
   , extend = require('extend')
   , logger = require('../../log').logger;
 
@@ -15,13 +16,18 @@ exports.plugin = function(server) {
         var chartList = req.query.chartList;
         var list = chart_list[chartList]; 
         var collectTimeList = [];
+        var coreList = [];
         var headTitle ='';
         list.forEach(function(item){
             headTitle = config[item.mode+item.type+item.subtype].name;
             if(config[item.mode+item.type+item.subtype].collectTimeList)
                 collectTimeList = config[item.mode+item.type+item.subtype].collectTimeList;
+            if(config[item.mode+item.type+item.subtype].statType =='LCU') 
+               coreList =  transcode_list;
+            else if(config[item.mode+item.type+item.subtype].statType =='SVR')
+               coreList =  server_list; 
         });
-    		res.renderPjax('plugin/lcucalledsum/realtimeCalledSum',{chartList:chartList,collectTimeList:collectTimeList,coreTranscodeList:transcode_list,headTitle:headTitle})     	              
+    		res.renderPjax('plugin/lcucalledsum/realtimeCalledSum',{chartList:chartList,collectTimeList:collectTimeList,coreTranscodeList:coreList,headTitle:headTitle})     	              
    });
    
    
@@ -63,9 +69,10 @@ exports.plugin = function(server) {
                      filter[col] = {$gte: now-tempConfig[item.mode+item.type+item.subtype].delayTime,$lte: now+1000};   
                  }else{ 
                      var obj = {};
-                     logger.debug("req.query[col]=%s",req.query[col]);
-                     if(req.query[col]||'' != '')
-                        filter[col] = req.query[col];
+                     logger.debug("req.query[col]=%s",req.query['TRANSCODE']);
+                     logger.debug("col=%s",col);
+                     if(req.query['TRANSCODE']||'' != '')
+                        filter[col] = req.query['TRANSCODE'];
                  }    
              });
              tempConfig[item.mode+item.type+item.subtype].filter = filter;  
