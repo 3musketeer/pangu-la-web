@@ -774,15 +774,15 @@
     var bayeux = new Faye.Client('http://localhost:8001/faye');
     
     bayeux.subscribe('/SystemMessage/error', function(message) {
-        var content = '异常类型：'+ message.type+'</br>';
+        var content = '异常类型：'+'<font color=red>'+ message.type+'</font>'+'</br>';
         content = content + '异常时间：'+ message.time +'</br>';
         if(message.host !='all'){
             content = content + '异常主机：'+message.host +'</br>';
         }
-        content = content + '异常内容：</br>' + message.detail+'</br>';
+        content = content + '异常内容：</br>' +'<font color=red>'+ message.detail +'</font>'+'</br>';
         content = content + '-------------------------------------------------------------'+'</br>';
         $.messager.lays(300, 500);
-		    $.messager.show('<font color=red><strong>异常警告</strong></font>','<font color=red>'+content+'</font>');
+		    $.messager.show('<font color=red><strong>异常警告</strong></font>',content);
     });
         
   
