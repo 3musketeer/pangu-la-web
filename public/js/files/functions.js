@@ -747,6 +747,10 @@
             delete timeId;
        }
    });
+   
+   $(document).on('complete.pjax', function (e) { 
+       schedule();
+   });
    //updating ctrol end
    
    
