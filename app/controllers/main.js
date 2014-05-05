@@ -162,6 +162,10 @@ exports.getMailDetail = function(req, res,next) {
     table.findOne({'_id': req.query.warningId}, function(err, warningInfo){
         if(err)  return next(err);		
         if(warningInfo){
+            var table1 = mongoose.model('UserSubscriptionRel','UserSubscriptionRel');  
+            table1.update({'user_name':req.session.user.user_name,'SubscriptionId':req.query.warningId},{$set:{Unread:'1'}},function(err){
+        		    if(err) return next(err);		    
+            });
             warningInfo.type = warningType[warningInfo.type];
            var response = JSON.stringify(warningInfo);        
            res.send(response);  

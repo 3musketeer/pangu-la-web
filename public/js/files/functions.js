@@ -799,9 +799,8 @@
                     content = content + '异常主机：'+data.host +'</br>';
                 }
                 content = content + '异常内容：</br>' +'<font color=red>'+ data.detail +'</font>'+'</br></br>';
-                content = content + '-------------------------------------------------------------'+'</br>';
                 $.messager.lays(300, 300);
-        		    $.messager.show('<font color=red><strong>异常警告</strong></font>',content);
+        		    $.messager.show('<font color=red><strong>异常警告</strong></font>',content,0,'cover');
             },  
             error:function(xhr,status,errMsg){  
               alert('获取用户邮件明细出错！');  

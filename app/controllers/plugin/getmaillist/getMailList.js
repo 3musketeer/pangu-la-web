@@ -16,7 +16,7 @@ exports.plugin = function(server) {
         var headTile = "异常警告列表"; 
         var queryUrl = "/getAllMailData";
     		res.renderPjax('plugin/getmaillist/getMailList',{    
-    		    titles: ['排名', '异常标题', '异常类型', '是否已读', '异常日期'],
+    		    titles: ['排名', '异常标题', '异常类型', '是否已读', '异常日期','异常id'],
             queryUrl:queryUrl,
             headTile:headTile
     		})     	              
@@ -51,7 +51,7 @@ exports.plugin = function(server) {
             output.aaData = [];
                     
             docs.forEach(function(item,idx){
-                ['#','SubscriptionTitle', 'relType', 'Unread', 'SubscriptDate'].forEach(function(col){    
+                ['#','SubscriptionTitle', 'relType', 'Unread', 'SubscriptDate','SubscriptionId'].forEach(function(col){    
                     if(col == '#') { 
                         temp.push(parseInt(iDisplayStart)+1+idx);
                     }else{          
@@ -61,7 +61,7 @@ exports.plugin = function(server) {
                 output.aaData.push(temp);
                 temp = [];
             }); 
-            var response = JSON.stringify(output);        
+            var response = JSON.stringify(output);       
             res.send(response);
     	}
         
@@ -77,7 +77,7 @@ exports.plugin = function(server) {
             proxy.trigger('count', cnt);
       });
     	
-      table.find(filter, ['#','SubscriptionTitle', 'relType', 'Unread', 'SubscriptDate'].join(' '))
+      table.find(filter, ['#','SubscriptionTitle', 'relType', 'Unread', 'SubscriptDate','SubscriptionId'].join(' '))
         .sort({'Unread' : 1}).limit(iDisplayLength||0).skip(iDisplayStart||0)
         .exec(function(err, resultRow){
             if(err) return next(err);		

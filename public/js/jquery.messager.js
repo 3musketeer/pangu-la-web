@@ -40,8 +40,13 @@
 			//alert(timer1);
 		});
 	};
-	this.show = function(title, text, time){
-		if($("#message").is("div")){$("#message_content").prepend(text);return; }
+	this.show = function(title, text, time,cover){
+	   
+	  if(!cover){
+		    if($("#message").is("div")){$("#message_content").prepend(text);return; }
+		}else{
+		    if($("#message").is("div")){$("#message").remove(); }
+		}
 		if(title==0 || !title)title = this.title;
 		this.inits(title, text);
 		if(time>=0)this.time = time;
