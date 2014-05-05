@@ -41,7 +41,6 @@ var accumulate = function(data) {
 
 exports.getStatData = function(req, res) {
     var client = redis.createClient(redisCfg.port,redisCfg.host);
-    client.publish("foo", "Hello Mr Lee");
     try
     {
        
