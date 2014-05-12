@@ -108,3 +108,4 @@ exports.plugin = function(server) {
       });
    });
      
+}

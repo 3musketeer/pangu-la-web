@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "express": "<4.0.0",
+    "express-partials": "latest",
     "ejs": "latest",
     "redis": "0.10.1",
     "connect-flash": "latest",
