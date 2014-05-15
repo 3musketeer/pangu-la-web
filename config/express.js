@@ -94,8 +94,8 @@ module.exports = function (app, config) {
             res.locals.menus = menus;
             res.locals.current_user = req.session.user;
         }else{ 
-                    
-           if(req.url != "/login.html" && req.url != "/auth.html" && req.url != "/logout" && req.url != "/register"){
+                     
+           if(req.url != "/login.html" && req.url != "/auth.html" && req.url != "/logout" && req.url != "/register" && req.url != "/registerAction"){
                 if (req.url == "/getInbox.html"){
                    ContentType = "text/plain";
                    res.StatusCode =500;
