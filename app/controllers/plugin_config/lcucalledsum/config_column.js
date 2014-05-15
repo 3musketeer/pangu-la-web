@@ -4,7 +4,7 @@ var scopeNames = {'day':'日', 'month':'月', 'year':'年'}
 //柱状图配置
 exports.barConfig = {
 	
-	TuxStateCalledSumByTimeAtday: {
+	TuxStateCalledSumByTimeByLcu: {
 		name: '流程调用总量',
 		displayType:'bar',
 		mode:'TuxState',
@@ -18,7 +18,7 @@ exports.barConfig = {
 		statType:'LCU',
 		sort: {'hours' : 1}
 	},
-	TuxStateFailedSumByTimeAtday: {
+	TuxStateFailedSumByTimeByLcu: {
 		name: '流程调用异常总量',
 		displayType:'bar',
 		mode:'TuxState',
@@ -42,7 +42,7 @@ exports.barConfig = {
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count'], 
-	  filter: {SVRNAME: {$exists: true}, TRANSCODE:{$exists:false}},
+	  filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false}},
 		filterColNames: ['SVRNAME'],
 		statType:'SVR',
 		sort: {'hours' : 1}
@@ -67,8 +67,8 @@ exports.barConfig = {
 
 exports.barList = {
     
-  lcuCalledSumList:[ {mode:'TuxState', type:'CalledSumByTime',subtype:'Atday'}],
-  lcuFailedSumList:[ {mode:'TuxState', type:'FailedSumByTime',subtype:'Atday'}],
+  lcuCalledSumList:[ {mode:'TuxState', type:'CalledSumByTime',subtype:'ByLcu'}],
+  lcuFailedSumList:[ {mode:'TuxState', type:'FailedSumByTime',subtype:'ByLcu'}],
   svcCalledSumList:[ {mode:'TuxState', type:'CalledSumByTime',subtype:'BySvc'}],
   svcFailedSumList:[ {mode:'TuxState', type:'FailedSumByTime',subtype:'BySvc'}]
 
@@ -108,8 +108,8 @@ exports.topConfig = {
 		name: '服务调用量排名',
 		displayType:'top',
 		mode:'TuxState',
-		type:'FailedSum',
-		subtype:'ByLcu',
+		type:'CalledSum',
+		subtype:'BySvr',
 		scopes: ['day'],
 		scopeNames: {'day':'日'},
 		colNames : [ 'SVRNAME', '_count' ], 
@@ -119,11 +119,15 @@ exports.topConfig = {
 	
 	TuxStateFailedSumBySvr: {
 		name: '服务异常量排名',
-		scopes: ['day', 'month', 'year'],
-		scopeNames: {'day':'日', 'month':'月', 'year':'年'},
-		colNames: ['SVRNAME', '_count'],
-		filter: {SVRNAME: {$exists: true}, host: 'all'},
-    sort: {'_count' : -1}
+		displayType:'top',
+		mode:'TuxState',
+		type:'FailedSum',
+		subtype:'BySvr',
+		scopes: ['day'],
+		scopeNames: {'day':'日'},
+		colNames : [ 'SVRNAME', '_count' ], 
+		filter : {SVRNAME: {$exists: true}, host: 'all'},
+		sort: {'_count' : -1}
 	}
 	
 }
