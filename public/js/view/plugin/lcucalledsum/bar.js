@@ -48,7 +48,9 @@ $(function() {
           var tempData = [temp.hours,temp._count];
           var bars = {
               show: true, 
-              barWidth: 0.5
+              barWidth: 0,
+              align: "center",
+              lineWidth:15
           };
           if(typeof(dataobj[item]) == 'undefined'){         
               var obj ={};
@@ -74,7 +76,12 @@ $(function() {
 	    grid:{
           hoverable:true
       },
-	    legend: {show: true}
+	    legend: {show: true},
+	    xaxis: {
+            tickFormatter: function (v, axis) {
+                return parseInt(v)
+            }        
+         }
 	   
 	  });
 	 
@@ -98,7 +105,6 @@ $(function() {
 	$('#placeholder-1').bind("plothover",function (event, pos, item) {
 
 		if ($('#placeholder-1').length > 0) {
-    
 			if (item) {
 				if (previousPoint != item.datapoint) {
 					previousPoint = item.datapoint;
