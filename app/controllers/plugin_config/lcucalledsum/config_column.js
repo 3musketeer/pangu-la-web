@@ -18,7 +18,7 @@ exports.barConfig = {
 		statType:'LCU',
 		sort: {'hours' : 1}
 	},
-	TuxStateFailedSumAtday: {
+	TuxStateFailedSumByTimeAtday: {
 		name: '流程调用异常总量',
 		displayType:'bar',
 		mode:'TuxState',
@@ -33,7 +33,7 @@ exports.barConfig = {
 		sort: {'hours' : 1}
 	},
 	
-	TuxStateCalledSumBySvc: {
+	TuxStateCalledSumByTimeBySvc: {
 		name: '服务调用总量',
 		displayType:'bar',
 		mode:'TuxState',
@@ -42,13 +42,13 @@ exports.barConfig = {
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count'], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false}},
+	  filter: {SVRNAME: {$exists: true}, TRANSCODE:{$exists:false}},
 		filterColNames: ['SVRNAME'],
 		statType:'SVR',
 		sort: {'hours' : 1}
 	},
 	
-	TuxStateFailedSumBySvc: {
+	TuxStateFailedSumByTimeBySvc: {
 		name: '服务异常量',
 		displayType:'bar',
 		mode:'TuxState',
@@ -68,9 +68,9 @@ exports.barConfig = {
 exports.barList = {
     
   lcuCalledSumList:[ {mode:'TuxState', type:'CalledSumByTime',subtype:'Atday'}],
-  lcuFailedSumList:[ {mode:'TuxState', type:'FailedSum',subtype:'Atday'}],
-  svcCalledSumList:[ {mode:'TuxState', type:'CalledSum',subtype:'BySvc'}],
-  svcFailedSumList:[ {mode:'TuxState', type:'FailedSum',subtype:'BySvc'}]
+  lcuFailedSumList:[ {mode:'TuxState', type:'FailedSumByTime',subtype:'Atday'}],
+  svcCalledSumList:[ {mode:'TuxState', type:'CalledSumByTime',subtype:'BySvc'}],
+  svcFailedSumList:[ {mode:'TuxState', type:'FailedSumByTime',subtype:'BySvc'}]
 
 }
 
@@ -125,6 +125,7 @@ exports.topConfig = {
 		filter: {SVRNAME: {$exists: true}, host: 'all'},
     sort: {'_count' : -1}
 	}
+	
 }
 
 exports.topList =  {

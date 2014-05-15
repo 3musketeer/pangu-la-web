@@ -208,21 +208,22 @@ exports.index = function(req, res) {
     }
     logger.debug("value---------=%s",value);
       
-        
+    
+    //曲线图
 	  var list = [ {mode:'TuxState', type:'CalledSumByTime', subtype: 'AtHours',value:value},
-				         {mode:'TuxState', type:'FailedSumByTime', subtype: 'AtHours',value:value},
-				         {mode:'TuxState', type:'FailedSumByTime', subtype: 'AtDay',value:value}]
-				 
+				         {mode:'TuxState', type:'FailedSumByTime', subtype: 'AtHours',value:value}]
+		
+		//排名		 
 	  var list1 = [{mode:'TuxState', type:'TimeOutTop',value:value},
 				        {mode:'TuxState', type:'CalledSum', subtype: 'ByLcu',value:value},
 				        {mode:'TuxState', type:'FailedSum', subtype: 'ByLcu',value:value}]
 				        
-	
-	  var list2 = [{mode:'TuxState', type:'CalledSumByTime', subtype: 'At28',value:value},
-				        {mode:'TuxState', type:'CalledSumByTime', subtype: 'At28a',value:value},
-				        {mode:'TuxState', type:'CalledSumByTime', subtype: 'At29',value:value},]
+	  //柱状图  
+	  var list2 = [{mode:'TuxState', type:'CalledSum', subtype: 'ByTimeAt28',value:value},
+				        {mode:'TuxState', type:'CalledSum', subtype: 'ByTimeAt28a',value:value},
+				        {mode:'TuxState', type:'CalledSum', subtype: 'ByTimeAt29',value:value},]
 				        
-	
+	  //计量表
 	  var list3 = [{mode:'TuxState', type:'CalledSumByTime', subtype: 'AtHours0',value:value},
 				        {mode:'TuxState', type:'CalledSumByTime', subtype: 'AtHours1',value:value},
 				        {mode:'TuxState', type:'CalledSumByTime', subtype: 'AtHours2',value:value},]

@@ -8,7 +8,7 @@ module.exports = {
     auth_cookie_name: 'USER_INFO_COOKIE',
     admins: {tangsz: true},
     
-	  db: 'mongodb://localhost/tuxlog',
+	  db: 'mongodb://localhost/tuxlog1',
 	  root: rootPath,
 	  
 	  client_opts: {
