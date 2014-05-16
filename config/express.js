@@ -93,10 +93,10 @@ module.exports = function (app, config) {
         if (req.session.user){ 
             res.locals.menus = menus;
             res.locals.current_user = req.session.user;
-        }else{
-           /*if(req.url != "/login.html" && req.url != "/auth.html"){
+        }else{            
+           if(req.url != "/login.html" && req.url != "/auth.html"){
                 return res.redirect('/login.html')
-            }*/
+           }
         }
         return next();   
     });
