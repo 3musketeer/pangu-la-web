@@ -1,5 +1,5 @@
 module.exports = [
-    {title:'业务',menuId:'current',class:'icon-signal',list:[    {title:'工单积压',url:'/orderOverstock.html'},
+    {title:'业务',menuId:'current',class:'icon-signal',list:[    {title:'工单积压',url:'/orderOverstock.html?chartList=lineChart'},
                                                 {title:'错单',url:'/historyTopDetail.html?chartList=historyTopDetailList'},
                                                 {title:'流程超时(历史)',url:'/historyQueryDetail.html?chartList=historyTopDetailList'},
                                                 {title:'流程超时(实时)',url:'/realtimeQueryDetail.html?chartList=realtimeLcuTimeoutDetailList'},
@@ -18,7 +18,7 @@ module.exports = [
                                                     {title:'服务队列(历史)',url:'/queueMonitorHis.html'},
                                                     {title:'服务队列(实时)',url:'/queueMonitor.html'},
                                                     {title:'服务僵死',url:'/realtimeQueryDetail.html?chartList=realTimeSvcDeadDetailList'},                                            
-                                                    {title:'内存占用',url:'/memoryMonitor.html'},
+                                                    {title:'内存占用',url:'/memoryMonitor.html?chartList=realMemory'},
                                                     {title:'服务超时(历史)',url:'/historyQueryDetail.html?chartList=historySvcTimeOutDetailList'},     
                                                     {title:'服务超时(实时)',url:'/realtimeQueryDetail.html?chartList=realTimeSvcTimeOutDetailList'},      
                                                     {title:'服务调用总量(历史)',url:'/lcuCalledSum.html?chartList=svcCalledSumList'},    

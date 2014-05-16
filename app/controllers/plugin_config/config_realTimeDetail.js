@@ -3,8 +3,8 @@ exports.detailConfig = {
 	TuxStateTimeOutTop : {
 	  name: '实时流程超时明细',
 	  scopes: ['day'],
-	  delayTime:2000,
-	  displayLength:50,
+	  delayTime:1000*60*60,
+	  displayLength:10,
 		titles: ['排名','流程名', '耗时(s)', '归属服务', '主机', '统计时间'],
 		colNames: ['#', 'TRANSCODE', 'MAX', 'SVRNAME', 'host', 'STARTTIME'],
 		filterColNames: ['TRANSCODE', 'SVRNAME', 'host', 'STARTTIME','timestamp'],

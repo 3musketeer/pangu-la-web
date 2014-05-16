@@ -49,7 +49,6 @@ $(function() {
           var bars = {
               show: true, 
               barWidth: 0,
-              align: "center",
               lineWidth:15
           };
           if(typeof(dataobj[item]) == 'undefined'){         
