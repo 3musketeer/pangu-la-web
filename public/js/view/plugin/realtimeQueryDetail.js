@@ -12,11 +12,23 @@ $(function() {
 		"sPaginationType": "full_numbers",
 		"aLengthMenu": [[parseInt($("input[name='displayLength']").val())], [parseInt($("input[name='displayLength']").val())]],
 		"oLanguage": {
-			"sSearch": "<span>关键字过滤:</span> _INPUT_",
+			"sSearch": "<span>关键字过滤):</span> _INPUT_",
 			"sLengthMenu": "<span>每页显示数:</span> _MENU_",
 			"oPaginate": { "sFirst": "首页", "sLast": "末页", "sNext": ">", "sPrevious": "<" }, 
 		    "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录"
 		},
+		"fnServerData": function ( sSource, aoData, fnCallback ) {
+        $.ajax({
+            "dataType": 'json',
+            "type": "get",
+            "url": sSource,
+            "data": aoData,
+            "success": fnCallback,
+            "error": function (XMLHttpRequest, textStatus, errorThrown) {
+              //alert("实时获取数据失败！"̀);
+            } 
+        });
+    },
 		"fnDrawCallback": function () {
            
      }

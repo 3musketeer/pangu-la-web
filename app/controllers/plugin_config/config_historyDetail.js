@@ -16,9 +16,9 @@ exports.config = {
 	  name: '服务超时明细(日)',
 	  scopes: ['day'],
 	  displayLength:10,
-		titles: ['排名','流程名', '耗时(s)', '归属服务', '主机', '统计时间'],
-		colNames: ['#', 'TRANSCODE', 'MAX', 'SVRNAME', 'host', 'STARTTIME'],
-		filterColNames: ['TRANSCODE', 'SVRNAME', 'host', 'STARTTIME'],
+		titles: ['排名','服务名', '耗时(s)', '主机', '统计时间'],
+		colNames: ['#', 'SVRNAME', 'MAX',  'host', 'STARTTIME'],
+		filterColNames: ['SVRNAME', 'host', 'STARTTIME'],
 		sort: {'MAX':-1}
 	}
 	
