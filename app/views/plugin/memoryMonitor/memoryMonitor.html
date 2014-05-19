@@ -1,0 +1,76 @@
+<link href="/css/jqx.base.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/js/view/plugin/memoryMonitor/updatingMemory.js"></script>
+<script type="text/javascript" src="/js/view/meter/jqxcore.js"></script>
+<script type="text/javascript" src="/js/view/meter/jqxdata.js"></script>
+<script type="text/javascript" src="/js/view/meter/jqxchart.js"></script>
+<script type="text/javascript" src="/js/view/meter/jqxgauge.js"></script>
+<script type="text/javascript" src="/js/view/meter/meter.js"></script>
+<script type="text/javascript" src="/js/view/top/detail.js"></script>
+
+<!-- Content wrapper -->
+<div class="wrapper">
+
+    <!-- Content head -->
+    <% include ../../includes/contentHead.html %>
+    <!-- /Content head -->
+
+    <div class="widget-title">
+        <h5 class="widget-name"><i class="ico-upload"></i>主机监控</h5>
+    </div>
+
+    <div style="display: none;" id="mm_chart_list"><%= chartList %></div>
+
+    <div class="row-fluid">
+        <div class="span6">
+            <div class="widget">
+                <div class="navbar"><div class="navbar-inner"><h6>CPU监控</h6></div></div>
+                <div class="well body" id ='wellDiv'>
+
+                    <div class="graph-standard"  id="cpu_monitor"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="span6">
+            <div class="widget">
+                <div class="navbar"><div class="navbar-inner"><h6>内存监控</h6></div></div>
+                <div class="well body">
+
+                    <div class="graph-standard"  id="memory_monitor"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="widget">
+        <div class="navbar"><div class="navbar-inner"><h6>进程监控</h6></div></div>
+        <div class="table-overflow">
+            <table id="po_detail" class="table table-striped">
+                <thead>
+                <!--<tr>
+                    <th>ProcessID</th>
+                    <th>User</th>
+                    <th>Time</th>
+                    <th>CPU(%)</th>
+                    <th>MEMORY(%)</th>
+                </tr>-->
+                <tr>
+                    <% for(var i = 0; i < tabColNames.length; i++) { %>
+
+                    <th>
+                        <%= tabColNames[i] %>
+                    </th>
+
+                    <% } %>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<!-- /content wrapper -->
