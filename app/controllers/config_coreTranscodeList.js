@@ -8,6 +8,10 @@ exports.coreTranscodeList =
     'ITF_CCHQ_GetUserPublicInfoCU',
     'ITF_CCHQ_GetUserProductAllInfo',
     'QCS_CheckCustTransfer4G',
-    'QCS_User360BaseInfo'
+    'QCS_User360BaseInfo',
+    'ITF_CCHQ_ChkAccount_ECS_SD',
+    'ITF_CRM_BKGetRealFee_SD',
+    'ITF_BKHQ_GetRealFee_SD',
+    'ITF_CRM_RECVFEE_SD'
 ]
 

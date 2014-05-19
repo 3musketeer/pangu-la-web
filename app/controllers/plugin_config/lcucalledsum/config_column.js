@@ -13,7 +13,7 @@ exports.barConfig = {
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count'], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false}},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:{$exists:false}},
 		filterColNames: ['TRANSCODE'],
 		statType:'LCU',
 		sort: {'hours' : 1}
@@ -27,7 +27,7 @@ exports.barConfig = {
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count'], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false}},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:{$exists:false}},
 		filterColNames: ['TRANSCODE'],
 		statType:'LCU',
 		sort: {'hours' : 1}
@@ -42,7 +42,7 @@ exports.barConfig = {
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count'], 
-	  filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false}},
+	  filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:{$exists:false}},
 		filterColNames: ['SVRNAME'],
 		statType:'SVR',
 		sort: {'hours' : 1}
@@ -57,7 +57,7 @@ exports.barConfig = {
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count'], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false}},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:{$exists:false}},
 		filterColNames: ['SVRNAME'],
 		statType:'SVR',
 		sort: {'hours' : 1}
