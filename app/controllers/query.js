@@ -22,16 +22,21 @@ var getTable = function(mode, type, scope, value) {
 	if(scope=="month") value = YY+MM;
 	if (scope=="year") value = YY;
 
-	var collection = mode + type + scope.toUpperCase() + value;
+	var collection = ""
+	if (scope != 'noHave')
+	    collection = mode + type + scope.toUpperCase() + value;
+	else{
+	    value = YY+MM+DD;
+	    collection = mode + type  + value;
+	}
 	debug('collection:%s.', collection)
-
+    var table;
 	try{
-		var table = mongoose.model('QueryResult', collection);
+		table = mongoose.model('QueryResult', collection);
 	}catch(e){
 		console.error(e.stack)
 		throw new Error('not found')
 	}
-	
 	return table;
 	
 }

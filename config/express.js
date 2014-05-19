@@ -58,7 +58,7 @@ module.exports = function (app, config) {
 
     // express/mongo session storage
     app.use(express.session({
-      secret: 'logAnalyse-pangu',
+      secret: config.session_secret,
 	  cookie: { maxAge: 900000 },  //15 minute
       store: new mongoStore({
         url: config.db,
@@ -89,7 +89,7 @@ module.exports = function (app, config) {
     
       
     //Public Response Information 
-    app.use(function(req, res, next){         
+    app.use(function(req, res, next){       
         if (req.session.user){ 
             res.locals.menus = menus;
             res.locals.current_user = req.session.user;

@@ -100,7 +100,7 @@ function gen_session(user, req, res,ck_rmbUser){
 	}
 	req.session.user = user;
     req.session.hasAuth = true;
-   // req.session.cookie.maxAge = 1000 * 60 * 60;
+    //req.session.cookie.maxAge = 1000 * 60 * 60;
 }
 
 
