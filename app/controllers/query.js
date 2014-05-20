@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
   , debug = require('debug')('pangu:query')
+  , logger = require('./log').logger;
 
 var getTable = function(mode, type, scope, value) {
 
@@ -37,6 +38,7 @@ var getTable = function(mode, type, scope, value) {
 		console.error(e.stack)
 		throw new Error('not found')
 	}
+	logger.debug("collection=%s",collection);
 	return table;
 	
 }
@@ -91,7 +93,7 @@ exports.multiQuery = function(list, config, limit, callback) {
 			var scope = cfg.scopes[idx]	
 
 			if (!list[i].scope || list[i].scope == scope) {
-
+			    logger.debug("subtype=%s",subtype);
 				getTable(mode, type, scope, value)
 				.list(cfg, (function(mode, type, subtype, scope, cfg, result) { 
 						return function(err, docs) {
