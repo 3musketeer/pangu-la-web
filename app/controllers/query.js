@@ -27,8 +27,7 @@ var getTable = function(mode, type, scope, value) {
 	if (scope != 'noHave')
 	    collection = mode + type + scope.toUpperCase() + value;
 	else{
-	    value = YY+MM+DD;
-	    collection = mode + type  + value;
+	    collection = mode + type  + value.replace(/-/g,'');
 	}
 	debug('collection:%s.', collection)
     var table;
