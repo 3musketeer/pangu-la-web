@@ -1,5 +1,9 @@
-var mongoose = require('mongoose');
-var QueueMonitorHis = require('../../models/queuemonitorhis').QueueMonitorHis;
+var mongoose = require('mongoose')
+    , logger = require('../log').logger
+    , qConfig = require('../plugin_config/queue/config_queue').queue
+    , extend = require('extend')
+    , query = require('../query')
+    , QueueMonitorHis = require('../../models/queuemonitorhis');
 
 exports.plugin =  function(server) {
     server.get('/queueMonitorHis.html', function(req, res) {
@@ -8,17 +12,24 @@ exports.plugin =  function(server) {
         })
     });
 
-    server.get('/getRealQueueDataHis', function(req, res) {
-        var curTime = new Date().getTime();
-        var startTime = curTime - 60000;
+    // 直接查询统计结果
+    server.get('/getQueueDataHis', function(req, res) {
+        var date = req.query['value'];
 
-        var result = [];
-        console.log('start=>' + startTime + '; end=>' + curTime);
+        var chartConfig = qConfig.hisQueue[0];
+        var tabName = chartConfig.mode + chartConfig.type + chartConfig.subtype;
+        console.log('tabName=>' + tabName);
 
-        QueueMonitorHis.find({time: {$gt: startTime, $lt: curTime}}, function(err, rows) {
-//            console.log('rows=>' + rows);
+        var queueFields = qConfig.queueFields;
+        var queueLabels = qConfig.queueLabels;
 
-            for (var i = 0; i < rows.length; i++) {
+        var table = mongoose.model('QueueMonitorHis', tabName);
+
+        table.find({time: {$gte: new Date(date + ' 00:00:00').getTime(), $lte: new Date(date + ' 23:59:59').getTime()}}
+            , function(err, rows) {
+            console.log('rows=>' + rows.length);
+
+            /*for (var i = 0; i < rows.length; i++) {
                 var rd = new Object();
                 var row = rows[i];
                 var qs = row['data'];
@@ -33,38 +44,16 @@ exports.plugin =  function(server) {
                     rd[name] = count;
                 }
                 result.push(rd);
-            }
-            res.send({success: 1, data: result});
+            }*/
+            res.send({success: 1, data: rows, queueFields: queueFields, queueLabels: queueLabels});
         });
 
     });
 
+    // MapReduce 统计
     server.get('/getQueueGroupDataHis', function(req, res) {
         console.log('time=>' + req.query['value']);
         var date = req.query['value'];
-
-//        var data = [{
-//            label: 'Queue1',
-//            data: []
-//        }, {
-//            label: 'Queue2',
-//            data: []
-//        }, {
-//            label: 'Queue3',
-//            data: []
-//        }, {
-//            label: 'Queue4',
-//            data: []
-//        }, {
-//            label: 'Queue5',
-//            data: []
-//        }, {
-//            label: 'Queue6',
-//            data: []
-//        }, {
-//            label: 'Queue7',
-//            data: []
-//        }];
 
         var result = [];
         var detail = [];
@@ -111,9 +100,18 @@ exports.plugin =  function(server) {
             }
             return {label: k, data: m};
         };
-        QueueMonitorHis.mapReduce(o, function(err, rows) {
+
+        var chartConfig = qConfig.hisQueue[0];
+        var tabName = chartConfig.mode + chartConfig.type + chartConfig.subtype;
+        console.log('tabName=>' + tabName);
+
+        var table = mongoose.model('QueueMonitorHis', tabName);
+
+        table.mapReduce(o, function(err, rows) {
 //            console.log(rows.length);
             console.log('rows=>' + rows);
+            console.log(rows[0]);
+            console.log(rows[0].value.data[0]);
             res.send({success: 1, data: rows});
         });
     });

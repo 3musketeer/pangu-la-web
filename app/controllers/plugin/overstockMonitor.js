@@ -5,10 +5,13 @@
  * Time: 下午5:06
  * To change this template use File | Settings | File Templates.
  */
-/*var models = require('../../models/user');
-var User = models.User;*/
-var mongoose = require('mongoose');
-var Overstock = require('../../models/overstock').Overstock;
+var mongoose = require('mongoose')
+    , logger = require('../log').logger
+    , osConfig = require('../plugin_config/overstock/config_overstock')
+    , extend = require('extend')
+    , query = require('../query')
+    ;
+//var Overstock = require('../../models/overstock').Overstock;
 
 /*var mongoose = require('mongoose')
     , debug = require('debug')('pangu:top')
@@ -22,12 +25,19 @@ exports.plugin = function(server) {
 
         console.log('date select=>' + req.query['value']);
 
-        /*var table = query.findTable('user');
-        debug(table);
-        console.log('table.user_name=>' + table);*/
+        var os = req.query.chartList;
+        var value = req.query.value || '';
+        var ajaxGetTag = req.query.ajaxGetTag || 'false';
+        var transCode = req.query.TRANSCODE || '';
+        var headTitle = '';
+
+        var tabColNames = osConfig.overstock.tabColNames;
 
         res.renderPjax('plugin/orderOverstock/orderOverstock', {
-            layout:true
+//            layout:true,
+            chartList: os,
+            headTitle: '工单积压',
+            tabColNames: tabColNames
         })
 
     });
@@ -36,6 +46,16 @@ exports.plugin = function(server) {
 
         console.log('isInit=>' + req.query['isInit']);
         //var os = mongoose.model('Overstock','overstocks');
+
+        var chartList = req.query['chartList'];
+        console.log('chartList=>' + chartList);
+
+        var chartConfig = osConfig.overstock.lineChart[0];
+        console.log('chartConfig=>' + (chartConfig.mode + chartConfig.type + chartConfig.subtype));
+        var tabName = chartConfig.mode + chartConfig.type + chartConfig.subtype;
+
+        var table = mongoose.model('orderoverstock', tabName);
+        console.log('table=>' + table);
 
         var curTime = new Date().getTime();
         //取当前一个小时数据
@@ -48,8 +68,8 @@ exports.plugin = function(server) {
 
         var result = [];
         var detail = [];
-        Overstock.find({time: {$gte: startTime, $lte:curTime}}, function(err, rows) {
-            //console.log('rows111=>' + rows);
+        table.find({time: {$gte: startTime, $lte:curTime}}, function(err, rows) {
+//            console.log('rows111=>' + rows);
 
             var tt;
             var num = 0;
@@ -78,20 +98,20 @@ exports.plugin = function(server) {
                 }
             }
 //            console.log('result=>' + result);
-            res.send({success: 1, data: result, detail: detail});
+            res.send({success: 1, data: result, detail: detail, cols: osConfig.overstock.tabCols});
         });
     });
 
-    server.get('/getOverstockDetail', function(req, res) {
+    /*server.get('/getOverstockDetail', function(req, res) {
         var time = req.query['time'];
         console.log('time=>' + time);
 
         Overstock.find({time: time}, function(err, rows) {
             console.log('rows=>' + rows);
         });
-    });
+    });*/
 
-    server.get('/getOverstockGroup', function(req, res) {
+    /*server.get('/getOverstockGroup', function(req, res) {
         console.log('time=>' + req.query['value']);
 
         var result = [];
@@ -148,6 +168,6 @@ exports.plugin = function(server) {
 //            console.log(result.length);
             res.send({success: 1, data: result});
         });
-    });
+    });*/
 
 }
