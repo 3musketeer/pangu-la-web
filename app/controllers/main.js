@@ -14,7 +14,9 @@
   , logger = require('./log').logger
   , config_index = require('./config_index').config
   , list_index = require('./config_index').list
-  , EventProxy = require('eventproxy').EventProxy;
+  , EventProxy = require('eventproxy').EventProxy
+  , cfgSumList = require('./config_sum').list
+  , configSum = require('./config_sum').config;
 
 var formatNum = function(num) {
 	if (num > 1000000) return (num/1000000).toFixed(1)+'M';
@@ -24,6 +26,7 @@ var formatNum = function(num) {
 
 var accumulate = function(data) {
 	for(var key in data) {
+ 
 		scope = data[key].scopes[0]
 		list = data[key][scope]
 		if (list.error) continue;
@@ -45,6 +48,7 @@ exports.getStatData = function(req, res) {
     {
        
         var value = req.query.value||'';
+        //value ='2013-06-18';
         var now = new Date().getTime();  
         
         if(value == ''){
@@ -57,31 +61,30 @@ exports.getStatData = function(req, res) {
         logger.debug("value---------=%s",value); 
         var statObject = {};
         var tempConfig ={};	
-        extend(true,tempConfig,config_index);
+        extend(true,tempConfig,configSum);
         
-        var list = [];              
-        extend(true,list,list_index);  
+        var list = [];  
+        var chart_list = cfgSumList['lcuCalledSumChart'];             
+        extend(true,list,chart_list);  
 
         var configKey = "";
         list.forEach(function(item){
-            if(!item.value)
-            item.value = value;
-            
-            var filter ={}; 
-            configKey = item.mode+item.type+item.subtype;
-            if(tempConfig[item.mode+item.type+item.subtype].filter)
-            filter = tempConfig[item.mode+item.type+item.subtype].filter;
-            tempConfig[item.mode+item.type+item.subtype].filterColNames.forEach(function(col){
-             if (col == "timestamp"){ 
-                 var obj = {};
-                 filter[col] = {$gte: now-60000,$lte: now+1000}; 
-             }else{   
-                 var obj = {};
-                 filter[col] = new RegExp(req.query[col]||'');
-             }                 
-            });
-            tempConfig[item.mode+item.type+item.subtype].filter = filter; 
-        });
+             if(!item.value)
+                item.value = value;
+                
+             var filter ={}; 
+             if(tempConfig[item.mode+item.type+item.subtype].filter)
+                filter = tempConfig[item.mode+item.type+item.subtype].filter;
+                tempConfig[item.mode+item.type+item.subtype].filterColNames.forEach(function(col){   
+                     var obj = {};
+                     if(req.query[col]||'' != '')
+                        filter[col] = req.query[col];  
+                });
+             
+             tempConfig[item.mode+item.type+item.subtype].filter = filter;  
+             logger.debug("tempConfig.filter=%s",JSON.stringify(tempConfig[item.mode+item.type+item.subtype].filter));
+             logger.debug("item.value=%s",item.value);
+        });  
     
         client.hgetall("statObject", function (err, obj) {
             logger.debug("obj=%s",JSON.stringify(obj));
@@ -93,8 +96,26 @@ exports.getStatData = function(req, res) {
                  res.send(response);    		         
             }else{  
             	  query.multiQuery(list,tempConfig , function(err, docs) {
-                    extend(true,statObject,docs[configKey]['day'][0]);
+            	      accumulate(docs);
+            	      logger.debug("docs=%s",JSON.stringify(docs));
+                    statObject.DayCalledSum = docs['TuxStateCalledSumByTimeAtHours'].count;
+                    statObject.DayFailedSum = docs['TuxStateFailedSumByTimeAtHours'].count;
+                    statObject.DaySuccessRate = (statObject.DayCalledSum-statObject.DayFailedSum)/statObject.DayCalledSum *100;
+                    if(statObject.DayCalledSum == 0) 
+                        statObject.DaySuccessRate = '0%';
+                    else
+                        statObject.DaySuccessRate = statObject.DaySuccessRate.toFixed(2);
+                    
+                    statObject.MonCalledSum = docs['TuxStateCalledSumByTimeAtDay'].count;
+                    statObject.MonFailedSum = docs['TuxStateFailedSumByTimeAtDay'].count;
+                    statObject.MonSuccessRate = (statObject.MonCalledSum-statObject.MonFailedSum)/statObject.MonCalledSum *100;
+                    if(statObject.MonCalledSum == 0) 
+                         statObject.MonSuccessRate = '0%';
+                    else
+                        statObject.MonSuccessRate =statObject.MonSuccessRate.toFixed(2);
+                    
                     logger.debug("statObject=%s",JSON.stringify(statObject));
+                    
                     client.expire('statObject', 300);
                     client.hmset("statObject",
                         "DayCalledSum",statObject.DayCalledSum,

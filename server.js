@@ -33,6 +33,7 @@ require('./config/routes')(app)
 
 
 // Start the app by listening on <port>
+/*
 if (cluster.isMaster) {
     logger.debug("master start...");
     for (var i = 0; i < numCPUs; i++) {
@@ -65,8 +66,13 @@ if (cluster.isMaster) {
             logger.error('error when exit:' +e.stack);
         }
     });
-    logger.debug('pangu log analyse server started on port '+port)
+    
 }
+*/
+
+var port = process.env.PORT || 3000
+app.listen(port);
+logger.debug('pangu log analyse server started on port '+port);
 
 // expose app
 exports = module.exports = app
