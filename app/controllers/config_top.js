@@ -4,6 +4,7 @@ exports.cfgTop = {
 		scopes: ['day', 'month', 'year'],
 		scopeNames: {'day':'日', 'month':'月', 'year':'年'},
 		colNames : [ 'TRANSCODE', 'MAX' ], 
+		filter : {TRANSCODE: {$not : /^ITF/} }, 
 		fixed: 2,
 		sort: {'MAX' : -1}
 	},
@@ -78,7 +79,8 @@ exports.cfgDetail = {
 		titles: ['排名','流程名', '耗时(s)', '归属服务', '主机', '统计时间'],
 		colNames: ['#', 'TRANSCODE', 'MAX', 'SVRNAME', 'host', 'STARTTIME'],
 		filterColNames: ['TRANSCODE', 'SVRNAME', 'host', 'STARTTIME'],
-		sort: {'MAX':-1}
+		filter : {TRANSCODE: {$not : /^ITF/} },
+		sort: {'MAX':-1,'host':1}
 	},
 
 	TuxStateCalledSumByLcu : {
