@@ -6,26 +6,26 @@ module.exports = [
                                                 {title:'流程调用总量(历史)',url:'/lcuCalledSum.html?chartList=lcuCalledSumList'}, 
                                                 {title:'超时流程分析',url:'/historyQueryDetail.html?chartList=lcuTimeTopAnalyse'},                
                                                // {title:'流程调用总量(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeLcuCalledSumChart'},                            
-                                                {title:'流程调用异常(历史)',url:'/lcuCalledSum.html?chartList=lcuFailedSumList'},   
+                                                {title:'流程调用异常',url:'/lcuCalledSum.html?chartList=lcuFailedSumList'},   
                                                // {title:'流程调用异常(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeLcuFailSumChart'},
                                                 {title:'流程调用成功率',url:'/sumList.html?chartList=lcuCalledSumChart'}                                      
                                                                                                                         
                                             ]
     },
    
-    {title:'中间件TUXEDO',class:'icon-tasks',list:[ {title:'问题定位',url:'/flowInfoAnalysis.html?flowId=/lcuErrorAnalysis.html'},
-                                                    {title:'主机对比(历史)',url:'/historyComPareGraph.html?chartList=historyLcuSumCompareChart'}, 
-                                                    {title:'主机对比(实时)',url:'/realtimeHostCompareGraph.html?chartList=realTimeLcuSumCompareChart'},
+    {title:'中间件TUXEDO',class:'icon-tasks',list:[ //{title:'问题定位',url:'/flowInfoAnalysis.html?flowId=/lcuErrorAnalysis.html'},
+                                                    {title:'主机对比',url:'/historyComPareGraph.html?chartList=historyLcuSumCompareChart'}, 
+                                                    //{title:'主机对比(实时)',url:'/realtimeHostCompareGraph.html?chartList=realTimeLcuSumCompareChart'},
                                                     {title:'服务队列(历史)',url:'/queueMonitorHis.html'},
                                                     {title:'服务队列(实时)',url:'/queueMonitor.html'},
                                                     {title:'服务僵死',url:'/realtimeQueryDetail.html?chartList=realTimeSvcDeadDetailList'},                                            
                                                     {title:'内存占用',url:'/memoryMonitor.html?chartList=realMemory'},
                                                     {title:'服务超时(历史)',url:'/historyQueryDetail.html?chartList=historySvcTimeOutDetailList'},     
                                                     {title:'服务超时(实时)',url:'/realtimeQueryDetail.html?chartList=realTimeSvcTimeOutDetailList'},      
-                                                    {title:'服务调用总量(历史)',url:'/lcuCalledSum.html?chartList=svcCalledSumList'},    
-                                                    {title:'服务调用总量(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeSvcCalledSumChart'},  
-                                                    {title:'服务调用异常(历史)',url:'/lcuCalledSum.html?chartList=svcFailedSumList'},  
-                                                    {title:'服务调用异常(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeSvcFailedSumChart'},  
+                                                    {title:'服务调用总量',url:'/lcuCalledSum.html?chartList=svcCalledSumList'},    
+                                                    //{title:'服务调用总量(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeSvcCalledSumChart'},  
+                                                    {title:'服务调用异常',url:'/lcuCalledSum.html?chartList=svcFailedSumList'},  
+                                                    //{title:'服务调用异常(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeSvcFailedSumChart'},  
                                                     //{title:'服务调用成功率',url:'/sumList.html?chartList=svcCalledSumChart'}    
                                                     
                                                   ]

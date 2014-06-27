@@ -44,7 +44,7 @@ exports.detailConfig = {
 		sort: {'MAX':-1}
 	},
 	
-	TuxStateTimeOutTopSvcTimeOut : {
+	TuxStateTimeOutDetailBySvc : {
 	  name: '实时服务超时明细',
 	  scopes: ['day'],
 	  delayTime:2000,
@@ -83,7 +83,7 @@ exports.detailList = {
 	realTimeLcuCalledSumChart:[ {mode:'TuxState', type:'CalledSum',subtype:'ByLcu'}],
 	realTimeLcuFailSumChart:[ {mode:'TuxState', type:'CalledSum',subtype:'ByLcu1'}],
 	realTimeSvcDeadDetailList:[ {mode:'TuxState', type:'SvcDead',subtype:'Detail'}],
-	realTimeSvcTimeOutDetailList:[ {mode:'TuxState', type:'TimeOutTop',subtype:'SvcTimeOut'}],
+	realTimeSvcTimeOutDetailList:[ {mode:'TuxState', type:'TimeOutDetail',subtype:'BySvc'}],
 	realTimeSvcCalledSumChart:[ {mode:'TuxState', type:'CalledSum',subtype:'BySvc'}],
 	realTimeSvcFailedSumChart:[ {mode:'TuxState', type:'CalledSum',subtype:'BySvc1'}]
 }
