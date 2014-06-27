@@ -48,7 +48,7 @@ exports.getStatData = function(req, res) {
     {
        
         var value = req.query.value||'';
-        //value ='2013-06-18';
+       // value ='2013-06-18';
         var now = new Date().getTime();  
         
         if(value == ''){
@@ -86,12 +86,11 @@ exports.getStatData = function(req, res) {
              logger.debug("item.value=%s",item.value);
         });  
     
-        client.hgetall("statObject", function (err, obj) {
-            logger.debug("obj=%s",JSON.stringify(obj));
+        client.get("statObject-"+value, function (err, obj) {
+            logger.debug("obj=%s",obj);
             if(obj){
-                 extend(true,statObject,obj);
-                 var response = JSON.stringify(statObject);
-               //  client.quit();        
+                 extend(true,statObject,JSON.parse(obj));
+                 var response = JSON.stringify(statObject);      
                  logger.debug("statObject-0=%s",JSON.stringify(statObject));
                  res.send(response);    		         
             }else{  
@@ -117,13 +116,7 @@ exports.getStatData = function(req, res) {
                     logger.debug("statObject=%s",JSON.stringify(statObject));
                     
                     client.expire('statObject', 300);
-                    client.hmset("statObject",
-                        "DayCalledSum",statObject.DayCalledSum,
-                        "DayFailedSum",statObject.DayFailedSum,
-                        "DaySuccessRate",statObject.DaySuccessRate,
-                        "MonCalledSum",statObject.MonCalledSum,
-                        "MonFailedSum",statObject.MonFailedSum,
-                        "MonSuccessRate",statObject.MonSuccessRate,client.quit());
+                    client.set("statObject-"+value,JSON.stringify(statObject));
                     var response = JSON.stringify(statObject);        
                     res.send(response);    		         
 	              });   

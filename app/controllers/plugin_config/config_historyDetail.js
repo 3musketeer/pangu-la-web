@@ -20,6 +20,15 @@ exports.config = {
 		colNames: ['#', 'SVRNAME', 'MAX',  'host', 'STARTTIME'],
 		filterColNames: ['SVRNAME', 'host', 'STARTTIME'],
 		sort: {'MAX':-1}
+	},
+	
+	TuxStateTimeOutStatHis : {
+	  name: '超时比例大于10%流程分析',
+	  scopes: ['day'],
+	  displayLength:10,
+	  queryType:'mapreduce',
+		titles: ['流程名', '调用总数', '平均时间>10s调用数', '平均时间>5s调用数','平均时间>2s调用数', '>2s占比', '总记录数','最大耗时>10s记录数','最大耗时>5s记录数','最大耗时>2s记录数','>2s占比','主机'],
+		colNames: ['TRANSCODE', 'calledsum','avg_gt_10s','avg_gt_5s','avg_gt_2s','avg_gt_2s_rate','count','max_gt_10s','max_gt_5s','max_gt_2s','max_gt_2s_rate','host']
 	}
 	
 }
@@ -27,6 +36,7 @@ exports.config = {
 exports.list = {
     
   historyTopDetailList:[ {mode:'TuxState', type:'TimeOutTop',subtype:'His'}],
-  historySvcTimeOutDetailList:[ {mode:'TuxState', type:'TimeOutTop',subtype:'SvcTimeOut'}]
+  historySvcTimeOutDetailList:[ {mode:'TuxState', type:'TimeOutTop',subtype:'SvcTimeOut'}],
+  lcuTimeTopAnalyse:[ {mode:'TuxState', type:'TimeOutStat',subtype:'His'}],
 
 }

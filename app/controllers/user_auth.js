@@ -67,7 +67,7 @@ exports.registeUser = function(req, res, next){
 						gen_session(user, req, res);
 						gridfs.putFile(req,user_name);
 						if(user.is_admin)
-						    return res.redirect('/index.html');
+						    return res.redirect('/login.html');
 						else{
 						    req.flash('error', '注册用户管理员审核通过后可以登录！');
 						    return res.redirect('/login.html');
