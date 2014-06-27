@@ -1,6 +1,6 @@
 exports.detailConfig = {
     
-	TuxStateTimeOutTop : {
+	TuxStateTimeOutDetail : {
 	  name: '实时流程超时明细',
 	  scopes: ['day'],
 	  delayTime:1000*60*60,
@@ -79,7 +79,7 @@ exports.detailConfig = {
 }
 
 exports.detailList = {  
-	realtimeLcuTimeoutDetailList:[ {mode:'TuxState', type:'TimeOutTop',subtype:''}],
+	realtimeLcuTimeoutDetailList:[ {mode:'TuxState', type:'TimeOutDetail',subtype:''}],
 	realTimeLcuCalledSumChart:[ {mode:'TuxState', type:'CalledSum',subtype:'ByLcu'}],
 	realTimeLcuFailSumChart:[ {mode:'TuxState', type:'CalledSum',subtype:'ByLcu1'}],
 	realTimeSvcDeadDetailList:[ {mode:'TuxState', type:'SvcDead',subtype:'Detail'}],

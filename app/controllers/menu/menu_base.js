@@ -1,13 +1,13 @@
 module.exports = [
     {title:'业务',menuId:'current',class:'icon-signal',list:[    {title:'工单积压',url:'/orderOverstock.html?chartList=lineChart'},
-                                                {title:'错单',url:'/historyTopDetail.html?chartList=historyTopDetailList'},
+                                                //{title:'错单',url:'/historyTopDetail.html?chartList=historyTopDetailList'},
                                                 {title:'流程超时(历史)',url:'/historyQueryDetail.html?chartList=historyTopDetailList'},
                                                 {title:'流程超时(实时)',url:'/realtimeQueryDetail.html?chartList=realtimeLcuTimeoutDetailList'},
                                                 {title:'流程调用总量(历史)',url:'/lcuCalledSum.html?chartList=lcuCalledSumList'}, 
                                                 {title:'超时流程分析',url:'/historyQueryDetail.html?chartList=lcuTimeTopAnalyse'},                
-                                                {title:'流程调用总量(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeLcuCalledSumChart'},                            
+                                               // {title:'流程调用总量(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeLcuCalledSumChart'},                            
                                                 {title:'流程调用异常(历史)',url:'/lcuCalledSum.html?chartList=lcuFailedSumList'},   
-                                                {title:'流程调用异常(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeLcuFailSumChart'},
+                                               // {title:'流程调用异常(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeLcuFailSumChart'},
                                                 {title:'流程调用成功率',url:'/sumList.html?chartList=lcuCalledSumChart'}                                      
                                                                                                                         
                                             ]
@@ -26,7 +26,7 @@ module.exports = [
                                                     {title:'服务调用总量(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeSvcCalledSumChart'},  
                                                     {title:'服务调用异常(历史)',url:'/lcuCalledSum.html?chartList=svcFailedSumList'},  
                                                     {title:'服务调用异常(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeSvcFailedSumChart'},  
-                                                    {title:'服务调用成功率',url:'/sumList.html?chartList=svcCalledSumChart'}    
+                                                    //{title:'服务调用成功率',url:'/sumList.html?chartList=svcCalledSumChart'}    
                                                     
                                                   ]
     },
