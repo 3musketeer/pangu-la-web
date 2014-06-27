@@ -40,8 +40,7 @@ exports.plugin = function(server) {
       if(!iDisplayLength) iDisplayLength = 10;
       
       var now = new Date().getTime();
-      value = '2013-06-18';
-      statValue = value;
+      //value = '2013-06-18';
     
     	if (!config[mode+type+subtype])
     		  return next(new Error('not found'));
@@ -191,44 +190,45 @@ exports.plugin = function(server) {
             var temp = [];
             output.sEcho = parseInt(req.query.sEcho);
             output.aaData = [];
-                    
-            results.documents[0].results.forEach(function(item,idx){
-                if(item.value != null){ 
-                    resultCnt ++ ;
-                    config[mode+type+subtype].colNames.forEach(function(col){ 
-                        if(col == '#') { 
-                            temp.push(parseInt(iDisplayStart)+1+idx);
-                        }else if(col == 'TRANSCODE' ) {          
-                           temp.push(item._id.split("->")[1]);
-                        }else if(col == 'host') {          
-                           temp.push(item._id.split("->")[0]);
-                        }else if(col == 'calledsum') {          
-                           temp.push(item.value.calledsum);
-                        }else if(col == 'avg_gt_10s') {          
-                           temp.push(item.value.avg_gt_10s);
-                        }else if(col == 'avg_gt_5s') {          
-                           temp.push(item.value.avg_gt_5s);
-                        }else if(col == 'avg_gt_2s') {          
-                           temp.push(item.value.avg_gt_2s);
-                        }else if(col == 'avg_gt_2s_rate') {          
-                           temp.push(item.value.avg_gt_2s_rate);
-                        }else if(col == 'count') {          
-                           temp.push(item.value.count);
-                        }else if(col == 'max_gt_10s') {          
-                           temp.push(item.value.max_gt_10s);
-                        }else if(col == 'max_gt_5s') {          
-                           temp.push(item.value.max_gt_5s);
-                        }else if(col == 'max_gt_2s') {          
-                           temp.push(item.value.max_gt_2s);
-                        }else if(col == 'max_gt_2s_rate') {          
-                           temp.push(item.value.max_gt_2s_rate);
-                        }     
-                 
-                    });
-                    output.aaData.push(temp);
-                    temp = [];
-                }
-              });
+            if(results.documents[0].results){      
+                results.documents[0].results.forEach(function(item,idx){
+                    if(item.value != null){ 
+                        resultCnt ++ ;
+                        config[mode+type+subtype].colNames.forEach(function(col){ 
+                            if(col == '#') { 
+                                temp.push(parseInt(iDisplayStart)+1+idx);
+                            }else if(col == 'TRANSCODE' ) {          
+                               temp.push(item._id.split("->")[1]);
+                            }else if(col == 'host') {          
+                               temp.push(item._id.split("->")[0]);
+                            }else if(col == 'calledsum') {          
+                               temp.push(item.value.calledsum);
+                            }else if(col == 'avg_gt_10s') {          
+                               temp.push(item.value.avg_gt_10s);
+                            }else if(col == 'avg_gt_5s') {          
+                               temp.push(item.value.avg_gt_5s);
+                            }else if(col == 'avg_gt_2s') {          
+                               temp.push(item.value.avg_gt_2s);
+                            }else if(col == 'avg_gt_2s_rate') {          
+                               temp.push(item.value.avg_gt_2s_rate);
+                            }else if(col == 'count') {          
+                               temp.push(item.value.count);
+                            }else if(col == 'max_gt_10s') {          
+                               temp.push(item.value.max_gt_10s);
+                            }else if(col == 'max_gt_5s') {          
+                               temp.push(item.value.max_gt_5s);
+                            }else if(col == 'max_gt_2s') {          
+                               temp.push(item.value.max_gt_2s);
+                            }else if(col == 'max_gt_2s_rate') {          
+                               temp.push(item.value.max_gt_2s_rate);
+                            }     
+                     
+                        });
+                        output.aaData.push(temp);
+                        temp = [];
+                    }
+                  });
+              }
               output.iTotalRecords = resultCnt;
               output.iTotalDisplayRecords = resultCnt;
   	          var response = JSON.stringify(output);        
