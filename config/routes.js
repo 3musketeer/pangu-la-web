@@ -11,7 +11,7 @@ module.exports = function (app) {
 	app.get('/login.html', auth.login)
 
 	//对用户名密码进行鉴权
-	app.post('/auth.html', auth.auth, auth.session);
+	app.post('/auth.html/:checkrmUser', auth.auth, auth.session);
 
 	//首页
 	app.get('/', auth.requiresLogin, main.index); 

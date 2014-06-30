@@ -227,7 +227,8 @@
 	background: -ms-linear-gradient(top,  #fafafa 0%,#efefef 100%);
 	background: linear-gradient(top,  #fafafa 0%,#efefef 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafafa', endColorstr='#efefef',GradientType=0 );}
-.ui-dialog .ui-dialog-title { float: left; height: 38px; font-size: 16px; padding: 0 12px 0 12px; line-height: 38px; } 
+/*.ui-dialog .ui-dialog-title { float: left; height: 38px; font-size: 16px; padding: 0 12px 0 12px; line-height: 38px; } */
+.ui-dialog .ui-dialog-title {height: 38px; font-size: 13px; padding: 0 12px 0 12px; line-height: 38px; } 
 .ui-dialog .ui-dialog-titlebar-close { position: absolute; right: 10px; top: 12px; width: 16px; height: 16px; background: url(../img/elements/interface/dialog_close.png) no-repeat; }
 .ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; opacity: 0.6; }
 .ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus {  }

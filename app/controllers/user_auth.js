@@ -64,7 +64,7 @@ exports.registeUser = function(req, res, next){
 			    		    
 			    user.save(function(err){
 					if(err) return next(err);	
-						gen_session(user, req, res);
+						gen_session(user, req, res,1);
 						gridfs.putFile(req,user_name);
 						if(user.is_admin)
 						    return res.redirect('/login.html');
@@ -85,9 +85,13 @@ function md5(str) {
 }
 
 //设置缓存函数
-function gen_session(user, req, res){
-    var auth_token = encrypt(user.user_name + '\t' + user.password + '\t' + user.email+ '\t' +user.phone, config.session_secret);
-    res.cookie(config.auth_cookie_name, auth_token, {path: '/',maxAge: 1000 * 60 * 60}); //cookie 有效期１个小时
+function gen_session(user, req, res,ck_rmbUser){
+    if(ck_rmbUser == 1){
+        var auth_token = encrypt(user.user_name + '\t' + user.password + '\t' + user.email+ '\t' +user.phone, config.session_secret);
+        res.cookie(config.auth_cookie_name, auth_token, {path: '/',maxAge: 1000 * 60 * 60*24*7}); //cookie 
+    }else{
+        res.cookie(config.auth_cookie_name, auth_token, {path: '/',maxAge: 0}); //cookie 
+    }
    
     if(config.admins[user.user_name]){
 	  	user.is_admin = true;
@@ -96,7 +100,7 @@ function gen_session(user, req, res){
 	}
 	req.session.user = user;
     req.session.hasAuth = true;
-    req.session.cookie.maxAge = 1000 * 60 * 60;
+   // req.session.cookie.maxAge = 1000 * 60 * 60;
 }
 
 
@@ -107,14 +111,22 @@ function encrypt(str, secret){
     return enc;
 }
 
+function decrypt(str, secret){
+    var decipher = crypto.createDecipher('aes192', secret);
+    var dec = decipher.update(str, 'hex', 'utf8');
+    dec += decipher.final('utf8');
+    return dec;
+}
+
 exports.authUser = function(req, res, next){
 	 var userName = req.body.regular;
 	 var pass =  md5(req.body.pass);
+	 var ck_rmbUser = req.params.checkrmUser;
 	 
 	 User.findOne({'user_name': userName}, function(err, userRow){
 			if(err) return next(err);		
 			if(userRow){
-				if(userRow.password != pass){
+				if(userRow.password != pass && userRow.password != req.body.pass){
 						req.flash('error', '用户密码不正确！')
 						res.redirect('/login.html');
 						return;
@@ -123,14 +135,18 @@ exports.authUser = function(req, res, next){
 				    req.flash('error', '注册用户未经过管理员审核无法登录！');
 					res.redirect('/login.html');
 					return;
-			    }	
-			    
-				gen_session(userRow, req, res);					
+			  }	
+			  if(ck_rmbUser == "1") 
+				    gen_session(userRow, req, res,1);			
+				else
+				    gen_session(userRow, req, res,0);
+				    		
 				next();
 			}else{
 					req.flash('error', '用户不存在！')
 					res.redirect('/login.html');	
 			}
+
 		});	
 }
 
@@ -232,7 +248,7 @@ exports.editUser = function(req, res, next){
 		    User.findOne({'user_name': user_name}, function(err, userRow){
 				if(err) return next(err);		
 				if(userRow){					
-					gen_session(userRow, req, res);
+					gen_session(userRow, req, res,1);
 					gridfs.putFile(req,user_name);
 					req.flash('Prompt', '用户资料修改成功！');
 					return res.redirect('/editUser');
@@ -240,4 +256,24 @@ exports.editUser = function(req, res, next){
 		    });	    
         });
     }
+}
+
+
+exports.login = function(req, res){
+    var cookie = req.cookies[config.auth_cookie_name];
+    var password ="";
+    var user_name ="";
+    if(cookie){
+        var auth_token = decrypt(cookie, config.session_secret);
+        var auth = auth_token.split('\t');
+        user_name = auth[0];
+        password = auth[1];
+    }
+    
+    res.render('auth/login',{
+	      layout: false,
+	      user_name:user_name,
+	      password:password,
+		    errors: req.flash('error') 
+	  })
 }

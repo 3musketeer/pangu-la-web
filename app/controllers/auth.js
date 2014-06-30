@@ -12,10 +12,7 @@ exports.requiresLogin = function (req, res, next) {
 }
 
 exports.login = function(req, res) {
-	res.render('auth/login',{
-	    layout: false,
-		errors: req.flash('error') 
-	})
+  userAuth.login(req, res); 
 }
 
 exports.auth = function(req, res, next) {    

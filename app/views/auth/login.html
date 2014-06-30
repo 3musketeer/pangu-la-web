@@ -10,12 +10,15 @@
 
 <script type="text/javascript" src="/js/jquery.min.js"></script>
 <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
 
 <script type="text/javascript" src="/js/plugins/forms/jquery.uniform.min.js"></script>
 
 <script type="text/javascript" src="/js/files/bootstrap.min.js"></script>
 
 <script type="text/javascript" src="/js/files/login.js"></script>
+<script type="text/javascript" src="/js/plugins/ui/jquery.bootbox.min.js"></script>
+
 
 </head>
 
@@ -66,22 +69,32 @@
 				<input type="hidden" name="_csrf" value="<%= csrf_token %>"/>
                 <div class="control-group">
                     <label class="control-label">用户名:</label>
-                    <div class="controls"><input class="span12" type="text" name="regular" placeholder="请输入用户名" /></div>
+                    <div class="controls"><input class="span12" type="text" name="regular" value ="<%= user_name %>" placeholder="请输入用户名" /></div>
                 </div>
                 
                 <div class="control-group">
                     <label class="control-label">密码:</label>
-                    <div class="controls"><input class="span12" type="password" name="pass" placeholder="请输入密码" /></div>
+                    <div class="controls"><input class="span12" type="password" name="pass" value ="<%= password %>" placeholder="请输入密码" /></div>
                 </div>
 
                 <div class="control-group">
-                    <div class="controls"><label class="checkbox inline"><input type="checkbox" name="checkbox1" class="styled" value="" checked="checked">记住用户名</label></div>
+                    <div class="controls"><label class="checkbox inline"><input type="checkbox" id="ck_rmbUser" class="styled" value="" checked="checked">记住用户名</label></div>
                 </div>
 
-                <div class="login-btn"><input type="submit" value="进 入" class="btn btn-danger btn-block" /></div>
+                <div class="login-btn"><input type="submit"  value="进 入"  class="btn btn-danger btn-block" /></div>
             </form>
         </div>
     </div>
+<!--    
+<div id="dialog-message">
+	<p class = "ico-warning-sign">  
+	</p>
+	<p id ="errorBox">
+	  sdsdsds
+	</p>	
+</div>
+
+-->
     <!-- /login block -->
 
 
