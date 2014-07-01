@@ -92,6 +92,7 @@ exports.getStatData = function(req, res) {
                  extend(true,statObject,JSON.parse(obj));
                  var response = JSON.stringify(statObject);      
                  logger.debug("statObject-0=%s",JSON.stringify(statObject));
+                 client.quit();
                  res.send(response);    		         
             }else{  
             	  query.multiQuery(list,tempConfig , function(err, docs) {
@@ -115,9 +116,10 @@ exports.getStatData = function(req, res) {
                     
                     logger.debug("statObject=%s",JSON.stringify(statObject));
                     
-                    client.expire('statObject', 300);
                     client.set("statObject-"+value,JSON.stringify(statObject));
-                    var response = JSON.stringify(statObject);        
+                    client.expire('statObject'+value, 300);
+                    var response = JSON.stringify(statObject);  
+                    client.end();      
                     res.send(response);    		         
 	              });   
             } 

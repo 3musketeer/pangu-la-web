@@ -60,6 +60,10 @@ module.exports = function (app) {
 	app.post('/receive',auth.receiveData);
 	
 	
+	//
+	app.get('/getVisitCount.html', auth.getVisitCount, auth.session);
+	
+	
 	//退出
 	app.get('/logout',auth.logout); 
 

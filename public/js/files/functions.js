@@ -787,7 +787,30 @@
               alert(xhr.responseText);
               window.location ='/logout';
             }  
-       });      
+       });
+       
+       //访问量
+       $.ajax({  
+            type:"GET",  
+            url:"/getVisitCount.html",  
+            data:"",  
+            dataType:"json",  
+            success:function(data){
+                var now = new Date().getTime();
+                var dateCa = new Date(now);        
+                var date = dateCa.getDate() < 10 ? "0" + dateCa.getDate() : dateCa.getDate();
+                var month = (dateCa.getMonth()+1) < 10 ? "0" + (dateCa.getMonth()+1) : (dateCa.getMonth()+1);
+                var year = dateCa.getFullYear();     
+                var value = year+"-"+month+"-"+date;
+                if($('#dayVisitCnt'))
+                    $('#dayVisitCnt').html(data['dayCnt-'+value]);
+                if($('#allVisitCnt'))
+                    $('#allVisitCnt').html(data.allCnt);
+            },  
+            error:function(xhr,status,errMsg){  
+              alert('统计访问量失败！'); 
+            }  
+       });         
    }
    
    function getWarningDetail(warningId,value){
@@ -833,7 +856,8 @@
               $('#DaySuccessRate').html('今日成功率<strong>'+data.DaySuccessRate+'</strong>');  
               $('#MonCalledSum').html('<strong>'+data.MonCalledSum+'</strong>'); 
               $('#MonFailedSum').html('<strong>'+data.MonFailedSum+'</strong>'); 
-              $('#MonSuccessRate').html('<strong>'+data.MonSuccessRate+'</strong>'); 
+              $('#MonSuccessRate').html('<strong>'+data.MonSuccessRate+'</strong>');
+              schedule(); 
             },  
             error:function(xhr,status,errMsg){  
               alert('加载调用统计失败！');  
@@ -877,6 +901,9 @@
    callbacks.add(function() {
        schedule();
    })
+   
+   
+   
 
 	//===== Form elements styling =====//
 	
