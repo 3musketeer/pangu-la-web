@@ -1,4 +1,4 @@
-var mongoose = require('mongoose')
+﻿var mongoose = require('mongoose')
   , debug = require('debug')('pangu:top')
   , util = require("util")
   , query = require('../query')
@@ -269,14 +269,25 @@ exports.plugin = function(server) {
                 output.sEcho = parseInt(req.query.sEcho);
                 output.iTotalRecords = count;
                 output.iTotalDisplayRecords = count;
-                output.aaData = [];
-                        
+                output.aaData = [];      
                 docs.forEach(function(item,idx){
+                    var item1 = JSON.parse(JSON.stringify(item)); 
                     tempConfig.colNames.forEach(function(col){    
                         if(col == '#') { 
                             temp.push(parseInt(iDisplayStart)+1+idx);
-                        }else{          
-                           temp.push(item[col]);
+                        }else if(col == 'avg_gt_2s_rate') {   
+                           item1[col] =  '0%';
+                           if(item1['avgcount'] != 0 && item1['avg_gt_2s'] != 0)
+                               item1[col] = (item1['avg_gt_2s']/item1['avgcount']*100).toFixed(2)+'%'; 
+                            temp.push(item1[col]);
+                           
+                        }else if(col == 'max_gt_2s_rate') {  
+                           item1[col] =  '0%';
+                           if(item1['maxcount'] != 0 && item1['max_gt_2s'] != 0)
+                               item1[col] = (item1['max_gt_2s']/item1['maxcount']*100).toFixed(2)+'%';
+                            temp.push(item1[col]); 
+                        }else{    
+                           temp.push(item1[col]);
                         }          
                     });
                     output.aaData.push(temp);
