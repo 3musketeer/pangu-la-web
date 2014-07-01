@@ -249,7 +249,8 @@ exports.editUser = function(req, res, next){
 				if(err) return next(err);		
 				if(userRow){					
 					gen_session(userRow, req, res,1);
-					gridfs.putFile(req,user_name);
+					if( file.name !='')
+					    gridfs.putFile(req,user_name);
 					req.flash('Prompt', '用户资料修改成功！');
 					return res.redirect('/editUser');
 				}
