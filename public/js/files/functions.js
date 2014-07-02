@@ -857,7 +857,7 @@
               $('#MonCalledSum').html('<strong>'+data.MonCalledSum+'</strong>'); 
               $('#MonFailedSum').html('<strong>'+data.MonFailedSum+'</strong>'); 
               $('#MonSuccessRate').html('<strong>'+data.MonSuccessRate+'</strong>');
-              schedule(); 
+              //schedule(); 
             },  
             error:function(xhr,status,errMsg){  
               alert('加载调用统计失败！');  
