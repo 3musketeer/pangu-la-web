@@ -6,14 +6,14 @@ module.exports = [
                                                 {title:'流程调用总量(历史)',url:'/lcuCalledSum.html?chartList=lcuCalledSumList'}, 
                                                 {title:'超时流程分析',url:'/historyQueryDetail.html?chartList=lcuTimeTopAnalyseRate'},                
                                                // {title:'流程调用总量(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeLcuCalledSumChart'},                            
-                                                {title:'流程调用异常',url:'/lcuCalledSum.html?chartList=lcuFailedSumList'},   
+                                                {title:'流程调用异常',url:'/lcuCalledSum.html?chartList=lcuFailedSumList'}
                                                // {title:'流程调用异常(实时)',url:'/realtimeLcuCalledSum.html?chartList=realTimeLcuFailSumChart'},
-                                                {title:'流程调用成功率',url:'/sumList.html?chartList=lcuCalledSumChart'}                                      
+                                                                                
                                                                                                                         
                                             ]
     },
    
-    {title:'中间件TUXEDO',class:'icon-tasks',list:[ //{title:'问题定位',url:'/flowInfoAnalysis.html?flowId=/lcuErrorAnalysis.html'},
+    {title:'中间件TUXEDO',menuId:'tuxedo', class:'icon-tasks',list:[ //{title:'问题定位',url:'/flowInfoAnalysis.html?flowId=/lcuErrorAnalysis.html'},
                                                     {title:'主机对比',url:'/historyComPareGraph.html?chartList=historyLcuSumCompareChart'}, 
                                                     //{title:'主机对比(实时)',url:'/realtimeHostCompareGraph.html?chartList=realTimeLcuSumCompareChart'},
                                                     {title:'服务队列(历史)',url:'/queueMonitorHis.html'},
@@ -31,19 +31,19 @@ module.exports = [
                                                   ]
     },
         		
-	{title:'中间件WEBLOGIC',class:'icon-tasks',list:[    {title:'异常明细(历史)',url:'#'},
+	{title:'中间件WEBLOGIC',menuId:'weblogic', class:'icon-tasks',list:[    {title:'异常明细(历史)',url:'#'},
                                                        {title:'异常明细(实时)',url:'#'}
 
                                                       ]
   },	
   
-  {title:'数据库',class:'icon-tasks',list:[ {title:'耗时语句',url:''},
+  {title:'数据库',menuId:'database', class:'icon-tasks',list:[ {title:'耗时语句',url:''},
                                             {title:'锁表语句',url:''},
                                             {title:'超限超时语句',url:''}                                           
                                           ]
   },
   
-  {title:'外围',class:'icon-tasks',list:[ {title:'接口异常信息(历史)',url:''},
+  {title:'外围',menuId:'interface',class:'icon-tasks',list:[ {title:'接口异常信息(历史)',url:''},
                                           {title:'接口异常信息(实时)',url:''}
                                                     
                                           ]
