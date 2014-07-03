@@ -154,8 +154,8 @@ exports.cfgDetail = {
 	},
 	
 	TuxStateVisitCount : {
-		titles: ['排名','模块名','模块地址' , '访问量'],
-		colNames: ['#','name','URL','count']
+		titles: ['模块名','模块地址' , '访问量'],
+		colNames: ['name','URL','count']
 	},
 }
 
