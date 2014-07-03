@@ -31,7 +31,7 @@ module.exports = [
                                                   ]
     },
         		
-	{title:'中间件WEBLOGIC',menuId:'weblogic', class:'icon-tasks',list:[    {title:'异常明细(历史)',url:'#'},
+	/*{title:'中间件WEBLOGIC',menuId:'weblogic', class:'icon-tasks',list:[    {title:'异常明细(历史)',url:'#'},
                                                        {title:'异常明细(实时)',url:'#'}
 
                                                       ]
@@ -47,7 +47,7 @@ module.exports = [
                                           {title:'接口异常信息(实时)',url:''}
                                                     
                                           ]
-  },
+  },*/
   
   {title:'告警',class:'ico-warning-sign',list:[],url:"/getAllMail.html"}
    

@@ -30,6 +30,7 @@ module.exports = function (app) {
 	//排名明细
 	app.get('/detail.html', auth.requiresLogin,laTop.initDetail); 
 	app.get('/topDetail.html', auth.requiresLogin, laTop.detail); 
+	app.get('/visitCntDetail.html', auth.requiresLogin, main.visitCntDetail); 
 	
 
 	//总数统计列表

@@ -11,6 +11,7 @@
   <script type="text/javascript" src="/js/view/meter/jqxgauge.js"></script>                 
   <script type="text/javascript" src="/js/view/meter/meter.js"></script>
   <script type="text/javascript" src="/js/view/top/detail.js"></script>
+  <script type="text/javascript" src="/js/view/visit/detail.js"></script>
 
 
 
@@ -147,7 +148,7 @@
                         <table class="table table-striped table-bordered table-hover" id="data-table">
                             <thead>
                                 <tr>
-									<% titles.forEach(function(title){ %>
+									<% TimeOutTopTitles.forEach(function(title){ %>
 									<th><%= title %></th>
 									<% }) %>
                                 </tr>
@@ -158,6 +159,33 @@
                         </table>
                     </div>
        </div>
+       <div>
+        &nbsp;
+       </div>
+       
+        <div class="widget-title">
+		          <h5 class="widget-name"><i class="ico-list-alt"></i>业务模块访问量明细(日)</h5>
+		    </div>
+		    
+		    <input type="hidden" name="visitCntUrl" value="<%= visitCntUrl %>"/>
+				<div class="widget">
+                	
+                    <div class="table-overflow">
+                        <table class="table table-striped table-bordered table-hover" id="visit-data-table">
+                            <thead>
+                                <tr>
+									<% visitCntUrlTitles.forEach(function(title){ %>
+									<th><%= title %></th>
+									<% }) %>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+       </div>
+
 
 
 	</div>

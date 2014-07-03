@@ -16,7 +16,8 @@
   , list_index = require('./config_index').list
   , EventProxy = require('eventproxy').EventProxy
   , cfgSumList = require('./config_sum').list
-  , configSum = require('./config_sum').config;
+  , configSum = require('./config_sum').config
+  , moduleName = require('./config_top').moduleName;
 
 var formatNum = function(num) {
 	if (num > 1000000) return (num/1000000).toFixed(1)+'M';
@@ -246,7 +247,8 @@ exports.index = function(req, res) {
 				        
 				        
     var queryUrl = "/topDetail.html?mode=TuxState"+"&type=TimeOutTop"+"&scope=day"+"&value="+value;
-
+    var visitCntUrl = "/visitCntDetail.html?mode=TuxState"+"&type=TimeOutTop"+"&scope=day"+"&value="+value;
+    
 	  query.multiQuery(list, config, function(err, docs) {   
 	      query.multiQuery(list1, cfgTop, 10, function(err, docs1) {
 	          extend(true,docs1,docs);
@@ -256,7 +258,7 @@ exports.index = function(req, res) {
     	             // console.log(JSON.stringify(docs3));
         	          extend(true,docs3,docs2);
         	          accumulate(docs3)
-            		    res.renderPjax('main/index', {all: docs3,caculateDate:value, queryUrl:queryUrl,titles: cfgDetail['TuxStateTimeOutTop'].titles })
+            		    res.renderPjax('main/index', {all: docs3,caculateDate:value, queryUrl:queryUrl,visitCntUrl:visitCntUrl,TimeOutTopTitles: cfgDetail['TuxStateTimeOutTop'].titles,visitCntUrlTitles: cfgDetail['TuxStateVisitCount'].titles })
 	              })         
 	          })
 	      })
@@ -264,3 +266,70 @@ exports.index = function(req, res) {
 	  })
     	  
 }
+
+exports.visitCntDetail = function(req, res) {
+    
+    var value = req.query.value;
+    if(value == ''){
+        var dateCa = new Date(now);
+        var date = dateCa.getDate() < 10 ? "0" + dateCa.getDate() : dateCa.getDate();
+        var month = (dateCa.getMonth()+1) < 10 ? "0" + (dateCa.getMonth()+1) : (dateCa.getMonth()+1);
+        var year = dateCa.getFullYear();     
+        value = year+"-"+month+"-"+date;
+    }
+    logger.debug("value++++++++++++++++++++++-=%s",value);
+    
+    var iDisplayStart = req.query.iDisplayStart||0;
+	  var iDisplayLength = req.query.iDisplayLength||10;
+
+    var client = redis.createClient(redisCfg.port,redisCfg.host);
+    try
+    {
+        client.get("system-visit-count-"+value, function (err, result){
+            var output = {};
+            var temp = [];
+            var tempOut = new Array();
+            var count = 0;
+            var obj = JSON.parse(result);  
+            if(obj){
+                for(var item in obj){
+                    if(item != 'allCnt'){       
+                        cfgDetail['TuxStateVisitCount'].colNames.forEach(function(col){    
+                            if(col == '#') { 
+                                temp.push(1+count);
+                            }else if(col == 'URL') {
+                                temp.push(item.substr(7));
+                            }else if(col == 'name') {
+                                if(moduleName[item.substr(7)])  
+                                    temp.push(moduleName[item.substr(7)]); 
+                                else
+                                    temp.push('模块内部跳转');       
+                            }else if(col == 'count') {  
+                                temp.push(obj[item]);       
+                            }        
+                        });     
+                        tempOut.push(temp);
+                        temp = [];  
+                        count++;
+                    }
+                }
+                        
+            }
+            output.aaData = [];
+            var end = parseInt(iDisplayStart) + parseInt(iDisplayLength);
+            output.aaData = tempOut.slice(iDisplayStart,end);
+            client.quit();	
+            output.sEcho = parseInt(req.query.sEcho);
+            output.iTotalRecords = count;
+            output.iTotalDisplayRecords = count;
+            
+            var response = JSON.stringify(output);        
+            res.send(response);
+        });
+        
+    }catch(error)
+    { 
+        client.quit();
+    }
+}
+

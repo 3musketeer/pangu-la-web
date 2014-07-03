@@ -69,6 +69,7 @@ exports.getVisitCount = function(req, res) {
         var year = dateCa.getFullYear();     
         var value = year+"-"+month+"-"+date;
         var statUrl = req.query.statUrl;
+        if(statUrl == '/') statUrl = '/index.html';
         try{
             var visitCountObj = {};
             client.get("system-visit-count-"+value, function (err, obj) {
@@ -80,7 +81,7 @@ exports.getVisitCount = function(req, res) {
                     else
                         tempObj['dayCnt-'+statUrl] = 1;
                     tempObj.allCnt = parseInt(tempObj.allCnt)+1;
-                    visitCountObj = tempObj;   
+                    visitCountObj = tempObj;  
                     client.set("system-visit-count-"+value,JSON.stringify(tempObj));
                     client.end();
                 }else{

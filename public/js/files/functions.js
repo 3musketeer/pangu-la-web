@@ -810,6 +810,7 @@
                param = window.location.search.replace(reg,"");
            }
            param = window.location.pathname + param;
+           if(param == '/') param = '/index.html';
            $.ajax({  
                 type:"GET",  
                 url:"/getVisitCount.html",  
