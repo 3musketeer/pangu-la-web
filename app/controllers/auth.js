@@ -68,30 +68,28 @@ exports.getVisitCount = function(req, res) {
         var month = (dateCa.getMonth()+1) < 10 ? "0" + (dateCa.getMonth()+1) : (dateCa.getMonth()+1);
         var year = dateCa.getFullYear();     
         var value = year+"-"+month+"-"+date;
-        //value = "2014-06-26"
+        var statUrl = req.query.statUrl;
         try{
             var visitCountObj = {};
-            client.get("system-visit-count", function (err, obj) {
+            client.get("system-visit-count-"+value, function (err, obj) {
                 if(obj){
                     logger.debug("obj-0=%s",JSON.stringify(obj));
                     var tempObj = JSON.parse(obj);
-                    if(tempObj['dayCnt-'+value])
-                        tempObj['dayCnt-'+value] = parseInt(tempObj['dayCnt-'+value])+1;
+                    if(tempObj['dayCnt-'+statUrl])
+                        tempObj['dayCnt-'+statUrl] = parseInt(tempObj['dayCnt-'+statUrl])+1;
                     else
-                        tempObj['dayCnt-'+value] = 1;
+                        tempObj['dayCnt-'+statUrl] = 1;
                     tempObj.allCnt = parseInt(tempObj.allCnt)+1;
                     visitCountObj = tempObj;   
-                    client.set("system-visit-count",JSON.stringify(tempObj));
-                    //client.expire('system-visit-count', -1);
+                    client.set("system-visit-count-"+value,JSON.stringify(tempObj));
                     client.end();
                 }else{
                     var tempObj ={};
-                    tempObj['dayCnt-'+value] = 1;
+                    tempObj['dayCnt-'+statUrl] = 1;
                     tempObj.allCnt = 1;
                     visitCountObj = tempObj;   
                     logger.debug("visitCountObj=%s",JSON.stringify(visitCountObj));
-                    client.set("system-visit-count",JSON.stringify(tempObj));
-                   // client.expire('system-visit-count', -1);
+                    client.set("system-visit-count-"+value,JSON.stringify(tempObj));
                     client.end();
                 }
                 res.send(JSON.stringify(visitCountObj)); 

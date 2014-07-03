@@ -796,20 +796,21 @@
        });
        
        //访问量
+       var param = "";
+		   var reg = new RegExp("[?&]" + "value" + "=([^&]*)(&|$)", "gi");
+       var r = window.location.search.substr(1).match(reg);
+       if (r != null){ 
+           param = window.location.search.replace(reg,"");
+       }
+       param = window.location.pathname + param;
        $.ajax({  
             type:"GET",  
             url:"/getVisitCount.html",  
-            data:"",  
+            data:"statUrl="+param,   
             dataType:"json",  
             success:function(data){
-                var now = new Date().getTime();
-                var dateCa = new Date(now);        
-                var date = dateCa.getDate() < 10 ? "0" + dateCa.getDate() : dateCa.getDate();
-                var month = (dateCa.getMonth()+1) < 10 ? "0" + (dateCa.getMonth()+1) : (dateCa.getMonth()+1);
-                var year = dateCa.getFullYear();     
-                var value = year+"-"+month+"-"+date;
                 if($('#dayVisitCnt'))
-                    $('#dayVisitCnt').html(data['dayCnt-'+value]);
+                    $('#dayVisitCnt').html(data['dayCnt-'+param]);
                 if($('#allVisitCnt'))
                     $('#allVisitCnt').html(data.allCnt);
             },  
