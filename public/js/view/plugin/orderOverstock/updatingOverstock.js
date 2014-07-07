@@ -328,7 +328,7 @@ $(function () {
         //plot.draw();
 
 //        console.log('updateInterval=>' + updateInterval);
-        setTimeout(update, updateInterval);
+        timeId = setTimeout(update, updateInterval);
     }
 
     update();

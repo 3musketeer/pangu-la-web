@@ -110,7 +110,7 @@ $(document).ready(function () {
             xaxis: {
 //                tickDecimals: 0
                 mode: "time",
-                tickSize: [30, "second"],
+                tickSize: [60, "second"],
                 tickFormatter: function (v, axis) {
                     var date = new Date(v);
 
@@ -120,7 +120,7 @@ $(document).ready(function () {
                         var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
                         var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
 
-                        return hours + ':' + minutes + ':' + seconds;
+                        return hours + ':' + minutes;
                     } else {
                         return "";
                     }

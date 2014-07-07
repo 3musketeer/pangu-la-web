@@ -253,7 +253,7 @@ $(function () {
 
         getData();
 
-        setTimeout(update, updateInterval);
+        timeId = setTimeout(update, updateInterval);
     }
 
     update();

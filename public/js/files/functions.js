@@ -751,43 +751,107 @@
    });
    
    $(document).on('complete.pjax', function (e) { 
+    	 $('#total-visits').sparkline(
+		       'html', {type: 'bar', barColor: '#ef705b', height: '35px', barWidth: "5px", barSpacing: "2px", zeroAxis: "false"}
+	     );
+	     $('#balance').sparkline(
+		       'html', {type: 'bar', barColor: '#91c950', height: '35px', barWidth: "5px", barSpacing: "2px", zeroAxis: "false"}
+	     );
        schedule();
    });
    //updating ctrol end
    
    
    var schedule = function(){
-       //收件箱 
-       $.ajax({  
-            type:"GET",  
-            url:"/getInbox.html",  
-            data:"",  
-            dataType:"json",  
-            success:function(data){
-                var innerHTML ='';
-                 data.forEach(function(row){ 
-                    var dateCa = new Date(row.SubscriptDate);                    
-                    var date = dateCa.getDate() < 10 ? "0" + dateCa.getDate() : dateCa.getDate();
-                    var month = (dateCa.getMonth()+1) < 10 ? "0" + (dateCa.getMonth()+1) : (dateCa.getMonth()+1);
-                    var year = dateCa.getFullYear();     
-                    var value = year+"-"+month+"-"+date;
-                    if(row.Unread == '0')   
-                        innerHTML = innerHTML + "<li><a href=\"javascript:getWarningDetail('"+row.SubscriptionId+"','"+value+"');\" title=''><i class='icon-info-sign'></i><strong>"+row.SubscriptionTitle+"</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><li>";
-                    else
-                        innerHTML = innerHTML + "<li><a href=\"javascript:getWarningDetail('"+row.SubscriptionId+"','"+value+"');\" title=''><i class='icon-info-sign'></i>"+row.SubscriptionTitle+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><li>";
-                }); 
-                innerHTML = innerHTML + "<li><a  data-pjax='#content' href='/getAllMail.html' title=''><i class='icon-list'></i>更多...</a><li>"; 
-                $('#InboxMenu').html(innerHTML);
-                
-                if(typeof(InboxScheduletimeId) == 'undefined'){ 
-                   var InboxScheduletimeId = setTimeout(schedule, 300000);
-                }
-            },  
-            error:function(xhr,status,errMsg){  
-              alert(xhr.responseText);
-              window.location ='/logout';
-            }  
-       });      
+    
+       var innerCallbacks = $.Callbacks();
+       
+       innerCallbacks.add(function() {
+           //收件箱 
+           $.ajax({  
+                type:"GET",  
+                url:"/getInbox.html",  
+                data:"",  
+                dataType:"json",  
+                success:function(data){
+                    var innerHTML ='';
+                     data.forEach(function(row){ 
+                        var dateCa = new Date(row.SubscriptDate);                    
+                        var date = dateCa.getDate() < 10 ? "0" + dateCa.getDate() : dateCa.getDate();
+                        var month = (dateCa.getMonth()+1) < 10 ? "0" + (dateCa.getMonth()+1) : (dateCa.getMonth()+1);
+                        var year = dateCa.getFullYear();     
+                        var value = year+"-"+month+"-"+date;
+                        if(row.Unread == '0')   
+                            innerHTML = innerHTML + "<li><a href=\"javascript:getWarningDetail('"+row.SubscriptionId+"','"+value+"');\" title=''><i class='icon-info-sign'></i><strong>"+row.SubscriptionTitle+"</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><li>";
+                        else
+                            innerHTML = innerHTML + "<li><a href=\"javascript:getWarningDetail('"+row.SubscriptionId+"','"+value+"');\" title=''><i class='icon-info-sign'></i>"+row.SubscriptionTitle+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><li>";
+                    }); 
+                    innerHTML = innerHTML + "<li><a  data-pjax='#content' href='/getAllMail.html' title=''><i class='icon-list'></i>更多...</a><li>"; 
+                    $('#InboxMenu').html(innerHTML);
+                    
+                    if(typeof(InboxScheduletimeId) == 'undefined'){ 
+                       var InboxScheduletimeId = setTimeout(schedule, 300000);
+                    }
+                },  
+                error:function(xhr,status,errMsg){  
+                  alert(xhr.responseText);
+                  window.location ='/logout';
+                }  
+           });
+       
+       });
+       
+       innerCallbacks.add(function() {
+            //访问量
+           var param = "";
+    		   var reg = new RegExp("[?&]" + "value" + "=([^&]*)(&|$)", "gi");
+           var r = window.location.search.substr(1).match(reg);
+           if (r != null){ 
+               param = window.location.search.replace(reg,"");
+           }
+           param = window.location.pathname + param;
+           if(param == '/') param = '/index.html';
+           $.ajax({  
+                type:"GET",  
+                url:"/getVisitCount.html",  
+                data:"statUrl="+param,   
+                dataType:"json",  
+                success:function(data){
+                    if($('#dayVisitCnt'))
+                        $('#dayVisitCnt').html(data['dayCnt-'+param]);
+                    if($('#allVisitCnt'))
+                        $('#allVisitCnt').html(data.allCnt);
+                },  
+                error:function(xhr,status,errMsg){  
+                  alert('统计访问量失败！'); 
+                }  
+           }); 
+           
+       });
+      
+       innerCallbacks.add(function() {
+           //刷新数据统计及
+           $.ajax({  
+                type:"GET",  
+                url:"/getStatData.html",  
+                data:"value="+$("#datepicker").attr("value"),  
+                dataType:"json",  
+                success:function(data){ 
+                  $('#DayCalledSum').html('今日调用总数<strong>'+data.DayCalledSum+'</strong>');  
+                  $('#DayFailedSum').html('今日异常总数<strong>'+data.DayFailedSum+'</strong>');  
+                  $('#DaySuccessRate').html('今日成功率<strong>'+data.DaySuccessRate+'</strong>');  
+                  $('#MonCalledSum').html('<strong>'+data.MonCalledSum+'</strong>'); 
+                  $('#MonFailedSum').html('<strong>'+data.MonFailedSum+'</strong>'); 
+                  $('#MonSuccessRate').html('<strong>'+data.MonSuccessRate+'</strong>');
+                  //schedule(); 
+                },  
+                error:function(xhr,status,errMsg){  
+                  alert('加载调用统计失败！');  
+                }  
+            }); 
+       });
+       
+       innerCallbacks.fire();        
    }
    
    function getWarningDetail(warningId,value){
@@ -833,7 +897,8 @@
               $('#DaySuccessRate').html('今日成功率<strong>'+data.DaySuccessRate+'</strong>');  
               $('#MonCalledSum').html('<strong>'+data.MonCalledSum+'</strong>'); 
               $('#MonFailedSum').html('<strong>'+data.MonFailedSum+'</strong>'); 
-              $('#MonSuccessRate').html('<strong>'+data.MonSuccessRate+'</strong>'); 
+              $('#MonSuccessRate').html('<strong>'+data.MonSuccessRate+'</strong>');
+              //schedule(); 
             },  
             error:function(xhr,status,errMsg){  
               alert('加载调用统计失败！');  
@@ -877,6 +942,9 @@
    callbacks.add(function() {
        schedule();
    })
+   
+   
+   
 
 	//===== Form elements styling =====//
 	

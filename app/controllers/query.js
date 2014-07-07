@@ -111,3 +111,30 @@ exports.multiQuery = function(list, config, limit, callback) {
 	}
 }
 
+exports.getTab = function(model, tab, date, ind) {
+
+    var mode = tab.mode,
+        type = tab.type,
+        subtype = tab.subtype;
+
+    if (!mode || !type || !subtype || !date || !model) throw new Error('参数不全');
+
+    var time = date.split('-');
+
+    var day = time[0]
+        + (time[1].length < 2 ? '0' + time[1] : time[1])
+        + (time[2].length < 2 ? '0' + time[2] : time[2]);
+
+    var tabName = mode + type + subtype + (ind > 0 ? day.substr(ind) : day);
+
+    var table = null;
+    try{
+        table = mongoose.model(model, tabName);
+    }catch(e){
+        console.error(e.stack)
+        throw new Error('not found')
+    }
+
+    return table;
+}
+

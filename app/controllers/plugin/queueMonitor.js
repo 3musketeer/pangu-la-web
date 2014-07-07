@@ -14,7 +14,7 @@ exports.plugin =  function(server) {
 
     server.get('/getQueueDataReal', function(req, res) {
         var curTime = new Date().getTime();
-        var startTime = curTime - 300000;
+        var startTime = curTime - 900000;
 
         var result = [];
 

@@ -6,7 +6,7 @@ exports.config = {
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false}},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:{$exists:false}},
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
@@ -26,7 +26,7 @@ exports.config = {
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false}},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:{$exists:false}},
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},

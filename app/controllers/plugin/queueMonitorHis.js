@@ -12,6 +12,28 @@ exports.plugin =  function(server) {
         })
     });
 
+    //test
+    server.get('/getTimeoutTest', function(req, res) {
+        var table = mongoose.model('TuxStateTimeOutTopDAY', 'TuxStateTimeOutTopDAY140519');
+        var testFields = ['max', 'average', 'min'];
+        var testLabel = ['最大值', '平均值', '最小值'];
+
+        table.find({}, function(err, rows) {
+            var data = [];
+
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                var time = row.timestamp;
+                var max = parseInt(row.MAX);
+                var average = parseInt(row.AVERAGE);
+                var min = parseInt(row.MIN);
+                data.push({time: time, data: [['max', max], ['average', average], ['min', min]]});
+            }
+            res.send({success: 1, data: data, queueFields: testFields, queueLabels: testLabel});
+        }).sort({timestamp: 1});
+
+    });
+
     // 直接查询统计结果
     server.get('/getQueueDataHis', function(req, res) {
         var date = req.query['value'];

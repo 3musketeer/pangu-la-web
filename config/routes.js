@@ -11,7 +11,7 @@ module.exports = function (app) {
 	app.get('/login.html', auth.login)
 
 	//对用户名密码进行鉴权
-	app.post('/auth.html', auth.auth, auth.session);
+	app.post('/auth.html/:checkrmUser', auth.auth, auth.session);
 
 	//首页
 	app.get('/', auth.requiresLogin, main.index); 
@@ -30,6 +30,7 @@ module.exports = function (app) {
 	//排名明细
 	app.get('/detail.html', auth.requiresLogin,laTop.initDetail); 
 	app.get('/topDetail.html', auth.requiresLogin, laTop.detail); 
+	app.get('/visitCntDetail.html', auth.requiresLogin, main.visitCntDetail); 
 	
 
 	//总数统计列表
@@ -58,6 +59,10 @@ module.exports = function (app) {
 	
 	 //数据加载
 	app.post('/receive',auth.receiveData);
+	
+	
+	//
+	app.get('/getVisitCount.html', auth.getVisitCount, auth.session);
 	
 	
 	//退出

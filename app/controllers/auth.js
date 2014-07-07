@@ -1,6 +1,10 @@
 var userAuth = require('./user_auth');
 var gridfs = require('./gridfs');
-var mongoose = require('mongoose'),db = mongoose.connection.db;
+var mongoose = require('mongoose'),db = mongoose.connection.db
+  , env = process.env.NODE_ENV || 'development'
+  , redis = require("redis")
+  , redisCfg = require('../../config/config')[env].redis
+  , logger = require('./log').logger;
 
 exports.requiresLogin = function (req, res, next) {
 
@@ -12,10 +16,7 @@ exports.requiresLogin = function (req, res, next) {
 }
 
 exports.login = function(req, res) {
-	res.render('auth/login',{
-	    layout: false,
-		errors: req.flash('error') 
-	})
+  userAuth.login(req, res); 
 }
 
 exports.auth = function(req, res, next) {    
@@ -57,6 +58,49 @@ exports.getHeadPicture = function(req, res) {
     }
 }
 
+
+exports.getVisitCount = function(req, res) {
+    if (req.session){
+        client = redis.createClient(redisCfg.port,redisCfg.host);
+        var now = new Date().getTime();
+        var dateCa = new Date(now);        
+        var date = dateCa.getDate() < 10 ? "0" + dateCa.getDate() : dateCa.getDate();
+        var month = (dateCa.getMonth()+1) < 10 ? "0" + (dateCa.getMonth()+1) : (dateCa.getMonth()+1);
+        var year = dateCa.getFullYear();     
+        var value = year+"-"+month+"-"+date;
+        var statUrl = req.query.statUrl;
+        if(statUrl == '/') statUrl = '/index.html';
+        try{
+            var visitCountObj = {};
+            client.get("system-visit-count-"+value, function (err, obj) {
+                if(obj){
+                    logger.debug("obj-0=%s",JSON.stringify(obj));
+                    var tempObj = JSON.parse(obj);
+                    if(tempObj['dayCnt-'+statUrl])
+                        tempObj['dayCnt-'+statUrl] = parseInt(tempObj['dayCnt-'+statUrl])+1;
+                    else
+                        tempObj['dayCnt-'+statUrl] = 1;
+                    tempObj.allCnt = parseInt(tempObj.allCnt)+1;
+                    visitCountObj = tempObj;  
+                    client.set("system-visit-count-"+value,JSON.stringify(tempObj));
+                    client.end();
+                }else{
+                    var tempObj ={};
+                    tempObj['dayCnt-'+statUrl] = 1;
+                    tempObj.allCnt = 1;
+                    visitCountObj = tempObj;   
+                    logger.debug("visitCountObj=%s",JSON.stringify(visitCountObj));
+                    client.set("system-visit-count-"+value,JSON.stringify(tempObj));
+                    client.end();
+                }
+                res.send(JSON.stringify(visitCountObj)); 
+            });
+        }catch(error)
+        {
+            client.quit();
+        }
+    }
+}
 
 exports.receiveData = function(req, res) {
      
