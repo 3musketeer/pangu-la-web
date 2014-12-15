@@ -823,7 +823,7 @@
                         $('#allVisitCnt').html(data.allCnt);
                 },  
                 error:function(xhr,status,errMsg){  
-                  alert('统计访问量失败！'); 
+                 // alert('统计访问量失败！'); 
                 }  
            }); 
            
@@ -846,7 +846,7 @@
                   //schedule(); 
                 },  
                 error:function(xhr,status,errMsg){  
-                  alert('加载调用统计失败！');  
+                 // alert('加载调用统计失败！');  
                 }  
             }); 
        });
@@ -875,7 +875,7 @@
                   alert(XMLHttpRequest.responseText);
                   window.location ='/logout';
               }else{
-                  alert("获取邮件明细出错！");
+                  //alert("获取邮件明细出错！");
               }              
             }  
        });
@@ -901,7 +901,7 @@
               //schedule(); 
             },  
             error:function(xhr,status,errMsg){  
-              alert('加载调用统计失败！');  
+              //alert('加载调用统计失败！');  
             }  
         }); 
    })
