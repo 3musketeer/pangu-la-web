@@ -138,3 +138,20 @@ exports.logout = function(req, res) {
 	req.session.hasAuth = false;
 	res.redirect('/login.html');
 }
+
+
+exports.resetPassword = function (req, res) {
+    res.render('user/resetPassword',{
+        layout: false,
+		errors: req.flash('error'),
+		Prompts: req.flash('Prompt') 
+	})
+}
+
+exports.modifyPassword = function (req, res) {
+    res.render('user/modifyPassword',{
+        layout: false,
+		errors: req.flash('error'),
+		Prompts: req.flash('Prompt') 
+	})
+}
