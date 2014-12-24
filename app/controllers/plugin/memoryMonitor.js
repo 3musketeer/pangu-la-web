@@ -26,7 +26,7 @@ exports.plugin =  function(server) {
         logger.debug("tabName==>%s", tabName);
         var table = mongoose.model('memorymonitor', tabName);
 
-        var curTime = new Date().getTime() - 81844559;
+        var curTime = new Date().getTime();
         var startTime = curTime - 300000;
 
         //console.log('chartList=>', req.query.chartList);
@@ -47,7 +47,7 @@ exports.plugin =  function(server) {
             sEcho = req.query.sEcho,
             sSearch = req.query.sSearch;
 
-        var curTime = new Date().getTime() - 81844559;
+        var curTime = new Date().getTime();
         var startTime = curTime - 300000;
 
         var conf = {};

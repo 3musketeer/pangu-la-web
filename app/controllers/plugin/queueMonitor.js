@@ -92,7 +92,7 @@ exports.plugin =  function(server) {
     server.get('/getHostQueueRealMR', function(req, res){
         logger.debug('time==>%s',req.query['value']);
         var date = req.query['value'],
-            curTime = new Date().getTime() - 74588916,
+            curTime = new Date().getTime(),
             startTime = curTime - 900000;
 
         var o = {};
