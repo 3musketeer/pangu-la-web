@@ -69,7 +69,10 @@ $(function() {
 $(function () {
     // we use an inline data source in the example, usually data would
     // be fetched from a server
-    var data = [], totalPoints = 10;
+    var data = [],
+        totalPoints = 10,
+        host = null,
+        table = null;
     function getRandomData() {
         if (data.length > 0)
             data = data.slice(1);
@@ -91,6 +94,53 @@ $(function () {
             res.push([i, data[i]])
 
         return res;
+    }
+
+    //绘制详细表数据
+    function initTable() {
+
+        host = (!host || host == '') ? $('#mm_serv li:first').text() : host;
+
+        table = $('#mm_table').dataTable({
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": '/memoryMonitorDayPage',
+            "fnServerParams": function ( aoData ) {
+                aoData.push( { "name": "value", "value": $('#datepicker').val() } );
+                aoData.push( { "name": "host", "value": host } )
+                aoData.push( { "name": "chartList", "value": $('#mm_chart_list').text() } );
+            },
+            "aoColumns": [
+                { "mData": "pid" },
+                { "mData": "name" },
+                { "mData": "time", sClass: 'text-right' },
+                { "mData": "size", sClass: 'text-right' },
+                { "mData": "timestamp", sClass: 'text-right' }
+            ],
+            "bRetrieve":true,
+            "bJQueryUI": false,
+            "bAutoWidth": false,
+            "bSort": false,
+            "sPaginationType": "full_numbers",
+            "oLanguage": {
+                "sSearch": "<span>关键字过滤:</span> _INPUT_",
+                "sLengthMenu": "<span>每页显示数:</span> _MENU_",
+                "oPaginate": { "sFirst": "首页", "sLast": "末页", "sNext": ">", "sPrevious": "<" },
+                "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录"
+            }
+        });
+
+        initServ();
+    }
+
+    //服务器选择事件
+    function initServ() {
+
+        $('#mm_serv').delegate('li', 'click', function() {
+            host = $(this).text();
+
+            table.fnDraw();
+        });
     }
 
     // setup control widget
@@ -149,11 +199,16 @@ $(function () {
 //    var plot = $.plot($("#cpu_monitor"), [ getRandomData() ], options);
 
     function getData() {
+        if(null == host){
+            host = '134.32.10.61';
+        }
         $.ajax({
             type: 'GET',
             url: '/queryMemory',
             data: {
-                chartList: $('#mm_chart_list')[0].innerText
+                chartList: $('#mm_chart_list')[0].innerText,
+                value: $('#datepicker').val(),
+                host: host
             },
             dataType: 'json',
             success: function(data) {
@@ -180,15 +235,15 @@ $(function () {
             var row = rows[i];
 
             if (tt <= 0) {
-                tt = row.time;
+                tt = row.timestamp;
             }
 
-            cnum += row.cpu;
-            mnum += row.memory;
+            cnum += (row.size/1024);//cpu ==> size
+            mnum += (row.size/1024);//memory ==> size
 
 //            no = row.time;
 
-            if (tt == row.time) {
+            if (tt == row.timestamp) {
                 ds.push(row);
             } else {
                 cdata.push([tt, cnum]);
@@ -197,7 +252,7 @@ $(function () {
 //                no++;
                 cnum = 0;
                 mnum = 0;
-                tt = row.time;
+                tt = row.timestamp;
                 ds = [];
                 ds.push(row);
             }
@@ -209,7 +264,8 @@ $(function () {
 
                 drawCpu(cdata);
                 drawMemory(mdata);
-                drawDetail(ds, cols);
+                initTable();
+                //drawDetail(ds, cols);
             }
         }
     }

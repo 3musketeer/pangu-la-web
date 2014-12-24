@@ -34,7 +34,8 @@
     "log4js": "0.6.13",
     "solr": "~0.2.2",
     "grunt-contrib-jshint": "~0.1.1",
-    "grunt-contrib-nodeunit": "~0.1.2"
+    "grunt-contrib-nodeunit": "~0.1.2",
+    "extend": "latest"
   },
   "devDependencies": {
     "nodemon": "latest",
