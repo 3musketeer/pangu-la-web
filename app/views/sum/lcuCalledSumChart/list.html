@@ -24,28 +24,17 @@
 							mode='TuxState', type='CalledSumByTime',subtype='AtHours';
 							item.color='#46bb00' %>
 						<% include ../../includes/widget/chart-area.html %>	
-
-						<% var item = all['TuxStateCalledSumByTimeAtDay'], 
-							mode='TuxState', type='CalledSumByTime',subtype='AtDay';
-							item.color='#46bb00' %>
-						<% include ../../includes/widget/chart-area.html %>
-
-					</div>
-
+						
+				    </div>
+					
 					<div class="span4">
-
 						<% var item = all['TuxStateFailedSumByTimeAtHours'], 
 							mode='TuxState', type='FailedSumByTime',subtype='AtHours';
 							item.color='#f1553c' %>
 						<% include ../../includes/widget/chart-area.html %>	
 
-						<% var item = all['TuxStateFailedSumByTimeAtDay'], 
-							mode='TuxState', type='FailedSumByTime',subtype='AtDay';
-							item.color='#f1553c' %>
-						<% include ../../includes/widget/chart-area.html %>
-
 					</div>
-
+					
 					<div class="span4">
 
 						<div class="widget">
@@ -61,6 +50,25 @@
 			            </div>		
 
 					</div>
+                
+				</div>
+				<div class="row-fluid">
+					<div class="span12">
+                        <% var item = all['TuxStateCalledSumByTimeAtDay'], 
+							mode='TuxState', type='CalledSumByTime',subtype='AtDay';
+							item.color='#46bb00' %>
+						<% include ../../includes/widget/chart-area.html %>
+                    </div>
+				</div>
+				<div class="row-fluid">	
+					<div class="span12">
+						<% var item = all['TuxStateFailedSumByTimeAtDay'], 
+							mode='TuxState', type='FailedSumByTime',subtype='AtDay';
+							item.color='#f1553c' %>
+						<% include ../../includes/widget/chart-area.html %>
+
+					</div>
+
 
 				</div>
 				<!-- /排名 -->

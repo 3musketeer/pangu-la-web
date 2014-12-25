@@ -3,19 +3,22 @@ $(function() {
 		obj = $('#chart-area-'+_idx);
 		if(obj.length == 1) {
 			
-			data = jQuery.parseJSON($('#chart-area-data'+_idx)[0].innerText)
-      if(data[0].data[0]){
+	    data = jQuery.parseJSON($('#chart-area-data'+_idx)[0].innerText)
+        if(data[0].data[0]){
     			var plot = $.plot(obj, data, {
     				xaxis: {
     					show: true,
     					min: data[0].data[0][0],
     					max: data[0].data[data[0].data.length-1][0],
     					//mode: "time",
-    					//tickSize: [1, "month"],
+    					minTickSize: 1,
     					//monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     					//tickLength: 1,
     					axisLabel: 'Hours',
-    					axisLabelFontSizePixels: 11
+    					axisLabelFontSizePixels: 11,
+    					tickFormatter: function (v, axis) {
+                            return v;
+                        }    
     				},
     				yaxis: {
     					//axisLabel: 'Amount',
