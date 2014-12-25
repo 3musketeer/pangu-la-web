@@ -59,7 +59,7 @@ module.exports = function (app, config) {
     // express/mongo session storage
     app.use(express.session({
       secret: "logAnalyse-pangu",
-	  cookie: { maxAge: 900000 },  //15 minute
+	  cookie: { maxAge: 7200000 },  //120 minute
       store: new mongoStore({
         url: config.db,
         collection : 'sessions'

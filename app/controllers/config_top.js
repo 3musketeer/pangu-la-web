@@ -146,23 +146,23 @@ exports.cfgDetail = {
 		sort: {'TRANSCODE' : -1}
 	},
 	
-	 TuxStateFailedErrorDetailByLcu: {    
-    titles: ['编号','流程名', '错误明细'],
+	TuxStateFailedErrorDetailByLcu: {    
+        titles: ['编号','流程名', '错误明细'],
 		colNames: ['#','TRANSCODE','ERRORDETAIL'],
 		filterColNames: ['TRANSCODE', 'ERRORDETAIL'],
 		sort: {'TRANSCODE' : -1}
 	},
 	
 	TuxStateVisitCount : {
-		titles: ['模块名','模块地址' , '访问量'],
-		colNames: ['name','URL','count']
+		titles: ['模块名','模块地址' , '访问量','操作'],
+		colNames: ['name','URL','count','count']
 	},
 }
 
 
 exports.moduleName = {
     '/index.html':'首页',
-    '/orderOverstock.html?chartList=lineChart':'工单积压',
+    //'/orderOverstock.html?chartList=lineChart':'工单积压',
     '/historyQueryDetail.html?chartList=historyTopDetailList':'流程超时(历史)',
     '/realtimeQueryDetail.html?chartList=realtimeLcuTimeoutDetailList':'流程超时(实时)',
     '/lcuCalledSum.html?chartList=lcuCalledSumList':'流程调用量(历史)',
@@ -172,7 +172,7 @@ exports.moduleName = {
     '/historyComPareGraph.html?chartList=historyLcuSumCompareChart':'主机对比',
     '/queueMonitorHis.html':'服务队列(历史)',
     '/queueMonitor.html':'服务队列(实时)',
-    '/realtimeQueryDetail.html?chartList=realTimeSvcDeadDetailList':'服务僵死',
+    //'/realtimeQueryDetail.html?chartList=realTimeSvcDeadDetailList':'服务僵死',
     '/memoryMonitor.html?chartList=realMemory':'内存占用',
     '/historyQueryDetail.html?chartList=historySvcTimeOutDetailList':'服务超时(历史)',
     '/realtimeQueryDetail.html?chartList=realTimeSvcTimeOutDetailList':'服务超时(实时)',
