@@ -137,4 +137,71 @@ exports.plugin =  function(server) {
             res.send({success: 1, data: rows});
         });
     });
+
+    // MapReduce 创建HostQueueHis
+    server.get('/getHostQueueHisMR', function(req, res) {
+        //console.log('time=>' + req.query['value']);
+        logger.debug('time==>%s',req.query['value']);
+        var date = req.query['value'];
+
+        var o = {};
+        max = 0;
+        max_queuef = [];
+        o.map = function(){
+            emit(this.timestamp, { time: this.timestamp, data:[{0: this.name, 1: this.queued}] });
+        };
+
+        o.reduce = function(key, values){
+            var tmpres = [];
+            for(var i=0; i<values.length; i++){
+                tmpres.push( values[i].data[0] );
+            }
+            return {time: key, data: tmpres};
+        };
+
+        var queueFields = qConfig.queueFields;
+        var queueLabels = qConfig.queueLabels;
+        var chartConfig = qConfig.hisQueue[1];
+        var tabName = chartConfig.mode + chartConfig.type + chartConfig.subtype + date.replace(/-/g, '');
+        console.log('tabName=>' + tabName);
+
+        table = mongoose.model('QueueDetail', tabName);
+
+        table.mapReduce(o, function(err, rows){
+            var results = [];
+            if(err){
+                logger.debug('==>' + err);
+            }
+            if( rows === undefined ){
+                res.send({ failure: 0, data: [], queueFields: [], queueLabels: [] });
+                return;
+            }
+            rows.forEach(function(row){
+                var obj = row.value;
+                results.push(obj);
+            });
+            for(var i=0; i<results.length; i++){
+                if( max < results[i].data.length ){
+                    max = results[i].data.length;
+                    var tmpq = [];
+                    for(var j=0; j<max; j++){
+                        tmpq.push( results[i].data[j]['0'] );
+                    }
+                    max_queuef = tmpq;
+                }
+            }
+            for(var i=0; i<results.length; i++){
+                var tmpd = [];
+                for(var j=0; j<results[i].data.length; j++){
+                    tmpd.push(results[i].data[j]['0']);
+                }
+                for(var k=0; k<max_queuef.length; k++){
+                    if( -1 == tmpd.indexOf( max_queuef[k] ) ){
+                        results[i].data.push({ 0: max_queuef[k], 1: 0 });
+                    }
+                }
+            }
+            res.send({ success: 1, data: results, queueFields: max_queuef, queueLabels: max_queuef });
+        });
+    });
 }

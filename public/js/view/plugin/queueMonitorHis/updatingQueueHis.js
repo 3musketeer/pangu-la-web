@@ -56,7 +56,8 @@ $(document).ready(function () {
     function getData() {
         $.ajax({
             type: 'GET',
-            url: '/getQueueDataHis',
+            //url: '/getQueueDataHis',
+            url: '/getHostQueueHisMR',
 //            url: '/getQueueGroupDataHis',
             data: {
                 value: $('#datepicker').val()

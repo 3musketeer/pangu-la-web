@@ -1,5 +1,5 @@
 exports.memory = {
-    realMemory: [{mode: 'Host', type: 'Memory', subtype: 'Real'}],
+    realMemory: [{mode: 'Host', type: 'Memory', subtype: 'Real'}, {mode: 'Tux', type: 'Mem', subtype: 'Base'}],
     tabColNames: ['ProcessID', 'User', 'Time', 'CPU(%)', 'MEMORY(%)'],
-    tabCols: ['processId', 'user', 'time', 'cpu', 'memory']
+    tabCols: ['pid', 'name', 'time', 'size', 'size']
 }

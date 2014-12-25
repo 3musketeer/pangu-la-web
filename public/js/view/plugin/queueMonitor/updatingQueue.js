@@ -66,7 +66,8 @@ $(document).ready(function () {
     function getRealData() {
         $.ajax({
             type: 'GET',
-            url: '/getQueueDataReal',
+            //url: '/getQueueDataReal',
+            url: '/getHostQueueRealMR',
             data: {
                 value: $('#datepicker').val()
             },
