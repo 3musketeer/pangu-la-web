@@ -142,14 +142,18 @@ exports.plugin =  function(server) {
     server.get('/getHostQueueHisMR', function(req, res) {
         //console.log('time=>' + req.query['value']);
         logger.debug('time==>%s',req.query['value']);
-        var date = req.query['value'];
+        var date = req.query['value'],
+            host = req.query['host'];
 
         var o = {};
         max = 0;
         max_queuef = [];
         o.map = function(){
-            emit(this.timestamp, { time: this.timestamp, data:[{0: this.name, 1: this.queued}] });
+            emit(this.timestamp, { time: this.timestamp, data:[{0: this.name + '|' + this.queue, 1: this.queued}] });
         };
+        o.query = {
+            host: host
+        }
 
         o.reduce = function(key, values){
             var tmpres = [];
@@ -159,8 +163,6 @@ exports.plugin =  function(server) {
             return {time: key, data: tmpres};
         };
 
-        var queueFields = qConfig.queueFields;
-        var queueLabels = qConfig.queueLabels;
         var chartConfig = qConfig.hisQueue[1];
         var tabName = chartConfig.mode + chartConfig.type + chartConfig.subtype + date.replace(/-/g, '');
         console.log('tabName=>' + tabName);
