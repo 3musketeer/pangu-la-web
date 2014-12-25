@@ -7,16 +7,16 @@ exports.config = {
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count', 'host' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['132.34.11.28','132.34.11.29']}},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['134.32.28.197','134.32.28.198']}},
 		sort: {'hours' : 1}
 	},
 	
-	TuxStateCalledSumByTimeAt28a: {
+	TuxStateFailedSumByTimeAt28a: {
 		name: '流程异常量',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count', 'host' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['132.34.11.28','132.34.11.29']}},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['134.32.28.197','134.32.28.198']}},
 		sort: {'hours' : 1}
 	},
 

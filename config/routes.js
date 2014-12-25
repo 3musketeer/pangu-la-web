@@ -65,6 +65,13 @@ module.exports = function (app) {
 	app.get('/getVisitCount.html', auth.getVisitCount, auth.session);
 	
 	
+	app.get('/modifyPassword.html',auth.modifyPassword); 
+	app.post('/modifyPassword',user_auth.modifyPassword); 
+	
+	app.get('/resetPassword.html',auth.resetPassword); 
+	app.post('/resetPassword',user_auth.resetPassword); 
+	
+	
 	//退出
 	app.get('/logout',auth.logout); 
 

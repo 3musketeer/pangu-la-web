@@ -40,8 +40,10 @@
 						<% if(locals.current_user){ %>
 						    <% if(locals.current_user.is_admin){ %>	
 							    <li><a href="/auditUser" title=""><i class="icon-cog"></i>审核</a></li>
+							    <li><a href="/resetPassword.html" title=""><i class="icon-cog"></i>密码重置</a></li>
 					    	<% } %>
 				        <% } %>
+				        <li><a href="/modifyPassword.html" title=""><i class="icon-cog"></i>密码修改</a></li>
 						<li><a  id="logout" href="/logout" title=""><i class="icon-remove"></i>退出</a></li>
 					</ul>
 				</li>

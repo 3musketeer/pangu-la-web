@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
   , debug = require('debug')('pangu:query')
+  , logger = require('./log').logger;
 
 var getTable = function(mode, type, scope, value) {
 
@@ -22,16 +23,21 @@ var getTable = function(mode, type, scope, value) {
 	if(scope=="month") value = YY+MM;
 	if (scope=="year") value = YY;
 
-	var collection = mode + type + scope.toUpperCase() + value;
+	var collection = ""
+	if (scope != 'noHave')
+	    collection = mode + type + scope.toUpperCase() + value;
+	else{
+	    collection = mode + type  + value.replace(/-/g,'');
+	}
 	debug('collection:%s.', collection)
-
+    var table;
 	try{
-		var table = mongoose.model('QueryResult', collection);
+		table = mongoose.model('QueryResult', collection);
 	}catch(e){
 		console.error(e.stack)
 		throw new Error('not found')
 	}
-	
+	logger.debug("collection=%s",collection);
 	return table;
 	
 }
@@ -86,7 +92,7 @@ exports.multiQuery = function(list, config, limit, callback) {
 			var scope = cfg.scopes[idx]	
 
 			if (!list[i].scope || list[i].scope == scope) {
-
+			    logger.debug("subtype=%s",subtype);
 				getTable(mode, type, scope, value)
 				.list(cfg, (function(mode, type, subtype, scope, cfg, result) { 
 						return function(err, docs) {

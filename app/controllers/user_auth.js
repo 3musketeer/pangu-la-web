@@ -100,7 +100,7 @@ function gen_session(user, req, res,ck_rmbUser){
 	}
 	req.session.user = user;
     req.session.hasAuth = true;
-   // req.session.cookie.maxAge = 1000 * 60 * 60;
+    //req.session.cookie.maxAge = 1000 * 60 * 60;
 }
 
 
@@ -277,4 +277,62 @@ exports.login = function(req, res){
 	      password:password,
 		    errors: req.flash('error') 
 	  })
+}
+
+
+
+exports.resetPassword = function(req, res, next){
+    var user_name = sanitize(req.body.user_name).trim();
+    user_name = sanitize(user_name).xss();
+    var password = sanitize(req.body.password).trim();
+    password = sanitize(password).xss();
+   
+    //验证用户名
+    try{
+    	check(user_name, '用户名只能使用字母和数字').isAlphanumeric();
+    }catch(e){			
+			req.flash('error', '用户名只能使用字母和数字！')
+			res.redirect('/register');
+			return;	
+    }
+    
+
+    User.findOne({'user_name': user_name}, function(err, userRow){
+    	if(err) return next(err);		
+    	if(userRow){					
+    		password = md5(password);
+    		userRow.set({password:password});
+            userRow.save();
+    		req.flash('Prompt', '密码重置成功！');
+    		return res.redirect('/resetPassword.html');
+    	}else{
+    	    req.flash('error', '用户名不存在！')
+    		return res.redirect('/resetPassword.html');
+    	}
+    });
+}
+
+
+exports.modifyPassword = function(req, res, next){
+	 var userName = req.session.user.user_name;
+	 var pass0 =  md5(req.body.password0);
+	 var pass1 =  md5(req.body.password1);
+	 
+	 User.findOne({'user_name': userName}, function(err, userRow){
+			if(err) return next(err);		
+			if(userRow){
+				if(userRow.password != pass0 && userRow.password != req.body.password0){
+    				req.flash('error', '用户密码不正确！')
+    				res.redirect('/modifyPassword.html');
+    				return;
+				}
+				userRow.set({password:pass1});
+                userRow.save();
+        		req.flash('Prompt', '密码修改成功！');
+        		return res.redirect('/modifyPassword.html');
+			}else{
+    			req.flash('error', '用户不存在！')
+    			return res.redirect('/login.html');	
+			}
+		});	
 }

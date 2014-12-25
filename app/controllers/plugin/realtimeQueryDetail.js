@@ -46,14 +46,14 @@ exports.plugin = function(server) {
     	  , subtype = req.query.subtype || ''
     	  , iDisplayStart = req.query.iDisplayStart
     	  , iDisplayLength = req.query.iDisplayLength
-        , sSearch = req.query.sSearch
+          , sSearch = req.query.sSearch
     
       if(!iDisplayStart) iDisplayStart = 0;
       iDisplayLength = config[mode+type+subtype].displayLength;
       
       var now = new Date().getTime();
       
-    	var table = query.getTable(mode, type, scope, value)
+    	var table = query.getTable(mode, type, 'noHave', value)
     
     	type += subtype;
     
@@ -113,7 +113,8 @@ exports.plugin = function(server) {
                 output.aaData.push(temp);
                 temp = [];
             }); 
-            var response = JSON.stringify(output);        
+            var response = JSON.stringify(output);      
+              
             res.send(response);
     	}
         
@@ -124,7 +125,8 @@ exports.plugin = function(server) {
           proxy.trigger('count', cnt);
       });
         
-    	table.list(tempConfig, function(err, docs){	        
+    	table.list(tempConfig, function(err, docs){	      
+    	    logger.debug("docs------------=%s",JSON.stringify(docs));  
     	    proxy.trigger('docs', docs);			
     	})
     });
