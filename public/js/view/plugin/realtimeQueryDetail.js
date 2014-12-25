@@ -10,9 +10,10 @@ $(function() {
 		"bAutoWidth": false,
 		"bSort": false,
 		"sPaginationType": "full_numbers",
+		"sDom":'<"H"f<"startCollection"><"stopCollection">r>t<"F"ip>',
 		"aLengthMenu": [[parseInt($("input[name='displayLength']").val())], [parseInt($("input[name='displayLength']").val())]],
 		"oLanguage": {
-			"sSearch": "<span>关键字过滤):</span> _INPUT_",
+			"sSearch": "<span>关键字过滤):</span> _INPUT_",
 			"sLengthMenu": "<span>每页显示数:</span> _MENU_",
 			"oPaginate": { "sFirst": "首页", "sLast": "末页", "sNext": ">", "sPrevious": "<" }, 
 		    "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录"
@@ -25,7 +26,7 @@ $(function() {
             "data": aoData,
             "success": fnCallback,
             "error": function (XMLHttpRequest, textStatus, errorThrown) {
-              //alert("实时获取数据失败！"̀);
+              //alert("实时获取数据失败！"̀);
             } 
         });
     },
@@ -34,6 +35,8 @@ $(function() {
      }
   });
   
+  $(".startCollection").html("<button class=\"btn\" onclick = \"ctrolAjax('1')\"type=\"button\">开始采集</button>").css("float","left").css("width","320px").css("margin","12px auto auto auto");
+  $(".stopCollection").html("<button class=\"btn\" onclick = \"ctrolAjax('0')\"type=\"button\">停止采集</button>").css("float","left").css("width","320px").css("margin","12px auto auto auto");
   var oSettings = oTable.fnSettings();
   oSettings._iDisplayLength = parseInt($("input[name='displayLength']").val());
   function updateAjax() {
