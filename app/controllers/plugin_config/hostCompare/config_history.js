@@ -71,7 +71,7 @@ exports.config = {
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
 		filter: {TRANSCODE:{$exists:false},SVRNAME:'qamcbs1l1server'},
-		color: "#4bb0ce",
+		color: "#FFB5C5",
 		filterColNames: [],
 		sort: {'hours' : 1}
 	}
