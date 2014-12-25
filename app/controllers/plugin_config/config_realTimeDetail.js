@@ -47,7 +47,7 @@ exports.detailConfig = {
 	TuxStateTimeOutDetailBySvc : {
 	  name: '实时服务超时明细',
 	  scopes: ['day'],
-	  delayTime:2000,
+	  delayTime:1000*60*60,
 	  displayLength:50,
 		titles: ['排名','服务名', '耗时(s)', '主机', '统计时间'],
 		colNames: ['#', 'SVRNAME', 'MAX', 'host', 'STARTTIME'],
