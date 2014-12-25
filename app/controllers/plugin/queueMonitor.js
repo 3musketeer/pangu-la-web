@@ -93,17 +93,19 @@ exports.plugin =  function(server) {
         logger.debug('time==>%s',req.query['value']);
         var date = req.query['value'],
             curTime = new Date().getTime(),
-            startTime = curTime - 900000;
+            startTime = curTime - 900000,
+            host = req.query['host'];
 
         var o = {};
         max = 0;
         max_queuef = [];
         o.map = function(){
-            emit(this.timestamp, { time: this.timestamp, data:[{0: this.name, 1: this.queued}] });
+            emit(this.timestamp, { time: this.timestamp, data:[{0: this.name + '|' + this.queue, 1: this.queued}] });
         };
 
         o.query = {
-            timestamp: { $gte: startTime, $lte: curTime }
+            timestamp: { $gte: startTime, $lte: curTime },
+            host: host
         };
 
         o.reduce = function(key, values){
@@ -114,8 +116,6 @@ exports.plugin =  function(server) {
             return {time: key, data: tmpres};
         };
 
-        var queueFields = qConfig.queueFields;
-        var queueLabels = qConfig.queueLabels;
         var chartConfig = qConfig.realQueue[1];
         var tabName = chartConfig.mode + chartConfig.type + chartConfig.subtype + date.replace(/-/g, '');
         console.log('tabName=>' + tabName);
@@ -154,7 +154,7 @@ exports.plugin =  function(server) {
                     }
                 }
             }
-            res.send({ success: 1, data: results, queueFields: max_queuef, queueLabels: max_queuef });
+            res.send({ success: 1, data: results, queueFields: max_queuef, queueLabels: max_queuef});
         });
     });
 }

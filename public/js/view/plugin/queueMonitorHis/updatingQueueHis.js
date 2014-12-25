@@ -60,7 +60,8 @@ $(document).ready(function () {
             url: '/getHostQueueHisMR',
 //            url: '/getQueueGroupDataHis',
             data: {
-                value: $('#datepicker').val()
+                value: $('#datepicker').val(),
+                host: '134.32.28.141'
             },
             dataType: 'json',
             success: function(data) {
@@ -151,7 +152,7 @@ $(document).ready(function () {
         for (var i = 0; i < data.length; i++) {
 //            ds.push(data[i].value);
             for (var j = 0; j < queueLabels.length; j++) {
-                ds[j].data.push([data[i].time, data[i].data[j][1]]);
+                ds[j].data.push([data[i].time, data[i].data[j]['1']]);
             }
 
         }
