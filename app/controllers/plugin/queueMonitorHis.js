@@ -7,8 +7,9 @@ var mongoose = require('mongoose')
 
 exports.plugin =  function(server) {
     server.get('/queueMonitorHis.html', function(req, res) {
+        var hosts = qConfig.hosts;
         res.renderPjax('plugin/queueMonitorHis/queueMonitorHis', {
-
+            hosts: hosts
         })
     });
 
@@ -148,8 +149,12 @@ exports.plugin =  function(server) {
         var o = {};
         max = 0;
         max_queuef = [];
+        queueLabels = [];
+        serveFields = [];
         o.map = function(){
-            emit(this.timestamp, { time: this.timestamp, data:[{0: this.name + '|' + this.queue, 1: this.queued}] });
+            if("GWTDOMAIN" != this.name) {
+                emit(this.timestamp, {time: this.timestamp, data: [{0: this.name + '`' + this.queue, 1: this.queued}]});
+            }
         };
         o.query = {
             host: host
@@ -179,31 +184,61 @@ exports.plugin =  function(server) {
                 return;
             }
             rows.forEach(function(row){
-                var obj = row.value;
-                results.push(obj);
+                results.push(row.value);
             });
             for(var i=0; i<results.length; i++){
-                if( max < results[i].data.length ){
-                    max = results[i].data.length;
-                    var tmpq = [];
-                    for(var j=0; j<max; j++){
-                        tmpq.push( results[i].data[j]['0'] );
+                for(var j=0; j<results[i].data.length; j++){
+                    if( -1 == max_queuef.indexOf(results[i].data[j]['0'])){
+                        max_queuef.push(results[i].data[j]['0']);
                     }
-                    max_queuef = tmpq;
                 }
             }
             for(var i=0; i<results.length; i++){
                 var tmpd = [];
                 for(var j=0; j<results[i].data.length; j++){
                     tmpd.push(results[i].data[j]['0']);
+                    if( -1 == max_queuef.indexOf(results[i].data[j]['0'])){
+                        max_queuef.push(results[i].data[j]['0']);
+                    }
                 }
                 for(var k=0; k<max_queuef.length; k++){
                     if( -1 == tmpd.indexOf( max_queuef[k] ) ){
-                        results[i].data.push({ 0: max_queuef[k], 1: 0 });
+                        results[i].data.push({ 0: max_queuef[k], 1: null });
                     }
                 }
             }
-            res.send({ success: 1, data: results, queueFields: max_queuef, queueLabels: max_queuef });
+            res.send({ success: 1, data: results, queueFields: max_queuef, queueLabels: max_queuef, serveFields: serveFields });
         });
+    });
+
+    server.get('/getHostQueueHisServe', function(req, res) {
+        var name_queue = req.query['name'];
+        var date = req.query['value'];
+        var host = req.query['host'];
+        var tmpnq = name_queue.split('`');
+        var name = tmpnq[0],
+            queue = tmpnq[1];
+        logger.debug("{host:'"+host+"',name:'"+name+"',queue:'"+queue+"'}")
+        var chartConfig = qConfig.hisQueue[1];
+        var tabName = chartConfig.mode + chartConfig.type + chartConfig.subtype + date.replace(/-/g, '');
+        var table = mongoose.model('QueueDetail', tabName);
+        table.find({name: name, host: host, queue: queue}, function(err, rows) {
+            if(err){
+                res.send({ failure: 1, serve: null});
+                return;
+            }
+            if(rows.length == 0){
+                res.send({ success: 1, serve: null });
+                return;
+            }else if(rows[0].name != 'GWTDOMAIN'){
+                res.send({ success: 1, serve: rows[0].serve });
+                return;
+            }else{
+                res.send({ success: 1, serve: rows[1].serve });
+                return;
+            }
+
+        });
+
     });
 }

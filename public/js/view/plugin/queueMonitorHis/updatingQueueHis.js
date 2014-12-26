@@ -2,7 +2,10 @@ $(document).ready(function () {
     var data = [];
     var dataset;
     var updateInterval = 2000;
-    var now = new Date().getTime();
+    var now = new Date().getTime(),
+        host = null,
+        serv_sel = null,
+        query_res = null;
 
     // prepare chart data
     var  sampleData = [
@@ -53,7 +56,9 @@ $(document).ready(function () {
 //            ]
 //    };
 
-    function getData() {
+    $("#mh_hosts_sel").change(function(){
+        host = $(this).children('option:selected').text();
+        serv_sel = $("#mh_serve_sel").children('option:selected').text() || '全部显示';
         $.ajax({
             type: 'GET',
             //url: '/getQueueDataHis',
@@ -61,13 +66,81 @@ $(document).ready(function () {
 //            url: '/getQueueGroupDataHis',
             data: {
                 value: $('#datepicker').val(),
-                host: '134.32.28.141'
+                host: host
             },
             dataType: 'json',
             success: function(data) {
-                console.log('data=>' + data);
+                query_res = data;
                 sampleData =  data.data;
 //                redraw(data.data);
+                updateServeSelect(data.queueLabels);
+                group(data.data, data.queueFields, data.queueLabels);
+            },
+            error: function() {
+
+            }
+        });
+    });
+
+    $("#mh_serve_sel").change(function() {
+        serv_sel = $(this).children('option:selected').text();
+        if (serv_sel == '全部显示') {
+            group(query_res.data, query_res.queueFields, query_res.queueLabels);
+        }else{
+            var tmpdata = [];
+            for(var i=0; i<query_res.data.length; i++){
+                for(var j=0; j<query_res.data[i].data.length; j++){
+                    if(serv_sel == query_res.data[i].data[j]['0']){
+                        tmpdata.push({time:query_res.data[i].time, data:[query_res.data[i].data[j]]});
+                    }
+                }
+            }
+            $.ajax({
+                type: 'GET',
+                url: '/getHostQueueHisServe',
+                data: {
+                    value: $('#datepicker').val(),
+                    host: host,
+                    name: serv_sel,
+                    timestamp: tmpdata[0].time
+                },
+                dataType: 'json',
+                success: function(data) {
+                    var serve = data.serve;
+                    for(var i=0; i<tmpdata.length; i++){
+                        tmpdata[i].data.push({0:'serve', 1: serve});
+                        if( null == tmpdata[i].data[0]['1']){
+                            tmpdata[i].data[0]['1'] = 0;
+                        }
+                    }
+
+                    group(tmpdata, [serv_sel, serve], [serv_sel, serve]);
+                },
+                error: function() {
+                }
+            });
+        }
+    });
+
+    function getData() {
+        host = $("#mh_hosts_sel").children("option:selected").text() || '134.32.28.36';
+        serv_sel = $("#mh_serve_sel").children('option:selected').text() || '全部显示';
+        //console.log(host)
+        $.ajax({
+            type: 'GET',
+            //url: '/getQueueDataHis',
+            url: '/getHostQueueHisMR',
+//            url: '/getQueueGroupDataHis',
+            data: {
+                value: $('#datepicker').val(),
+                host: host
+            },
+            dataType: 'json',
+            success: function(data) {
+                query_res = data;
+                sampleData =  data.data;
+//                redraw(data.data);
+                updateServeSelect(data.queueLabels);
                 group(data.data, data.queueFields, data.queueLabels);
             },
             error: function() {
@@ -75,6 +148,16 @@ $(document).ready(function () {
             }
         });
     }
+
+    function updateServeSelect(qLabels){
+        var serv_sel = $("#mh_serve_sel");
+        var html = "<option>全部显示</option>";
+        for(var i=0; i<qLabels.length; i++){
+            html += "<option>" + qLabels[i] + "</option>";
+        }
+        serv_sel.html(html);
+    }
+
 
     function redraw(data) {
 
@@ -161,22 +244,55 @@ $(document).ready(function () {
             series: {
                 lines: {
                     show: true
+                }
+            },
+            xaxis: {
+                mode: "time",
+                tickSize: [60, "second"],
+                tickFormatter: function (v, axis) {
+                    var date = new Date(v);
+
+                    if (date.getSeconds() % 10 == 0) {
+                        var day = (date.getMonth()+1) + '-' + date.getDate();
+                        var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                        var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                        var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+
+                        return hours + ':' + minutes;
+                    } else {
+                        return "";
+                    }
+                },
+                show: false
+            },
+            yaxis: {
+                show: false
+            },
+            selection: {
+                mode: "x"
+            }
+        };
+
+        var options_part = {
+            series: {
+                lines: {
+                    show: true
                 },
                 points: {
-                    show: true
+                    show: false
                 }
             },
             legend: {
-                noColumns: 2
+                noColumns: 8
             },
             xaxis: {
 //                tickDecimals: 0
                 mode: "time",
-                tickSize: [360, "second"],
+                tickSize: [60, "second"],
                 tickFormatter: function (v, axis) {
                     var date = new Date(v);
 
-                    if (date.getSeconds() % 6 == 0) {
+                    if (date.getMinutes() % 10 == 0) {
                         var day = (date.getMonth()+1) + '-' + date.getDate();
                         var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
                         var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
@@ -191,30 +307,29 @@ $(document).ready(function () {
             yaxis: {
 //                min: 0
             },
-            selection: {
-                mode: "x"
-            }
+            hoverable: true,
+            clickable: true
         };
 
         var placeholder = $("#queue_monitor");
+        var pcpart = $("#queue_monitor_part");
 
         placeholder.bind("plotselected", function (event, ranges) {
-            console.log('plotselected...');
-
+            //console.log('plotselected...');
 //            $("#selection").text(ranges.xaxis.from.toFixed(1) + " to " + ranges.xaxis.to.toFixed(1));
 //
 //            var zoom = $("#zoom").prop("checked");
 //
 //            if (zoom) {
-            $.each(plot.getXAxes(), function(_, axis) {
+            $.each(plot_part.getXAxes(), function(_, axis) {
                 var opts = axis.options;
                 opts.min = ranges.xaxis.from;
                 opts.max = ranges.xaxis.to;
-                console.log('opts=>' + opts);
+                //console.log('opts=>' + opts);
             });
-            plot.setupGrid();
-            plot.draw();
-            plot.clearSelection();
+            plot_part.setupGrid();
+            plot_part.draw();
+            //plot.clearSelection();
 //            }
         });
 
@@ -223,12 +338,13 @@ $(document).ready(function () {
         });
 
         var plot = $.plot(placeholder, ds, options);
+        var plot_part = $.plot(pcpart, ds, options_part);
 
 
         $('#mh_show_all').click(function() {
-            plot.getAxes().min = null;
-            plot.getAxes().max = null;
-            plot = $.plot(placeholder, ds, options);
+            plot_part.getAxes().min = null;
+            plot_part.getAxes().max = null;
+            plot_part = $.plot(pcpart, ds, options_part);
         });
 
         $('#mh_hours_sel').change(function() {

@@ -15,6 +15,18 @@
         <div class="navbar-inner">
             <h6>队列监控</h6>
             <ul class="navbar-icons">
+                <li><a href="#" class="tip" title="选择显示主机地址">
+                    <select id="mh_serve_sel" style="vertical-align: bottom; height: 2em; margin-top: -1em;">
+                        <option>全部显示</option>
+                    </select>
+                </a></li>
+                <li><a href="#" class="tip" title="选择显示主机地址">
+                    <select id="mh_hosts_sel" style="vertical-align: bottom; height: 2em; margin-top: -1em;">
+                        <% for (var i = 0; i < hosts.length; i++) { %>
+                        <option><%= hosts[i] %></option>
+                        <% } %>
+                    </select>
+                </a></li>
                 <li><a href="#" class="tip" title="显示两个小时结果">
                     <select id="mh_hours_sel" style="vertical-align: bottom; height: 2em; margin-top: -1em; width: 3.5em;">
                         <option>0</option>
@@ -34,6 +46,9 @@
                 <li><a href="#" class="tip" title="全量显示"><i id="mh_show_all" class="ico-resize-full"></i></a></li>
             </ul>
         </div>
+    </div>
+    <div class="well body">
+        <div class="graph-standard" id="queue_monitor_part"></div>
     </div>
     <div class="well body">
         <div class="graph-standard" id="queue_monitor"></div>
