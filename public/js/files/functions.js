@@ -197,14 +197,14 @@
 		showOtherMonths:true,
 		numberOfMonths: 1,
 		onSelect: function( selectedDate ) {
-		    alert(selectedDate);
+		    //alert(selectedDate);
 			var option = this.id == "fromDate" ? "minDate" : "maxDate",
 				instance = $( this ).data( "datepicker" ),
 				date = $.datepicker.parseDate(
 					instance.settings.dateFormat ||
 					$.datepicker._defaults.dateFormat,
 					selectedDate, instance.settings );
-					alert(date);
+					//alert(date);
 			dates.not( this ).datepicker( "option", option, date );
 			
 		}
@@ -794,8 +794,8 @@
                     }
                 },  
                 error:function(xhr,status,errMsg){  
-                  alert(xhr.responseText);
-                  window.location ='/logout';
+                  //alert(xhr.responseText);
+                  //window.location ='/logout';
                 }  
            });
        
@@ -872,8 +872,8 @@
             },  
             error:function (XMLHttpRequest, textStatus, errorThrown) {
               if(typeof(XMLHttpRequest.StatusCode) !='undefined' && XMLHttpRequest.StatusCode == 500){ 
-                  alert(XMLHttpRequest.responseText);
-                  window.location ='/logout';
+                  //alert(XMLHttpRequest.responseText);
+                  //window.location ='/logout';
               }else{
                   //alert("获取邮件明细出错！");
               }              
@@ -908,7 +908,7 @@
     
    callbacks.add(function() {
        //刷新用户订阅配置
-       var bayeux = new Faye.Client('http://localhost:8001/faye');   
+       var bayeux = new Faye.Client('http://134.32.84.233:8001/faye');   
        $.ajax({  
             type:"GET",  
             url:"/getUserSubscribeType.html",  
@@ -933,8 +933,8 @@
                 }); 
             },  
             error:function(xhr,status,errMsg){  
-              alert(xhr.responseText);
-              window.location ='/logout'; 
+              //alert(xhr.responseText);
+              //window.location ='/logout'; 
             }  
         }); 
    })
