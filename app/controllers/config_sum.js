@@ -1,4 +1,4 @@
-var scopeNames = {'day':'日', 'month':'月', 'year':'年'}
+var scopeNames = {'day':'全省-日', 'month':'月', 'year':'年'}
 
 exports.config = {
 	TuxStateCalledSumByTimeAtHours: {

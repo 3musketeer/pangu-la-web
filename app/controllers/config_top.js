@@ -1,6 +1,6 @@
 exports.cfgTop = {
 	TuxStateTimeOutTop: {
-		name: '流程超时排名',
+		name: '流程超时排名(全省)',
 		scopes: ['day', 'month', 'year'],
 		scopeNames: {'day':'日', 'month':'月', 'year':'年'},
 		colNames : [ 'TRANSCODE', 'MAX' ], 
@@ -10,7 +10,7 @@ exports.cfgTop = {
 	},
 
 	TuxStateCalledSumByLcu: {
-		name: '流程调用量排名',
+		name: '流程调用量排名(全省)',
 		scopes: ['day', 'month', 'year'],
 		scopeNames: {'day':'日', 'month':'月', 'year':'年'},
 		colNames : [ 'TRANSCODE', '_count' ], 
@@ -19,7 +19,7 @@ exports.cfgTop = {
 	},
 
 	TuxStateFailedSumByLcu: {
-		name: '流程异常量排名',
+		name: '流程异常量排名(全省)',
 		scopes: ['day', 'month', 'year'],
 		scopeNames: {'day':'日', 'month':'月', 'year':'年'},
 		colNames: ['TRANSCODE', '_count'],
