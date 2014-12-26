@@ -7,8 +7,9 @@ var mongoose = require('mongoose')
 
 exports.plugin =  function(server) {
     server.get('/queueMonitor.html', function(req, res) {
+        var hosts = qConfig.hosts;
         res.renderPjax('plugin/queueMonitor/queueMonitor', {
-
+            hosts: hosts
         })
     });
 
@@ -97,10 +98,11 @@ exports.plugin =  function(server) {
             host = req.query['host'];
 
         var o = {};
-        max = 0;
         max_queuef = [];
         o.map = function(){
-            emit(this.timestamp, { time: this.timestamp, data:[{0: this.name + '|' + this.queue, 1: this.queued}] });
+            if("GWTDOMAIN" != this.name) {
+                emit(this.timestamp, {time: this.timestamp, data: [{0: this.name + '`' + this.queue, 1: this.queued}]});
+            }
         };
 
         o.query = {
@@ -134,23 +136,23 @@ exports.plugin =  function(server) {
                 results.push(obj);
             });
             for(var i=0; i<results.length; i++){
-                if( max < results[i].data.length ){
-                    max = results[i].data.length;
-                    var tmpq = [];
-                    for(var j=0; j<max; j++){
-                        tmpq.push( results[i].data[j]['0'] );
+                for(var j=0; j<results[i].data.length; j++){
+                    if( -1 == max_queuef.indexOf(results[i].data[j]['0'])){
+                        max_queuef.push(results[i].data[j]['0']);
                     }
-                    max_queuef = tmpq;
                 }
             }
             for(var i=0; i<results.length; i++){
                 var tmpd = [];
                 for(var j=0; j<results[i].data.length; j++){
                     tmpd.push(results[i].data[j]['0']);
+                    if( -1 == max_queuef.indexOf(results[i].data[j]['0'])){
+                        max_queuef.push(results[i].data[j]['0']);
+                    }
                 }
                 for(var k=0; k<max_queuef.length; k++){
                     if( -1 == tmpd.indexOf( max_queuef[k] ) ){
-                        results[i].data.push({ 0: max_queuef[k], 1: 0 });
+                        results[i].data.push({ 0: max_queuef[k], 1: null });
                     }
                 }
             }

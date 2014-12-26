@@ -207,7 +207,7 @@ exports.plugin =  function(server) {
                     }
                 }
             }
-            res.send({ success: 1, data: results, queueFields: max_queuef, queueLabels: max_queuef, serveFields: serveFields });
+            res.send({ success: 1, data: results, queueFields: max_queuef, queueLabels: max_queuef });
         });
     });
 

@@ -1,6 +1,7 @@
 $(document).ready(function () {
 //    var data = [];
-    var updateInterval = 6000;
+    var host = null;
+    var updateInterval = 60000;
 
     function getData() {
         $.ajax({
@@ -63,14 +64,34 @@ $(document).ready(function () {
         $('#D').jqxChart(settings);
     }
 
-    function getRealData() {
+    $("#qm_hosts_sel").change(function(){
+        host = $(this).children('option:selected').text();
         $.ajax({
             type: 'GET',
             //url: '/getQueueDataReal',
             url: '/getHostQueueRealMR',
             data: {
                 value: $('#datepicker').val(),
-                host: '134.32.28.141'
+                host: host
+            },
+            dataType: 'json',
+            success: function(data) {
+                updateReal(data.data, data.queueFields, data.queueLabels);
+            },
+            error: function() {
+            }
+        });
+    });
+
+    function getRealData() {
+        host = $('#qm_hosts_sel').children('option:selected').text() || '134.32.28.36';
+        $.ajax({
+            type: 'GET',
+            //url: '/getQueueDataReal',
+            url: '/getHostQueueRealMR',
+            data: {
+                value: $('#datepicker').val(),
+                host: host
             },
             dataType: 'json',
             success: function(data) {
@@ -107,7 +128,7 @@ $(document).ready(function () {
                 }
             },
             legend: {
-                noColumns: 2
+                noColumns: 10
             },
             xaxis: {
 //                tickDecimals: 0
