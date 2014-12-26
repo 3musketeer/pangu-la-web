@@ -93,6 +93,7 @@ module.exports = function (app, config) {
         if (req.session.user){ 
             res.locals.menus = menus;
             res.locals.current_user = req.session.user;
+            req.session.cookie.expires = new Date(Date.now() + 1000*60*60*24*14);
         }else{       
            if(req.url != "/login.html" && req.url.indexOf("/auth.html/")< 0 && req.url != "/logout" && req.url != "/register" && req.url != "/registerAction"){
                 if (req.url == "/getInbox.html"){

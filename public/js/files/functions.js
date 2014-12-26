@@ -1,7 +1,6 @@
 ﻿$(function() {
 
 
-
 	//===== Hide/show sidebar =====//
 
 	$('.fullview').click(function(){
@@ -750,56 +749,21 @@
        }
    });
    
-   $(document).on('complete.pjax', function (e) { 
-    	 $('#total-visits').sparkline(
-		       'html', {type: 'bar', barColor: '#ef705b', height: '35px', barWidth: "5px", barSpacing: "2px", zeroAxis: "false"}
-	     );
-	     $('#balance').sparkline(
-		       'html', {type: 'bar', barColor: '#91c950', height: '35px', barWidth: "5px", barSpacing: "2px", zeroAxis: "false"}
-	     );
-       schedule();
+    $(document).on('complete.pjax', function (e) { 
+        $('#total-visits').sparkline(
+           'html', {type: 'bar', barColor: '#ef705b', height: '35px', barWidth: "5px", barSpacing: "2px", zeroAxis: "false"}
+        );
+        $('#balance').sparkline(
+           'html', {type: 'bar', barColor: '#91c950', height: '35px', barWidth: "5px", barSpacing: "2px", zeroAxis: "false"}
+        );
+        schedule();
    });
    //updating ctrol end
    
    
    var schedule = function(){
-    
+               
        var innerCallbacks = $.Callbacks();
-       
-       innerCallbacks.add(function() {
-           //收件箱 
-           $.ajax({  
-                type:"GET",  
-                url:"/getInbox.html",  
-                data:"",  
-                dataType:"json",  
-                success:function(data){
-                    var innerHTML ='';
-                     data.forEach(function(row){ 
-                        var dateCa = new Date(row.SubscriptDate);                    
-                        var date = dateCa.getDate() < 10 ? "0" + dateCa.getDate() : dateCa.getDate();
-                        var month = (dateCa.getMonth()+1) < 10 ? "0" + (dateCa.getMonth()+1) : (dateCa.getMonth()+1);
-                        var year = dateCa.getFullYear();     
-                        var value = year+"-"+month+"-"+date;
-                        if(row.Unread == '0')   
-                            innerHTML = innerHTML + "<li><a href=\"javascript:getWarningDetail('"+row.SubscriptionId+"','"+value+"');\" title=''><i class='icon-info-sign'></i><strong>"+row.SubscriptionTitle+"</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><li>";
-                        else
-                            innerHTML = innerHTML + "<li><a href=\"javascript:getWarningDetail('"+row.SubscriptionId+"','"+value+"');\" title=''><i class='icon-info-sign'></i>"+row.SubscriptionTitle+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><li>";
-                    }); 
-                    innerHTML = innerHTML + "<li><a  data-pjax='#content' href='/getAllMail.html' title=''><i class='icon-list'></i>更多...</a><li>"; 
-                    $('#InboxMenu').html(innerHTML);
-                    
-                    if(typeof(InboxScheduletimeId) == 'undefined'){ 
-                       var InboxScheduletimeId = setTimeout(schedule, 300000);
-                    }
-                },  
-                error:function(xhr,status,errMsg){  
-                  //alert(xhr.responseText);
-                  //window.location ='/logout';
-                }  
-           });
-       
-       });
        
        innerCallbacks.add(function() {
             //访问量
@@ -943,13 +907,43 @@
        schedule();
    })
    
+   callbacks.fire(); 
    
-   
+   function getInbox(){
+       //收件箱 
+       $.ajax({  
+            type:"GET",  
+            url:"/getInbox.html",  
+            data:"",  
+            dataType:"json",  
+            success:function(data){
+                var innerHTML ='';
+                 data.forEach(function(row){ 
+                    var dateCa = new Date(row.SubscriptDate);                    
+                    var date = dateCa.getDate() < 10 ? "0" + dateCa.getDate() : dateCa.getDate();
+                    var month = (dateCa.getMonth()+1) < 10 ? "0" + (dateCa.getMonth()+1) : (dateCa.getMonth()+1);
+                    var year = dateCa.getFullYear();     
+                    var value = year+"-"+month+"-"+date;
+                    if(row.Unread == '0')   
+                        innerHTML = innerHTML + "<li><a href=\"javascript:getWarningDetail('"+row.SubscriptionId+"','"+value+"');\" title=''><i class='icon-info-sign'></i><strong>"+row.SubscriptionTitle+"</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><li>";
+                    else
+                        innerHTML = innerHTML + "<li><a href=\"javascript:getWarningDetail('"+row.SubscriptionId+"','"+value+"');\" title=''><i class='icon-info-sign'></i>"+row.SubscriptionTitle+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><li>";
+                }); 
+                innerHTML = innerHTML + "<li><a  data-pjax='#content' href='/getAllMail.html' title=''><i class='icon-list'></i>更多...</a><li>"; 
+                $('#InboxMenu').html(innerHTML);
+                setTimeout(getInbox, 300000);
+            },  
+            error:function(xhr,status,errMsg){ 
+                setTimeout(getInbox, 300000); 
+            }  
+       });  
+   }
+   getInbox();
 
 	//===== Form elements styling =====//
 	
 	$(".ui-datepicker-month, .styled, .dataTables_length select").uniform({ radioClass: 'choice' });
 		
-	callbacks.fire(); 
+	
 		
 });
