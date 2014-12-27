@@ -315,15 +315,7 @@ exports.config = {
 exports.list = {
     
 
-	historyLcuSumCompareChart:[ [    {mode:'TuxState', type:'CalledSumByTime', subtype: 'At117',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At119',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At120',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At121',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At122',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At123',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At152',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At154',hostName: '全业务主机调用数(日)'}
-	                            ]
+	historyLcuSumCompareChart:[ 
 	                          /* ,[   {mode:'TuxState', type:'FailedSumByTime', subtype: 'At28',hostName: '异常数'}
 	                                ,{mode:'TuxState', type:'FailedSumByTime', subtype: 'At29',hostName: '异常数'}
 	                            ]
@@ -331,11 +323,24 @@ exports.list = {
 	                               ,{mode:'TuxState', type:'CalledSumByTime', subtype: 'BySvc2',hostName: '服务调用数'}
 	                               ,{mode:'TuxState', type:'CalledSumByTime', subtype: 'BySvc3',hostName: '服务调用数'}
 	                            ]*/
-	                            , 
 	                            [    {mode:'TuxState', type:'CalledSumByTime', subtype: 'At197',hostName: 'ECS主机调用数(日)'}
 	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At198',hostName: 'ECS主机调用数(日)'}
 	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At44',hostName: 'ECS主机调用数(日)'}
 	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At45',hostName: 'ECS主机调用数(日)'}
+	                            ]
+	                            ,
+	                            [    {mode:'TuxState', type:'CalledSumByTime', subtype: 'At139',hostName: '客服主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At141',hostName: '客服主机调用数(日)'}
+	                            ]
+	                            ,
+	                            [    {mode:'TuxState', type:'CalledSumByTime', subtype: 'At117',hostName: '全业务主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At119',hostName: '全业务主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At120',hostName: '全业务主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At121',hostName: '全业务主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At122',hostName: '全业务主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At123',hostName: '全业务主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At152',hostName: '全业务主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At154',hostName: '全业务主机调用数(日)'}
 	                            ]
 	                            ,
 	                            [    {mode:'TuxState', type:'CalledSumByTime', subtype: 'At118',hostName: '缴费接口主机调用数(日)'}
@@ -353,10 +358,7 @@ exports.list = {
 	                            [    {mode:'TuxState', type:'CalledSumByTime', subtype: 'At40',hostName: 'BPM主机调用数(日)'}
 	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At41',hostName: 'BPM主机调用数(日)'}
 	                            ]
-	                            ,
-	                            [    {mode:'TuxState', type:'CalledSumByTime', subtype: 'At139',hostName: '客服主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At141',hostName: '客服主机调用数(日)'}
-	                            ]
+	                           
 	                            
 	                            ]
 	                 
