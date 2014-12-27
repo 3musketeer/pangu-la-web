@@ -7,7 +7,7 @@ $(function() {
     //页面初始化调用
     function init() {
 
-        host = (!host || host == '') ? $('#qa_serv li:first').text() : host;
+        host = (!host || host == '') ? $('#qa_serv option:selected').text() : host;
 
         table = $('#qa_table').dataTable({
             "bProcessing": true,
@@ -66,8 +66,13 @@ $(function() {
     //初始化服务器选择事件
     function initServ() {
 
-        $('#qa_serv').delegate('li', 'click', function() {
+        /*$('#qa_serv').delegate('li', 'click', function() {
             host = $(this).text();
+
+            table.fnDraw();
+        });*/
+        $('#qa_serv').change(function(){
+            host = $('#qa_serv option:selected').text();
 
             table.fnDraw();
         });

@@ -62,7 +62,16 @@
     <div class="navbar">
         <div class="navbar-inner">
             <h6>队列监控分析</h6>
-            <div class="nav pull-right">
+            <ul class="navbar-icons" style="margin-top: 8px">
+                <li><a href="#" class="tip" title="选择显示主机地址">
+                    <select id="qa_serv" style="vertical-align: bottom; height: 2em; margin-top: -1em;">
+                        <% for (var i = 0; i < hosts.length; i++) { %>
+                        <option><%= hosts[i] %></option>
+                        <% } %>
+                    </select>
+                </a></li>
+            </ul>
+            <!--<div class="nav pull-right">
                 <a href="#" class="dropdown-toggle navbar-icon" data-toggle="dropdown">
                     <i class="icon-sitemap"></i>
                 </a>
@@ -71,7 +80,7 @@
                     <li><a><i class="icon-hand-right"></i><%= hosts[j] %></a></li>
                     <% } %>
                 </ul>
-            </div>
+            </div>-->
         </div>
     </div>
 
