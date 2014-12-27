@@ -33,7 +33,8 @@ module.exports = [
     {title:'分析',menuId:'analysis', class:'icon-tasks',list:[
                                                     {title:'超时流程分析',url:'/historyQueryDetail.html?chartList=lcuTimeTopAnalyseRate'},
                                                     {title:'队列分析',url:'/queueAnalyze.html'},   
-                                                    {title:'主机对比',url:'/historyComPareGraph.html?chartList=historyLcuSumCompareChart'}
+                                                    {title:'主机对比',url:'/historyComPareGraph.html?chartList=historyLcuSumCompareChart'},
+                                                    {title:'服务部署建议',url:'/queueReportAnalyze.html'}
                                                     
                                                     
                                                   ]

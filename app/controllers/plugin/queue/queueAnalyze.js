@@ -101,7 +101,7 @@ exports.plugin = function(server) {
 
         table.count({host: host}, function(err, count) {
             sum = count;
-            var _q = {host: host};
+            var _q = {host: host, name:{$ne: 'GWTDOMAIN'}};
             if (!!sSearch && sSearch != '') {
                 var reg = new RegExp('.*' + sSearch + '.*', 'i');
                 _q['$or'] = [{
