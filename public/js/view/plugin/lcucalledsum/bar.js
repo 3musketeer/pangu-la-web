@@ -1,11 +1,12 @@
 $(function() {
   
-    var objDiv = $('#placeholder-1');
+    
     var now = new Date();
     var date = now.getDate() < 10 ? "0" + now.getDate() : now.getDate();
     var month = (now.getMonth()+1) < 10 ? "0" + (now.getMonth()+1) : (now.getMonth()+1);
     var year = now.getFullYear();     
     var value = year+"-"+month+"-"+Date;
+    var barIndex = parseInt($('#barIndex')[0].innerText);
     
     $('#transcodeValue').change(function(){
         var param = "";
@@ -20,12 +21,15 @@ $(function() {
             url:"/lcuCalledSum.html",  
             data:"value="+value+"&chartList="+$('#chart-list')[0].innerText+"&TRANSCODE="+param+"&ajaxGetTag=true",  
             dataType:"json",  
-            success:function(data1){  
-             
-              for(var item in data1){   
-                   $('#caculateDateId').html("统计日期:"+data1[item].caculateDate);  
-                   draw(data1[item][data1[item].scopes[0]]);
-
+            success:function(data1){        
+              for(var item in data1){    
+                   for(var m = 0;m<barIndex;m++){ 
+                       var objDiv = $('#placeholder-'+m);
+                       if ($('#placeholder-data'+m)[0].innerText.indexOf('hours')>0 && JSON.stringify(data1[item]).indexOf('hours')>0){
+                           draw(data1[item][data1[item].scopes[0]],objDiv);
+                       }
+                  }
+                   
               } 
              
             },  
@@ -35,17 +39,21 @@ $(function() {
     }); 
     
     
-  function draw(data){ 
+  function draw(data,objDiv){ 
 
-			var len = data.length;
-			var dataobj = {};
-			var dataset =[];
+      var len = data.length;
+      var dataobj = {};
+      var dataset =[];
       var order = 1;
       
       for (var i =0;i<len; i++){
           var temp = data[i];
           var item = temp.host;
-          var tempData = [temp.hours,temp._count];
+          var tempData;
+          if(temp.hours)
+            tempData = [temp.hours,temp._count];
+          else
+            tempData = [temp.day,temp._count];
           var bars = {
               show: true, 
               barWidth: 0.8,
@@ -67,9 +75,9 @@ $(function() {
           }
       }
     
-    for(var item in dataobj){ 
+      for(var item in dataobj){ 
         dataset.push(dataobj[item]);
-    }
+      }
     
 	  var plot = $.plot(objDiv, dataset, {		    
 	    grid:{
@@ -86,48 +94,53 @@ $(function() {
 	 
   }
   
-   function showTooltip(x, y, contents, areAbsoluteXY) {
-    var rootElt = 'body';
-        $('<div id="tooltip2" class="chart-tooltip">' + contents + '</div>').css( {
-        position: 'absolute',
-        display: 'none',
-        top: y - 45,
-        left: x - 8,
-			 'z-index': '9999',
-			 'color': '#fff',
-			 'font-size': '11px',
-        opacity: 0.8
-    }).prependTo(rootElt).show();
- }
+     function showTooltip(x, y, contents, areAbsoluteXY) {
+        var rootElt = 'body';
+            $('<div id="tooltip2" class="chart-tooltip">' + contents + '</div>').css( {
+            position: 'absolute',
+            display: 'none',
+            top: y - 45,
+            left: x - 8,
+    			 'z-index': '9999',
+    			 'color': '#fff',
+    			 'font-size': '11px',
+            opacity: 0.8
+        }).prependTo(rootElt).show();
+     }
 
 	var previousPoint = null;
-	$('#placeholder-1').bind("plothover",function (event, pos, item) {
-
-		if ($('#placeholder-1').length > 0) {
-			if (item) {
-				if (previousPoint != item.datapoint) {
-					previousPoint = item.datapoint;
-					
-					$('.chart-tooltip').remove();
-					var x = item.datapoint[0];
-					
-					if(item.series.bars.order){
-              for(var i=0; i < item.series.data.length; i++){
-                if(item.series.data[i][3] == item.datapoint[0])
-                    x = item.series.data[i][0];
-              }
-           }
-           var y = item.datapoint[1];
-           showTooltip(item.pageX+5, item.pageY+5,x + '时调用量为:'+ y);
-				}
-			}
-			else {
-				 $('.chart-tooltip').remove();
-         previousPoint = null;        
-			}
-		}
-	});
-   
-  draw(jQuery.parseJSON($('#placeholder-data1')[0].innerText));
+	for(var m = 0;m<barIndex;m++){
+    	$('#placeholder-'+m).bind("plothover",(function(idx){return function (event, pos, item) {
+    
+    		if ($('#placeholder-'+idx).length > 0) {
+    			if (item) {
+    				if (previousPoint != item.datapoint) {
+    					previousPoint = item.datapoint;
+    					
+    					$('.chart-tooltip').remove();
+    					var x = item.datapoint[0];
+    					
+    					if(item.series.bars.order){
+                        for(var i=0; i < item.series.data.length; i++){
+                            if(item.series.data[i][3] == item.datapoint[0])
+                                x = item.series.data[i][0];
+                            }
+                        }
+                       var y = item.datapoint[1];
+                       showTooltip(item.pageX+5, item.pageY+5,x + '(日)时调用量为:'+ y);
+    				}
+    			}
+    			else {
+    				$('.chart-tooltip').remove();
+                    previousPoint = null;        
+    			}
+    		}
+    	}})(m));
+    }
+       
+  for(var m = 0;m<barIndex;m++){
+      var objDiv = $('#placeholder-'+m);
+      draw(jQuery.parseJSON($('#placeholder-data'+m)[0].innerText),objDiv);
+  }
 
 });

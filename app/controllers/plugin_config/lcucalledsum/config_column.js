@@ -1,10 +1,10 @@
-var scopeNames = {'day':'日', 'month':'月', 'year':'年'}
+var scopeNames = {'day':'全省-日', 'month':'全省-月', 'year':'年'}
 
 
 //柱状图配置
 exports.barConfig = {
 	
-	TuxStateCalledSumByTimeByLcu: {
+	TuxStateCalledSumByTimeByLcuDay: {
 		name: '流程调用总量',
 		displayType:'bar',
 		mode:'TuxState',
@@ -18,7 +18,23 @@ exports.barConfig = {
 		statType:'LCU',
 		sort: {'hours' : 1}
 	},
-	TuxStateFailedSumByTimeByLcu: {
+	
+	TuxStateCalledSumByTimeByLcuMonth: {
+		name: '流程调用总量',
+		displayType:'bar',
+		mode:'TuxState',
+		type:'CalledSumByTime',
+		subtype:'Atday',
+		scopes: ['month'],
+		scopeNames: scopeNames,
+		colNames : [ 'day', '_count'], 
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:{$exists:false}},
+		filterColNames: ['TRANSCODE'],
+		statType:'LCU',
+		sort: {'day' : 1}
+	},
+
+	TuxStateFailedSumByTimeByLcuDay: {
 		name: '流程调用异常总量',
 		displayType:'bar',
 		mode:'TuxState',
@@ -27,6 +43,20 @@ exports.barConfig = {
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count'], 
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:{$exists:false}},
+		filterColNames: ['TRANSCODE'],
+		statType:'LCU',
+		sort: {'hours' : 1}
+	},
+	TuxStateFailedSumByTimeByLcuMonth: {
+		name: '流程调用异常总量',
+		displayType:'bar',
+		mode:'TuxState',
+		type:'FailedSum',
+		subtype:'Atday',
+		scopes: ['month'],
+		scopeNames: scopeNames,
+		colNames : [ 'day', '_count'], 
 		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:{$exists:false}},
 		filterColNames: ['TRANSCODE'],
 		statType:'LCU',
@@ -67,8 +97,8 @@ exports.barConfig = {
 
 exports.barList = {
     
-  lcuCalledSumList:[ {mode:'TuxState', type:'CalledSumByTime',subtype:'ByLcu'}],
-  lcuFailedSumList:[ {mode:'TuxState', type:'FailedSumByTime',subtype:'ByLcu'}],
+  lcuCalledSumList:[ {mode:'TuxState', type:'CalledSumByTime',subtype:'ByLcuDay'},{mode:'TuxState',type:'CalledSumByTime',subtype:'ByLcuMonth'}],
+  lcuFailedSumList:[ {mode:'TuxState', type:'FailedSumByTime',subtype:'ByLcuDay'},{mode:'TuxState', type:'FailedSumByTime',subtype:'ByLcuMonth'}],
   svcCalledSumList:[ {mode:'TuxState', type:'CalledSumByTime',subtype:'BySvc'}],
   svcFailedSumList:[ {mode:'TuxState', type:'FailedSumByTime',subtype:'BySvc'}]
 
@@ -79,29 +109,53 @@ exports.barList = {
 
 exports.topConfig = {
 	
-	TuxStateCalledSumByLcu: {
+	TuxStateCalledSumByLcuDay: {
 		name: '流程调用量排名',
 		displayType:'top',
 		mode:'TuxState',
 		type:'CalledSum',
 		subtype:'ByLcu',
 		scopes: ['day'],
-		scopeNames: {'day':'日'},
+		scopeNames: "全省-日",
 		colNames : [ 'TRANSCODE', '_count' ], 
 		filter : {TRANSCODE: {$exists: true}, host: 'all'},
 		sort: {'_count' : -1}
 	},
-	TuxStateFailedSumByLcu: {
+	TuxStateCalledSumByLcuMonth: {
+		name: '流程调用量排名',
+		displayType:'top',
+		mode:'TuxState',
+		type:'CalledSum',
+		subtype:'ByLcu',
+		scopes: ['month'],
+		scopeNames: "全省-月",
+		colNames : [ 'TRANSCODE', '_count' ], 
+		filter : {TRANSCODE: {$exists: true}, host: 'all'},
+		sort: {'_count' : -1}
+	},
+	TuxStateFailedSumByLcuDay: {
 		name: '流程异常量排名',
 		displayType:'top',
 		mode:'TuxState',
 		type:'FailedSum',
 		subtype:'ByLcu',
 		scopes: ['day'],
-		scopeNames: {'day':'日'},
+		scopeNames: "全省-日",
 		colNames: ['TRANSCODE', '_count'],
 		filter: {TRANSCODE: {$exists: true}, host: 'all'},
-    sort: {'_count' : -1}
+        sort: {'_count' : -1}
+	},
+	TuxStateFailedSumByLcuMonth: {
+		name: '流程异常量排名',
+		displayType:'top',
+		mode:'TuxState',
+		type:'FailedSum',
+		subtype:'ByLcu',
+		scopes: ['month'],
+		scopeNames: "全省-月",
+		colNames: ['TRANSCODE', '_count'],
+		filter: {TRANSCODE: {$exists: true}, host: 'all'},
+        sort: {'_count' : -1}
 	},
 	
 	TuxStateCalledSumBySvr: {
@@ -133,8 +187,8 @@ exports.topConfig = {
 }
 
 exports.topList =  {
-    lcuCalledSumList:[ {mode:'TuxState', type:'CalledSum',subtype:'ByLcu'}],
-    lcuFailedSumList:[ {mode:'TuxState', type:'FailedSum',subtype:'ByLcu'}],
+    lcuCalledSumList:[ {mode:'TuxState', type:'CalledSum',subtype:'ByLcuDay'},{mode:'TuxState', type:'CalledSum',subtype:'ByLcuMonth'}],
+    lcuFailedSumList:[ {mode:'TuxState', type:'FailedSum',subtype:'ByLcuDay'},{mode:'TuxState', type:'FailedSum',subtype:'ByLcuMonth'}],
     svcCalledSumList:[ {mode:'TuxState', type:'CalledSum',subtype:'BySvr'}],
     svcFailedSumList:[ {mode:'TuxState', type:'FailedSum',subtype:'BySvr'}]
 }

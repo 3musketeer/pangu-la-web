@@ -1,9 +1,9 @@
 ﻿<div class="widget">
-	<div class="navbar"><div class="navbar-inner"><h6 id ="caculateDateId">统计日期:<%= caculateDate %></h6></div></div>
+	<div class="navbar"><div class="navbar-inner"><h6 id ="caculateDateId"><%= headTitle %>(<%= item.scopeNames[item.scopes[0]] %>)</h6></div></div>
 	<div class="well body">
 
-		<div class="graph-standard" id="placeholder-1"></div>
-		<div style="display:none" id="placeholder-data1"><%= JSON.stringify(item[item.scopes[0]]) %></div>
+		<div class="graph-standard" id="placeholder-<%= barIndex%>"></div>
+		<div style="display:none" id="placeholder-data<%= barIndex%>"><%= JSON.stringify(item[item.scopes[0]]) %></div>
 	</div>
 </div>
 
