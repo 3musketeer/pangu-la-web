@@ -354,8 +354,8 @@ exports.list = {
 	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At41',hostName: 'BPM主机调用数(日)'}
 	                            ]
 	                            ,
-	                            [    {mode:'TuxState', type:'CalledSumByTime', subtype: 'At139',hostName: '信控接口主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At141',hostName: '信控接口主机调用数(日)'}
+	                            [    {mode:'TuxState', type:'CalledSumByTime', subtype: 'At139',hostName: '客服主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At141',hostName: '客服主机调用数(日)'}
 	                            ]
 	                            
 	                            ]
