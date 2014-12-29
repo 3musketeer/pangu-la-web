@@ -35,7 +35,8 @@
     "solr": "~0.2.2",
     "grunt-contrib-jshint": "~0.1.1",
     "grunt-contrib-nodeunit": "~0.1.2",
-    "extend": "latest"
+    "extend": "latest",
+    "async": "latest"
   },
   "devDependencies": {
     "nodemon": "latest",

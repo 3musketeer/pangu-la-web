@@ -14,7 +14,7 @@ exports.plugin = function(server) {
         var date = req.query.value;
         var hosts = qConfig.hosts;
 
-        var tab = qConfig.anaListTab[0];
+        /*var tab = qConfig.anaListTab[0];
         var table = query.getTab('QueueAnalyze', tab, date, 2);
         table.find({host: hosts[0]}, function(err, rows) {
             for (var i = 0; i < rows.length; i++) {
@@ -60,7 +60,7 @@ exports.plugin = function(server) {
                 row.suggestion = sug;
                 row.save();
             }
-        });
+        });*/
 
         res.renderPjax('plugin/queue/queueAnalyze', {
             tabColNames: qConfig.anaTabColNames,

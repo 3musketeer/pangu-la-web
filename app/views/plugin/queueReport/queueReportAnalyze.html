@@ -1,5 +1,58 @@
 <link href="css/popModal.min.css" rel="stylesheet" type="text/css"/>
 
+<style>
+    .text-right {
+        text-align: right;
+    }
+
+    #qra_dialog {
+        width: 100%;
+        height: 100%;
+        display: none;
+        opacity: 1;
+    }
+
+    #qra_dialog_header {
+        position: absolute;
+        width: 60%;
+        height: 2.6em;
+        left: 20%;
+        top: 15%;
+        margin-top: -2.6em;
+        z-index: 1002;
+        font-size: 1.2em;
+    }
+
+    #qra_dialog_content {
+        position: absolute;
+        width: 60%;
+        height: 50%;
+        left: 20%;
+        top: 15%;
+        max-height: 350px;
+        background-color: #fff;
+        z-index: 1002;
+        padding-top: -4em;
+        overflow: hidden;
+    }
+
+    #qra_dialog_content table {
+        margin-top: 2.5em;
+    }
+
+    #qra_dialog_bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0%;
+        top: 0%;
+        z-index: 1001;
+        opacity: 0.8;
+        background-color: #fff;
+    }
+
+</style>
+
 <script type="text/javascript" src="js/popModal.min.js"></script>
 <script type="text/javascript" src="js/view/plugin/queueReport/updateReport.js"></script>
 
@@ -32,7 +85,7 @@
     </div>
 
     <div class="table-overflow">
-        <table id="qr_table" class="table table-striped table-hover">
+        <table id="qra_table" class="table table-striped table-hover">
             <thead>
             <tr>
                 <% for (var i = 0; i < tabColNames.length; i++) { %>
@@ -45,6 +98,29 @@
         </table>
     </div>
 
-</div>
+    </div>
 
+<div id="qra_dialog">
+
+    <div id="qra_dialog_header" class="navbar">
+        <div class="navbar-inner">
+            <h6 id="qra_dialog_content_title">Title</h6>
+            <ul class="navbar-icons">
+                <li>
+                    <a class="tip" title="最大化">
+                        <i class="ico-resize-full" id="qra_dialog_header_max"></i>
+                    </a>
+                </li>
+                <li>
+                    <a class="tip" title="关闭">
+                        <i class="ico-remove" id="qra_dialog_header_close"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="qra_dialog_content" class="well body"></div>
+
+    <div id="qra_dialog_bg"></div>
 </div>
