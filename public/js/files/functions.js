@@ -825,7 +825,8 @@
             data:"warningId="+warningId+"&value="+value,  
             dataType:"json",  
             success:function(data){
-                var content = '异常类型：'+'<font color=red>'+ data.type+'</font>'+'</br>';
+                //var content = '异常类型：'+'<font color=red>'+ data.type+'</font>'+'</br>';
+                var content = '';
                 content = content + '异常时间：'+ data.time +'</br>';
                 if(data.host !='all'){
                     content = content + '异常主机：'+data.host +'</br>';
@@ -882,7 +883,8 @@
                 //subscribe the Warning message
                 data.forEach(function(row){    
                     bayeux.subscribe('/SystemMessage/'+row.SubscripType, function(message) {
-                        var content = '异常类型：'+'<font color=red>'+ message.type+'</font>'+'</br>';
+                        //var content = '异常类型：'+'<font color=red>'+ message.type+'</font>'+'</br>';
+                        var content = '';
                         content = content + '异常时间：'+ message.time +'</br>';
                         if(message.host !='all'){
                             content = content + '异常主机：'+message.host +'</br>';
