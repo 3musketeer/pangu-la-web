@@ -178,6 +178,8 @@ exports.moduleName = {
     '/realtimeQueryDetail.html?chartList=realTimeSvcTimeOutDetailList':'服务超时(实时)',
     '/lcuCalledSum.html?chartList=svcCalledSumList':'服务调用总量',
     '/lcuCalledSum.html?chartList=svcFailedSumList':'服务调用异常',
-    '/getAllMail.html':'邮件警告'
+    '/getAllMail.html':'邮件警告',
+    '/queueAnalyze.html':'队列分析',
+    '/queueReportAnalyze.html':'服务部署建议'
     
 }
