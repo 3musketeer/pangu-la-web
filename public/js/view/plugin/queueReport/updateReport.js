@@ -6,14 +6,18 @@ $(function() {
         updateTable();
     });
 
+    $('#qra_dialog_header_close').click(function() {
+        $('#qra_dialog').hide();
+
+        //placeholder.unbind();
+    });
+
     $("#qra_table tbody").delegate("tr", "dblclick", function() {
         var tmp = $("td:first", this).text();
         tmp = tmp.split('`');
         var server = tmp[0];
         var queue = tmp[1];
         var sug = $('td:eq(9)', this).text();
-        console.log(tmp[0]);
-        console.log(tmp[1]);
 
         findDetail(server, queue, sug, host);
     });
@@ -251,9 +255,9 @@ $(function() {
                     html += '<td style="text-align: center">'+rows[i]['suggestion']+'</td>';
                     html += '<td style="text-align: center">'+rows[i]['mem_size']+'</td>';
                     if(rows[i]['change_mem'] > 0){
-                        html += '<td style="color: #FF0000;text-align: center"><b>'+rows[i]['change_mem']+'</b></td>';
+                        html += '<td style="color: red;text-align: center"><b>'+rows[i]['change_mem']+'</b></td>';
                     }else{
-                        html += '<td style="color: #00FF00;text-align: center"><b>'+rows[i]['change_mem']+'</b></td>';
+                        html += '<td style="color: green;text-align: center"><b>'+rows[i]['change_mem']+'</b></td>';
                     }
                 }
                 $('#qra_table > tbody').html(html);

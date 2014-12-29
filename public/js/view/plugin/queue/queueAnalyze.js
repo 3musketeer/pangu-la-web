@@ -76,6 +76,12 @@ $(function() {
 
             table.fnDraw();
         });
+
+        $('#qa_dialog_header_close').click(function() {
+            $('#qa_dialog').hide();
+
+            //placeholder.unbind();
+        });
     }
 
     //查询队列运行明细
