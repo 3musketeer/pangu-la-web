@@ -88,12 +88,9 @@ exports.plugin = function(server) {
                     sum = queRows[i]['sum'],
                     serve = queRows[i]['serve'],
                     max = queRows[i]['max_queued'];
-                if(name == 'GWTDOMAIN' || name == 'TMS_ORA'){
+                if(name == 'GWTDOMAIN' || name == 'TMS_ORA' || name == 'JREPSVR'){
                     continue;
                 }
-                /*if(serve > max){ //浪费==>情况一 : 配置队列数>实际队列数
-                    rate1 = 1;
-                }*/
                 var queue_name = queRows[i].name + '`' + queRows[i].queue,
                     sug = 0,
                     mem_size = 0, // ==> 当前进程的战友每次
