@@ -21,7 +21,7 @@
 	this.version = '@1.3';
 	this.layer = {'width' : 200, 'height': 100};
 	this.title = '异常警告';
-	this.time = 10000;
+	this.time = 60000;
 	this.anims = {'type' : 'slide', 'speed' : 600};
 	this.timer1 = null;
 	
@@ -102,7 +102,7 @@
 	this.original = function(){	
 		this.layer = {'width' : 200, 'height': 100};
 		this.title = '异常警告';
-		this.time = 10000;
+		this.time = 60000;
 		this.anims = {'type' : 'slide', 'speed' : 600};
 	};
     jQuery.messager = this;
