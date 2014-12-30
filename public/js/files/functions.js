@@ -1,6 +1,7 @@
 ﻿$(function() {
 
 
+    closeWarningTag = false;
 	//===== Hide/show sidebar =====//
 
 	$('.fullview').click(function(){
@@ -746,7 +747,8 @@
        if(typeof(timeId) !='undefined'){ 
             clearTimeout(timeId);
             delete timeId;
-       }
+       }      
+       closeWarningTag = false;
    });
    
     $(document).on('complete.pjax', function (e) { 
@@ -884,6 +886,8 @@
                 data.forEach(function(row){    
                     bayeux.subscribe('/SystemMessage/'+row.SubscripType, function(message) {
                         //var content = '异常类型：'+'<font color=red>'+ message.type+'</font>'+'</br>';
+                        if(closeWarningTag)
+                            return;
                         var content = '';
                         content = content + '异常时间：'+ message.time +'</br>';
                         if(message.host !='all'){
@@ -940,12 +944,22 @@
             }  
        });  
    }
-   getInbox();
+   //getInbox();
+   
+    
+    function closeWarning(){
+        if(closeWarningTag){
+            closeWarningTag = false;$('#closeWarning').html('关闭告警');
+        }else{
+            closeWarningTag = true;$('#closeWarning').html('开启告警');
+        }
+	}
+	window.closeWarning = closeWarning;
 
 	//===== Form elements styling =====//
 	
 	$(".ui-datepicker-month, .styled, .dataTables_length select").uniform({ radioClass: 'choice' });
-		
+
 	
 		
 });

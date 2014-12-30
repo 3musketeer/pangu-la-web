@@ -58,6 +58,6 @@ module.exports = [
                                           ]
   },*/
   
-  {title:'告警',class:'ico-warning-sign',list:[],url:"/getAllMail.html"}
+  {title:'异常明细',class:'ico-warning-sign',list:[],url:"/historyQueryDetail.html?chartList=getWarning"}
    
 ]

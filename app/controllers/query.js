@@ -24,10 +24,14 @@ var getTable = function(mode, type, scope, value) {
 	if (scope=="year") value = YY;
 
 	var collection = ""
-	if (scope != 'noHave')
-	    collection = mode + type + scope.toUpperCase() + value;
-	else{
+	if (scope == 'noHave'){
 	    collection = mode + type  + value.replace(/-/g,'');
+	}else if (scope == 'fullSuffix'){
+	    collection = mode + type  + value.replace(/-/g,'');
+	}else if (scope == 'suffix'){
+	    collection = mode + type  + value.replace(/-/g,'').substr(2);
+	}else{
+	    collection = mode + type + scope.toUpperCase() + value;
 	}
 	debug('collection:%s.', collection)
     var table;

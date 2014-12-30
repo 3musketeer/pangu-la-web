@@ -39,8 +39,17 @@ exports.config = {
 		colNames: ['TRANSCODE', 'avgcount','avg_gt_60s','avg_gt_30s','avg_gt_5s','avg_gt_2s','avg_gt_2s_rate','maxcount','max_gt_60s','max_gt_30s','max_gt_5s','max_gt_2s','max_gt_2s_rate','host'],
 		filterColNames: ['TRANSCODE','host'],
 		sort: {'avg_gt_2s':-1}
-	}
+	},
 	
+	warningQuery : {
+	  name: '异常警告明细',
+	  scopes: ['suffix'],
+	  displayLength:10,
+		titles: ['排名', '异常明细', '异常时间','异常主机'],
+		colNames: ['#', 'detail','time','host'],
+		filterColNames: ['detail','host'],
+		sort: {'time':-1}
+	}
 }
 
 exports.list = {
@@ -49,5 +58,6 @@ exports.list = {
   historySvcTimeOutDetailList:[ {mode:'TuxState', type:'TimeOutTop',subtype:'SvcTimeOut'}],
   lcuTimeTopAnalyse:[ {mode:'TuxState', type:'TimeOutStat',subtype:'His'}],
   lcuTimeTopAnalyseRate:[ {mode:'TuxState', type:'TimeOutStat',subtype:'HisRate'}],
+  getWarning:[ {mode:'warn', type:'ing',subtype:'Query'}]
 
 }
