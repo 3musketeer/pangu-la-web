@@ -65,7 +65,7 @@ $(document).ready(function () {
             url: '/getHostQueueHisMR',
 //            url: '/getQueueGroupDataHis',
             data: {
-                value: $('#datepicker').val(),
+                value: $('#value').val(),
                 host: host
             },
             dataType: 'json',
@@ -99,7 +99,7 @@ $(document).ready(function () {
                 type: 'GET',
                 url: '/getHostQueueHisServe',
                 data: {
-                    value: $('#datepicker').val(),
+                    value: $('#value').val(),
                     host: host,
                     name: serv_sel,
                     timestamp: tmpdata[0].time
@@ -132,7 +132,7 @@ $(document).ready(function () {
             url: '/getHostQueueHisMR',
 //            url: '/getQueueGroupDataHis',
             data: {
-                value: $('#datepicker').val(),
+                value: $('#value').val(),
                 host: host
             },
             dataType: 'json',
@@ -349,7 +349,7 @@ $(document).ready(function () {
 
         $('#mh_hours_sel').change(function() {
             var h = $(this).val();
-            var date = $('#datepicker').val();
+            var date = $('#value').val();
 //            console.log('start=>' + (date + ' ' + h + ':00:00') + '; end=>' + (date + ' ' + (parseInt(h)+2) + ':00:00'));
             var start = date + ' ' + h + ':00:00';
             var end = '';

@@ -71,7 +71,7 @@ $(document).ready(function () {
             //url: '/getQueueDataReal',
             url: '/getHostQueueRealMR',
             data: {
-                value: $('#datepicker').val(),
+                value: $('#value').val(),
                 host: host
             },
             dataType: 'json',
@@ -90,7 +90,7 @@ $(document).ready(function () {
             //url: '/getQueueDataReal',
             url: '/getHostQueueRealMR',
             data: {
-                value: $('#datepicker').val(),
+                value: $('#value').val(),
                 host: host
             },
             dataType: 'json',
