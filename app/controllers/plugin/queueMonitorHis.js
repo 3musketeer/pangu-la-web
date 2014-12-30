@@ -8,8 +8,10 @@ var mongoose = require('mongoose')
 exports.plugin =  function(server) {
     server.get('/queueMonitorHis.html', function(req, res) {
         var hosts = qConfig.hosts;
+        var date = req.query['value'];
         res.renderPjax('plugin/queueMonitorHis/queueMonitorHis', {
-            hosts: hosts
+            hosts: hosts,
+            value: date
         })
     });
 
