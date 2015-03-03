@@ -8,7 +8,7 @@ module.exports = {
     auth_cookie_name: 'USER_INFO_COOKIE',
     admins: {admin: true},
     
-	  db: 'mongodb://134.32.84.233/tuxlog',
+	  db: 'mongodb://127.0.0.1/tuxlog',
 	  root: rootPath,
 	  
 	  client_opts: {
@@ -21,7 +21,7 @@ module.exports = {
     },
     
     redis: {
-        host:'134.32.84.233',
+        host:'127.0.0.1',
         port:'6379'
     }
 		

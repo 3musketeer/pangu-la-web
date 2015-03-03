@@ -17,7 +17,7 @@ module.exports = [
                                                     {title:'服务队列(历史)',url:'/queueMonitorHis.html'},
                                                     {title:'服务队列(实时)',url:'/queueMonitor.html'},
                                                     //{title:'服务僵死',url:'/realtimeQueryDetail.html?chartList=realTimeSvcDeadDetailList'},                                            
-                                                    {title:'内存占用',url:'/memoryMonitor.html?chartList=realMemory'},
+                                                    //{title:'内存占用',url:'/memoryMonitor.html?chartList=realMemory'},
                                                     {title:'服务超时明细(日)',url:'/historyQueryDetail.html?chartList=historySvcTimeOutDetailList'},     
                                                     {title:'服务超时明细(实时)',url:'/realtimeQueryDetail.html?chartList=realTimeSvcTimeOutDetailList'},      
                                                     {title:'服务调用总量',url:'/lcuCalledSum.html?chartList=svcCalledSumList'},    
@@ -34,7 +34,9 @@ module.exports = [
                                                     {title:'超时流程分析',url:'/historyQueryDetail.html?chartList=lcuTimeTopAnalyseRate'},
                                                     {title:'队列分析',url:'/queueAnalyze.html'},   
                                                     {title:'主机对比',url:'/historyComPareGraph.html?chartList=historyLcuSumCompareChart'},
-                                                    {title:'服务部署建议',url:'/queueReportAnalyze.html'}
+                                                    {title:'服务部署建议',url:'/queueReportAnalyze.html'},
+        /*{title:'服务部署建议（4天）', url:'/queueReportBy4Days.html'},*/
+        {title:'23转4异常分析', url:'/trade4G.html'}
                                                     
                                                     
                                                   ]

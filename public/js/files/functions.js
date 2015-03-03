@@ -875,7 +875,7 @@
     
    callbacks.add(function() {
        //刷新用户订阅配置
-       var bayeux = new Faye.Client('http://134.32.84.233:8001/faye');   
+       var bayeux = new Faye.Client('http://127.0.0.1:8001/faye');
        $.ajax({  
             type:"GET",  
             url:"/getUserSubscribeType.html",  
@@ -945,7 +945,9 @@
        });  
    }
    //getInbox();
-   
+   
+
+
     
     function closeWarning(){
         if(closeWarningTag){
