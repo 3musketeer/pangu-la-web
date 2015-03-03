@@ -14,7 +14,7 @@
     "npm": ">=1.2.32"
   },
   "scripts": {
-    "start": "DEBUG=*,-send,-connect:dispatcher ./node_modules/.bin/nodemon server.js"
+    "start": "DEBUG=*,-send,-connect:dispatcher ./node_modules/.bin/nodemon web_server.js"
   },
   "dependencies": {
     "express": "<4.0.0",
