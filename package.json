@@ -19,7 +19,7 @@
   "dependencies": {
     "express": "<4.0.0",
     "express-partials": "latest",
-    "ejs": "latest",
+    "ejs": "1.0.0",
     "redis": "0.10.1",
     "connect-flash": "latest",
     "mongoose": "latest",

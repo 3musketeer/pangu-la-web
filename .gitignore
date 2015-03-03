@@ -1,5 +1,7 @@
 .DS_Store
-node_modules
 *.swp
 *.bak
 .idea/
+.buildpath
+.project
+npm-debug.log
