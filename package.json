@@ -36,7 +36,8 @@
     "grunt-contrib-jshint": "~0.1.1",
     "grunt-contrib-nodeunit": "~0.1.2",
     "extend": "latest",
-    "async": "latest"
+    "async": "latest",
+    "node-gyp": "latest"
   },
   "devDependencies": {
     "nodemon": "latest",

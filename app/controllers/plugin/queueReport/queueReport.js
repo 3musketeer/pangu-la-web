@@ -1,11 +1,13 @@
 var mongoose = require('mongoose')
     , logger = require('../../log').logger
     , qConfig = require('../../plugin_config/queue/config_queue').queue
+    , qrConfig = require('../../plugin_config/queueReport/report_config').queue
     , mConfig = require('../../plugin_config/memory/config_memory').memory
     , extend = require('extend')
     , query = require('../../query')
     , QueueAnalyze = require('../../../models/queueanalyze')
     , QueueDetail = require('../../../models/queuedetail')
+    , QueueReport = require('../../../models/queuereport')
     , async = require('async');
 
 exports.plugin = function(server) {
@@ -35,6 +37,8 @@ exports.plugin = function(server) {
             tableMem = query.getTab('memorymonitor', tabMem, date, 0),
             sumMem = 0;
 
+        var exceptName = qrConfig.exceptName;
+
         function countSuggestion(g1, g2, overflow, serve, sum, max){
             var sug = 0;
             var rat1 = (g1/sum).toFixed(2),
@@ -61,7 +65,7 @@ exports.plugin = function(server) {
 
         async.parallel({
             que: function (callback) {
-                table.find({host: host}, {_id: 0, suggestion: 0}, function(err, rows){
+                table.find({host: host, name: {'$nin': exceptName}}, {_id: 0, suggestion: 0}, function(err, rows){
                     callback(null, rows)
                 });
             },
@@ -88,9 +92,6 @@ exports.plugin = function(server) {
                     sum = queRows[i]['sum'],
                     serve = queRows[i]['serve'],
                     max = queRows[i]['max_queued'];
-                if(name == 'GWTDOMAIN' || name == 'TMS_ORA' || name == 'JREPSVR'){
-                    continue;
-                }
                 var queue_name = queRows[i].name + '`' + queRows[i].queue,
                     sug = 0,
                     mem_size = 0, // ==> 当前进程的战友每次
@@ -99,7 +100,7 @@ exports.plugin = function(server) {
                 var tmpSum = 0,
                     tmpCount = 0;
                 for(var j=0; j<memRows.length; j++){
-                    if(0 == memRows[j]['name'].indexOf(queRows[i]['name'])){
+                    if(memRows[j]['name'] && 0 == memRows[j]['name'].indexOf(queRows[i]['name'])){
                         tmpSum += memRows[j]['size'];
                         tmpCount += 1;
                     }
@@ -128,6 +129,9 @@ exports.plugin = function(server) {
             }else {
                 sumMem = sumMem + ' MB';
             }
+            resRows = resRows.sort(function(a, b){
+                return a.queue_name.localeCompare(b.queue_name);
+            });
             resRows.push({
                 queue_name: '内存总变化',
                 serve: '',
@@ -144,32 +148,57 @@ exports.plugin = function(server) {
             res.send(resRows);
         });
 
-        /*table.find({host: host}, {_id: 0, suggestion: 0}, function(err, rows){
-            var results = [];
-            for(var i=0; i< rows.length; i++) {
-                var name = rows[i]['name'],
-                    queue = rows[i]['queue'],
-                    g1 = rows[i]['lt_5'],
-                    g2 = rows[i]['m5-10'],
-                    g3 = rows[i]['m10-20'],
-                    g4 = rows[i]['ge20'],
-                    overflow = rows[i]['overflow'],
-                    sum = rows[i]['sum'],
-                    serve = rows[i]['serve'],
-                    max = rows[i]['max_queued'],
-                    ratuse = 0;
-                if(name == 'GWTDOMAIN' || name == 'TMS_ORA'){
-                    continue;
+
+    });
+
+    server.get('/queueReportBy4Days.html', function(req, res){
+        var date = req.query.value;
+        var hosts = qConfig.hosts;
+        res.renderPjax('plugin/queueReport/queueReportBy4Days', {
+            tabColNames: ['服务`队列','对列配置', '28日最大', '28日建议', '28日内存', '31日最大',
+                '31日建议', '31日内存', '02日最大', '02日建议','02日内存', '03日最大', '03日建议', '03日内存'],
+            hosts: hosts,
+            value: date
+        });
+    });
+
+    server.get('/getReportQueueDataBy4Days', function(req, res){
+        var host = req.query['host'];
+        var table = mongoose.model('QueueReport', 'QueueReport28310203');
+        table.find({host: host},{_id:0},function(err, rows){
+            rows = rows.sort(function(a, b){
+                var i = 0;
+                i = a.name.localeCompare(b.name);
+                if( 0 == i){
+                    i = a.queue.localeCompare(b.queue);
+                    return i;
+                }else{
+                    return i;
                 }
-                if(serve > max){ //浪费==>情况一 : 配置队列数>实际队列数
-                    rate1 = 1;
-                }
-                var queue_name = rows[i].name + '`' + rows[i].queue,
-                    sug = 0,
-                    mem_size = 8864,
-                    change_mem = 0,
-                    ch = 1,
-                    rat1 = (g1/sum).toFixed(2),
+            });
+            res.send(rows);
+        })
+    });
+
+    // 28\31\02\03
+    server.get('/getAllData',function(req, res){
+        var host = req.query['host'];
+        var dbqr = mongoose.createConnection('localhost', 'tuxlog').collection('QueueReport28310203')
+
+        function asyncGetDayInfo(host, date, fn){
+
+            var tab = qConfig.anaListTab[0],
+                table = query.getTab('QueueAnalyze', tab, date, 2);
+
+            var tabMem = mConfig.baseMemory[0],
+                tableMem = query.getTab('memorymonitor', tabMem, date, 0),
+                sumMem = 0;
+
+            var exceptName = qrConfig.exceptName;
+
+            function countSuggestion(g1, g2, overflow, serve, sum, max){
+                var sug = 0;
+                var rat1 = (g1/sum).toFixed(2),
                     rat2 = (g2/sum).toFixed(2);
                 if (rat1 == 1 && overflow == 0) {
                     sug = sum <= 10 ? 1 : max;
@@ -184,59 +213,178 @@ exports.plugin = function(server) {
                         sug = Math.ceil(((parseFloat(rat1) + parseFloat(rat2)) >= 0.8 ? 10 : max) * (1+rat));
                     }
                 }
-
                 sug = sum <= 10 ? 1 : sug;
                 sug = (sum > 10 && sum <= 20 && max < 5) ? max : sug;
-                sug = sug > 20 ? 20 : sug;
-                sug = sug == serve ? 0 : sug;
-                tableMem.find({name: name, host: host}, function(err, rows){
-                 var count_mem = 0,
-                 sum_mem = 0;
-                 for(var i=0; i<rows.length; i++){
-                 if( name != 'GWTDOMAIN'){
-                 count_mem += 1;
-                 sum_mem += rows[i]['size'];
-                 }
-                 }
-                 mem_size = (sum_mem / count_mem) * 4 / 1024 * ch; // 单位：MB,兆
-                 });
-                change_mem = ( serve - sug ) * mem_size * 4 / 1024 * -1;
-                sumMem += change_mem;
-                results.push({
-                    queue_name: queue_name,
-                    serve: serve,
-                    lt_5: g1,
-                    'm5-10': g2,
-                    'm10-20': g3,
-                    'ge20': g4,
-                    sum: sum,
-                    max_queued: max,
-                    suggestion: sug,
-                    mem_size: (mem_size * 4 /1024).toFixed(1),
-                    change_mem: change_mem.toFixed(1)
+                /*sug = sug > 20 ? 20 : sug;
+                 sug = sug == serve ? 0 : sug;*/
+                if( sug > max ){
+                    sug = max;
+                }
+                return sug;
+            }
+
+            async.parallel({
+                    que: function (callback) {
+                        table.find({host: host, name: {'$nin': exceptName}}, {_id: 0, suggestion: 0}, function(err, rows){
+                            callback(null, rows)
+                        });
+                    },
+                    mem: function (callback) {
+                        tableMem.find({host: host}, {_id: 0}, function(err, rows){
+                            callback(null, rows);
+                        });
+                    }
+                },
+                function(err, results){
+                    //logger.debug(results.que);
+                    var queRows = results.que,
+                        memRows = results.mem,
+                        resRows = [];
+
+                    for(var i=0; i< queRows.length; i++) {
+                        var name = queRows[i]['name'],
+                            queue = queRows[i]['queue'],
+                            g1 = queRows[i]['lt_5'],
+                            g2 = queRows[i]['m5-10'],
+                            g3 = queRows[i]['m10-20'],
+                            g4 = queRows[i]['ge20'],
+                            overflow = queRows[i]['overflow'],
+                            sum = queRows[i]['sum'],
+                            serve = queRows[i]['serve'],
+                            max = queRows[i]['max_queued'];
+                        var queue_name = queRows[i].name + '`' + queRows[i].queue,
+                            sug = 0,
+                            mem_size = 0, // ==> 当前进程的战友每次
+                            change_mem = 0;// ==> mem_size * 增加\减少的进程数
+                        sug = countSuggestion(g1, g2, overflow, serve, sum, max);
+                        var tmpSum = 0,
+                            tmpCount = 0;
+                        for(var j=0; j<memRows.length; j++){
+                            if(memRows[j]['name'] && 0 == memRows[j]['name'].indexOf(queRows[i]['name'])){
+                                tmpSum += memRows[j]['size'];
+                                tmpCount += 1;
+                            }
+                        }
+                        mem_size = tmpSum / tmpCount;
+                        mem_size = (mem_size / 1024).toFixed(1);  // ==> IBM 不需要*4, HP 需要*4
+                        change_mem = ( serve - sug ) * mem_size * -1;
+                        sumMem += change_mem;
+                        resRows.push({
+                            queue_name: queue_name,
+                            serve: serve,
+                            lt_5: g1,
+                            'm5-10': g2,
+                            'm10-20': g3,
+                            'ge20': g4,
+                            sum: sum,
+                            max_queued: max,
+                            suggestion: sug,
+                            mem_size: mem_size
+                        });
+                    }
+                    /*resRows = resRows.sort(function(a, b){
+                        return a.queue_name.localeCompare(b.queue_name);
+                    });*/
+                    fn(resRows);
+                });
+        }
+
+        async.parallel({
+            '28': function(callback) {
+                asyncGetDayInfo(host, '2014-12-28', function(data){
+                    callback(null, data);
+                });
+            },
+            '31': function(callback) {
+                asyncGetDayInfo(host, '2014-12-31', function(data){
+                    callback(null, data);
+                });
+            },
+            '02': function(callback) {
+                asyncGetDayInfo(host, '2015-01-02', function(data){
+                    callback(null, data);
+                });
+            },
+            '03': function(callback) {
+                asyncGetDayInfo(host, '2015-01-03', function(data){
+                    callback(null, data);
                 });
             }
-            if(sumMem > 1024 || sumMem < 1024){
-                sumMem = (sumMem / 1024).toFixed(1);
-                sumMem = sumMem + ' GB';
-            }else {
-                sumMem = sumMem + ' MB';
-            }
-            results.push({
-                queue_name: '内存总变化',
-                serve: '',
-                lt_5: '',
-                'm5-10': '',
-                'm10-20': '',
-                'ge20': '',
-                sum: '',
-                max_queued: '',
-                suggestion: '',
-                mem_size: '',
-                change_mem: sumMem
-            })
-            res.send(results);
-        });*/
-    });
+        },function(err, results){
+            var res28 = results['28'],
+                res31 = results['31'],
+                res02 = results['02'],
+                res03 = results['03'];
 
+            for(var i=0; i<res28.length; i++){
+                var qn = res28[i].queue_name;
+                var obj = {
+                    host: host,
+                    name: qn.split('`')[0],
+                    queue: qn.split('`')[1],
+                    serve: res28[i].serve,
+                    '28max': res28[i].max_queued,
+                    '28sug' : res28[i].suggestion,
+                    '28size': res28[i].mem_size
+                };
+                dbqr.insert(obj, function(err, result){
+                    console.log(result)
+                });
+            }
+            for(var i=0; i<res31.length; i++){
+                var qn = res31[i].queue_name;
+                dbqr.update({
+                    host: host,
+                    name: qn.split('`')[0],
+                    serve: res31[i].serve,
+                    queue: qn.split('`')[1]
+                },{$set:{
+                    '31max': res31[i].max_queued,
+                    '31sug' : res31[i].suggestion,
+                    '31size': res31[i].mem_size
+                }}, {upsert: true}, function(err, result){
+                    if(err){
+                        logger.debug(err);
+                    }
+                });
+            }
+
+            for(var i=0; i<res02.length; i++){
+                var qn = res02[i].queue_name;
+                dbqr.update({
+                    host: host,
+                    name: qn.split('`')[0],
+                    queue: qn.split('`')[1],
+                    serve: res02[i].serve
+                },{$set:{
+                    '02max': res02[i].max_queued,
+                    '02sug': res02[i].suggestion,
+                    '02size': res02[i].mem_size
+                }}, {upsert: true}, function(err, result){
+                    if(err){
+                        logger.debug(err);
+                    }
+                });
+            }
+
+            for(var i=0; i<res03.length; i++){
+                var qn = res03[i].queue_name;
+                dbqr.update({
+                    host: host,
+                    name: qn.split('`')[0],
+                    serve: res03[i].serve,
+                    queue: qn.split('`')[1]
+                },{$set:{
+                    '03max': res03[i].max_queued,
+                    '03sug': res03[i].suggestion,
+                    '03size': res03[i].mem_size
+                }}, {upsert: true}, function(err, result){
+                    if(err){
+                        logger.debug(err);
+                    }
+                });
+            }
+            res.send({'28': res28.length, '31': res31.length, '02': res02.length, '03': res03});
+        });
+    });
 }

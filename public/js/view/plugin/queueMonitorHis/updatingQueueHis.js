@@ -244,39 +244,6 @@ $(document).ready(function () {
             series: {
                 lines: {
                     show: true
-                }
-            },
-            xaxis: {
-                mode: "time",
-                tickSize: [60, "second"],
-                tickFormatter: function (v, axis) {
-                    var date = new Date(v);
-
-                    if (date.getSeconds() % 10 == 0) {
-                        var day = (date.getMonth()+1) + '-' + date.getDate();
-                        var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-                        var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-                        var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
-
-                        return hours + ':' + minutes;
-                    } else {
-                        return "";
-                    }
-                },
-                show: false
-            },
-            yaxis: {
-                show: false
-            },
-            selection: {
-                mode: "x"
-            }
-        };
-
-        var options_part = {
-            series: {
-                lines: {
-                    show: true
                 },
                 points: {
                     show: false
@@ -307,12 +274,14 @@ $(document).ready(function () {
             yaxis: {
 //                min: 0
             },
+            selection: {
+                mode: "x"
+            },
             hoverable: true,
             clickable: true
         };
 
         var placeholder = $("#queue_monitor");
-        var pcpart = $("#queue_monitor_part");
 
         placeholder.bind("plotselected", function (event, ranges) {
             //console.log('plotselected...');
@@ -321,15 +290,15 @@ $(document).ready(function () {
 //            var zoom = $("#zoom").prop("checked");
 //
 //            if (zoom) {
-            $.each(plot_part.getXAxes(), function(_, axis) {
+            $.each(plot.getXAxes(), function(_, axis) {
                 var opts = axis.options;
                 opts.min = ranges.xaxis.from;
                 opts.max = ranges.xaxis.to;
                 //console.log('opts=>' + opts);
             });
-            plot_part.setupGrid();
-            plot_part.draw();
-            //plot.clearSelection();
+            plot.setupGrid();
+            plot.draw();
+            plot.clearSelection();
 //            }
         });
 
@@ -337,14 +306,64 @@ $(document).ready(function () {
 //            $("#selection").text("");
         });
 
+        function showTooltip(x, y, contents, areAbsoluteXY) {
+            var rootElt = 'body';
+            $('<div id="tooltip2" class="chart-tooltip">' + contents + '</div>').css( {
+                position: 'absolute',
+                display: 'none',
+                top: y - 45,
+                left: x - 8,
+                'z-index': '9999',
+                'color': '#fff',
+                'font-size': '11px',
+                opacity: 0.8
+            }).prependTo(rootElt).show();
+        }
+
+        var previousPoint = null;
+        placeholder.bind("plothover",function (event, pos, item) {
+            logger.debug(item)
+
+            if (placeholder.length > 0) {
+                if (item) {
+                    if (previousPoint != item.datapoint) {
+                        previousPoint = item.datapoint;
+
+                        $('.chart-tooltip').remove();
+                        var x = item.datapoint[0];
+
+                        if(item.series.bars.order){
+                            for(var i=0; i < item.series.data.length; i++){
+                                if(item.series.data[i][3] == item.datapoint[0])
+                                    x = item.series.data[i][0];
+                            }
+                        }
+                        var y = item.datapoint[1];
+                        var time = new Date(x);
+                        var tx = time.getHours() > 9 ? time.getHours() : ('0' + time.getHours());
+                        tx += ':';
+                        tx += time.getMinutes() > 9 ? time.getMinutes() : ('0' + time.getMinutes());
+                        showTooltip(
+                            item.pageX+5,
+                            item.pageY-20,
+                            '时间: ' + tx + '<br>队列深度: ' + y);
+                    }
+                }
+                else {
+                    $('.chart-tooltip').remove();
+                    previousPoint = null;
+                }
+            }
+        });
+
+
         var plot = $.plot(placeholder, ds, options);
-        var plot_part = $.plot(pcpart, ds, options_part);
 
 
         $('#mh_show_all').click(function() {
-            plot_part.getAxes().min = null;
-            plot_part.getAxes().max = null;
-            plot_part = $.plot(pcpart, ds, options_part);
+            plot.getAxes().min = null;
+            plot.getAxes().max = null;
+            plot = $.plot(placeholder, ds, options);
         });
 
         $('#mh_hours_sel').change(function() {

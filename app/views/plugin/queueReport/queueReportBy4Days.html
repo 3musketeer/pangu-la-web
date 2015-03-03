@@ -5,14 +5,14 @@
         text-align: right;
     }
 
-    #qa_dialog {
+    #qra_dialog {
         width: 100%;
         height: 100%;
         display: none;
         opacity: 1;
     }
 
-    #qa_dialog_header {
+    #qra_dialog_header {
         position: absolute;
         width: 60%;
         height: 2.6em;
@@ -23,7 +23,7 @@
         font-size: 1.2em;
     }
 
-    #qa_dialog_content {
+    #qra_dialog_content {
         position: absolute;
         width: 60%;
         height: 50%;
@@ -36,11 +36,11 @@
         overflow: hidden;
     }
 
-    #qa_dialog_content table {
+    #qra_dialog_content table {
         margin-top: 2.5em;
     }
 
-    #qa_dialog_bg {
+    #qra_dialog_bg {
         position: absolute;
         width: 100%;
         height: 100%;
@@ -54,7 +54,7 @@
 </style>
 
 <script type="text/javascript" src="js/popModal.min.js"></script>
-<script type="text/javascript" src="js/view/plugin/queue/queueAnalyze.js"></script>
+<script type="text/javascript" src="js/view/plugin/queueReport/updateReport4Days.js"></script>
 
 <div class="wrapper">
     <!-- Content head -->
@@ -70,7 +70,7 @@
             <h6>队列监控分析</h6>
             <ul class="navbar-icons" style="margin-top: 8px">
                 <li><a href="#" class="tip" title="选择显示主机地址">
-                    <select id="qa_serv" style="vertical-align: bottom; height: 2em; margin-top: -1em;">
+                    <select id="qr_serv" style="vertical-align: bottom; height: 2em; margin-top: -1em;">
                         <% for (var i = 0; i < hosts.length; i++) { %>
                         <option><%= hosts[i] %></option>
                         <% } %>
@@ -91,42 +91,17 @@
     </div>
 
     <div class="table-overflow">
-        <table id="qa_table" class="table table-striped table-hover">
+        <table id="qra_table" class="table table-striped table-hover">
             <thead>
-                <tr>
-                    <% for (var i = 0; i < tabColNames.length; i++) { %>
-                    <th style="text-align: center"><%= tabColNames[i] %></th>
-                    <% } %>
-                </tr>
+            <tr>
+                <% for (var i = 0; i < tabColNames.length; i++) { %>
+                <th style="text-align: center"><%= tabColNames[i] %></th>
+                <% } %>
+            </tr>
             </thead>
             <tbody>
             </tbody>
         </table>
     </div>
 
-</div>
-
-<div id="qa_dialog">
-
-    <div id="qa_dialog_header" class="navbar">
-        <div class="navbar-inner">
-            <h6 id="qa_dialog_content_title">Title</h6>
-            <ul class="navbar-icons">
-                <li>
-                    <a class="tip" title="最大化">
-                        <i class="ico-resize-full" id="qa_dialog_header_max"></i>
-                    </a>
-                </li>
-                <li>
-                    <a class="tip" title="关闭">
-                        <i class="ico-remove" id="qa_dialog_header_close"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div id="qa_dialog_content" class="well body"></div>
-
-    <div id="qa_dialog_bg"></div>
 </div>
