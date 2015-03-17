@@ -38,14 +38,14 @@
     					
     					<div class="span4">    
     					    
-    					 	<% var item = all['TuxStateCalledSumByLcu'], type='CalledSum',subtype='ByLcu' %>
+    					 	<% var item = all['TuxStateCalledSumByLcu'], type='CalledSumByLcu',subtype='' %>
     						<% include ../includes/widget/top.html %>					
     						
     					</div>
     
     					<div class="span4">    
     					    
-    					    <% var item = all['TuxStateFailedSumByLcu'], type='FailedSum',subtype='ByLcu' %>
+    					    <% var item = all['TuxStateFailedSumByLcu'], type='FailedSumByLcu',subtype='' %>
     						<% include ../includes/widget/top.html %>   								
     						
     					</div>
@@ -62,22 +62,22 @@
 		    <div class="row-fluid">
 					  <div class="span4">
 					      	  <% var meterChartIdx = 0 %>
-        						<% var item = all['TuxStateCalledSumByTimeAtHours0'], 
-        							mode='TuxState', type='CalledSumByTime',subtype='AtHours';
+        						<% var item = all['TuxStateCalledSumByTimeByHourAtHours0'],
+        							mode='TuxState', type='CalledSumByTimeByHour',subtype='AtHours';
         						%>
         						<% include ../includes/widget/chart-meter.html %>	
 			       </div>  
 			       
 			       <div class="span4">
-					          <% var item = all['TuxStateCalledSumByTimeAtHours1'], 
-        							mode='TuxState', type='CalledSumByTime',subtype='AtHours1';
+					          <% var item = all['TuxStateCalledSumByTimeByHourAtHours1'],
+        							mode='TuxState', type='CalledSumByTimeByHour',subtype='AtHours1';
         					  %>
         						<% include ../includes/widget/chart-meter.html %>	
 			       </div>  
 			       
 			       <div class="span4">
-					          <% var item = all['TuxStateCalledSumByTimeAtHours2'], 
-        							mode='TuxState', type='CalledSumByTime',subtype='AtHours2';
+					          <% var item = all['TuxStateCalledSumByTimeByHourAtHours2'],
+        							mode='TuxState', type='CalledSumByTimeByHour',subtype='AtHours2';
         						%>
         						<% include ../includes/widget/chart-meter.html %>	
 			       </div>  
@@ -95,8 +95,8 @@
 
 						<% var chartAreaIdx = 0 %>
 
-						<% var item = all['TuxStateCalledSumByTimeAtHours'], 
-							mode='TuxState', type='CalledSumByTime',subtype='AtHours';
+						<% var item = all['TuxStateCalledSumByTimeByHour'],
+							mode='TuxState', type='CalledSumByTimeByHour',subtype='';
 							item.color='#46bb00' %>
 						<% include ../includes/widget/chart-area.html %>	
 
@@ -104,8 +104,8 @@
 
 					<div class="span6">
 
-						<% var item = all['TuxStateFailedSumByTimeAtHours'], 
-							mode='TuxState', type='FailedSumByTime',subtype='AtHours';
+						<% var item = all['TuxStateFailedSumByTimeByHour'],
+							mode='TuxState', type='FailedSumByTimeByHour',subtype='';
 							item.color='#f1553c' %>
 						<% include ../includes/widget/chart-area.html %>	
 
@@ -122,14 +122,14 @@
 		    <div class="row-fluid">
 					  <div class="span6">
 					      	  <% var colChartIdx = 0 %>
-        						<% var item = all['TuxStateCalledSumByTimeAt197198'], 
+        						<% var item = all['TuxStateCalledSumByTimeByHostAt197198'],
         							mode='TuxState', type='CalledSumByTime',subtype='At197198';
         						%>
         						<% include ../includes/widget/chart-cloumn.html %>	
 			       </div>  
 			       
 			       <div class="span6">
-					          <% var item = all['TuxStateCalledSumByTimeAt4445'], 
+					          <% var item = all['TuxStateCalledSumByTimeByHostAt4445'],
         							mode='TuxState', type='CalledSumByTime',subtype='At4445';
         					  %>
         						<% include ../includes/widget/chart-cloumn.html %>	

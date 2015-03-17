@@ -1,7 +1,7 @@
 var scopeNames = {'day':'全省-日', 'month':'月', 'year':'年'}
 
 exports.config = {
-	TuxStateCalledSumByTimeAtHours: {
+	TuxStateCalledSumByTimeByHour: {
 		name: '流程调用总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -21,7 +21,7 @@ exports.config = {
 		sort: {'day' : 1}
 	},
 
-	TuxStateFailedSumByTimeAtHours: {
+	TuxStateFailedSumByTimeByHour: {
 		name: '流程异常总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -90,9 +90,9 @@ exports.config = {
 
 exports.list = {
     
-	lcuCalledSumChart:[{mode:'TuxState', type:'CalledSumByTime', subtype: 'AtHours'},
+	lcuCalledSumChart:[{mode:'TuxState', type:'CalledSumByTimeByHour', subtype: ''},
                     				 {mode:'TuxState', type:'CalledSumByTime', subtype: 'AtDay'},
-                    				 {mode:'TuxState', type:'FailedSumByTime', subtype: 'AtHours'},
+                    				 {mode:'TuxState', type:'FailedSumByTimeByHour', subtype: ''},
                     				 {mode:'TuxState', type:'FailedSumByTime', subtype: 'AtDay'}	],
   
   svcCalledSumChart:[{mode:'TuxState', type:'CalledSumByTime', subtype: 'AtHours1'},

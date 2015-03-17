@@ -2,7 +2,7 @@ var scopeNames = {'day':'日', 'month':'月', 'year':'年'}
 
 exports.config = {
 	
-	TuxStateCalledSumByTimeAtHours0: {
+	TuxStateCalledSumByTimeByHourAtHours0: {
 		name: '工单积压',
 		innerName: '工单积压',
 		scopes: ['day'],
@@ -17,7 +17,7 @@ exports.config = {
 		sort: {'hours' : 1}
 	},
 	
-	TuxStateCalledSumByTimeAtHours1: {
+	TuxStateCalledSumByTimeByHourAtHours1: {
 		name: '服务队列积压',
 		innerName: '服务队列积压',
 		scopes: ['day'],
@@ -32,7 +32,7 @@ exports.config = {
 		sort: {'hours' : 1}
 	},
 	
-	TuxStateCalledSumByTimeAtHours2: {
+	TuxStateCalledSumByTimeByHourAtHours2: {
 		name: '工单失败率',
 		innerName: '工单失败率(%)',
 		scopes: ['day'],

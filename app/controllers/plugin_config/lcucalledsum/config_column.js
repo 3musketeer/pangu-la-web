@@ -12,8 +12,8 @@ exports.barConfig = {
 		subtype:'Atday',
 		scopes: ['day'],
 		scopeNames: scopeNames,
-		colNames : [ 'hours', '_count'], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:{$exists:false}},
+		colNames : [ 'hours', '_count'],
+		filter: {},
 		filterColNames: ['TRANSCODE'],
 		statType:'LCU',
 		sort: {'hours' : 1}
@@ -27,8 +27,8 @@ exports.barConfig = {
 		subtype:'Atday',
 		scopes: ['month'],
 		scopeNames: scopeNames,
-		colNames : [ 'day', '_count'], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:{$exists:false}},
+		colNames : [ 'day', '_count'],
+		filter: {},
 		filterColNames: ['TRANSCODE'],
 		statType:'LCU',
 		sort: {'day' : 1}
@@ -38,7 +38,7 @@ exports.barConfig = {
 		name: '流程调用异常总量',
 		displayType:'bar',
 		mode:'TuxState',
-		type:'FailedSum',
+		type:'FailedSumByTimeByLcu',
 		subtype:'Atday',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -63,7 +63,7 @@ exports.barConfig = {
 		sort: {'hours' : 1}
 	},
 	
-	TuxStateCalledSumByTimeBySvcDay: {
+	TuxStateCalledSumByTimeBySvrDay: {
 		name: '服务调用总量',
 		displayType:'bar',
 		mode:'TuxState',
@@ -77,7 +77,7 @@ exports.barConfig = {
 		statType:'SVR',
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeBySvcMonth: {
+	TuxStateCalledSumByTimeBySvrMonth: {
 		name: '服务调用总量',
 		displayType:'bar',
 		mode:'TuxState',
@@ -92,7 +92,7 @@ exports.barConfig = {
 		sort: {'hours' : 1}
 	},
 	
-	TuxStateFailedSumByTimeBySvcDay: {
+	TuxStateFailedSumByTimeBySvrDay: {
 		name: '服务异常量',
 		displayType:'bar',
 		mode:'TuxState',
@@ -106,7 +106,7 @@ exports.barConfig = {
 		statType:'SVR',
 		sort: {'hours' : 1}
 	},
-	TuxStateFailedSumByTimeBySvcMonth: {
+	TuxStateFailedSumByTimeBySvrMonth: {
 		name: '服务异常量',
 		displayType:'bar',
 		mode:'TuxState',
@@ -125,10 +125,10 @@ exports.barConfig = {
 
 exports.barList = {
     
-  lcuCalledSumList:[ {mode:'TuxState', type:'CalledSumByTime',subtype:'ByLcuDay'},{mode:'TuxState',type:'CalledSumByTime',subtype:'ByLcuMonth'}],
-  lcuFailedSumList:[ {mode:'TuxState', type:'FailedSumByTime',subtype:'ByLcuDay'},{mode:'TuxState', type:'FailedSumByTime',subtype:'ByLcuMonth'}],
-  svcCalledSumList:[ {mode:'TuxState', type:'CalledSumByTime',subtype:'BySvcDay'},{mode:'TuxState', type:'CalledSumByTime',subtype:'BySvcMonth'}],
-  svcFailedSumList:[ {mode:'TuxState', type:'FailedSumByTime',subtype:'BySvcDay'},{mode:'TuxState', type:'FailedSumByTime',subtype:'BySvcMonth'}]
+  lcuCalledSumList:[ {mode:'TuxState', type:'CalledSumByTimeByLcu',subtype:'Day'},{mode:'TuxState',type:'CalledSumByTime',subtype:'ByLcuMonth'}],
+  lcuFailedSumList:[ {mode:'TuxState', type:'FailedSumByTimeByLcu',subtype:'Day'},{mode:'TuxState', type:'FailedSumByTime',subtype:'ByLcuMonth'}],
+  svcCalledSumList:[ {mode:'TuxState', type:'CalledSumByTimeBySvr',subtype:'Day'},{mode:'TuxState', type:'CalledSumByTime',subtype:'BySvrMonth'}],
+  svcFailedSumList:[ {mode:'TuxState', type:'FailedSumByTimeBySvr',subtype:'Day'},{mode:'TuxState', type:'FailedSumByTime',subtype:'BySvrMonth'}]
 
 }
 
@@ -239,8 +239,8 @@ exports.topConfig = {
 }
 
 exports.topList =  {
-    lcuCalledSumList:[ {mode:'TuxState', type:'CalledSum',subtype:'ByLcuDay'},{mode:'TuxState', type:'CalledSum',subtype:'ByLcuMonth'}],
-    lcuFailedSumList:[ {mode:'TuxState', type:'FailedSum',subtype:'ByLcuDay'},{mode:'TuxState', type:'FailedSum',subtype:'ByLcuMonth'}],
-    svcCalledSumList:[ {mode:'TuxState', type:'CalledSum',subtype:'BySvrDay'},{mode:'TuxState', type:'CalledSum',subtype:'BySvrMonth'}],
-    svcFailedSumList:[ {mode:'TuxState', type:'FailedSum',subtype:'BySvrDay'},{mode:'TuxState', type:'FailedSum',subtype:'BySvrMonth'}]
+    lcuCalledSumList:[ {mode:'TuxState', type:'CalledSumByLcu',subtype:'Day'},{mode:'TuxState', type:'CalledSumByLcu',subtype:'Month'}],
+    lcuFailedSumList:[ {mode:'TuxState', type:'FailedSumByLcu',subtype:'Day'},{mode:'TuxState', type:'FailedSumByLcu',subtype:'Month'}],
+    svcCalledSumList:[ {mode:'TuxState', type:'CalledSumBySvr',subtype:'Day'},{mode:'TuxState', type:'CalledSumBySvr',subtype:'Month'}],
+    svcFailedSumList:[ {mode:'TuxState', type:'FailedSumBySvr',subtype:'Day'},{mode:'TuxState', type:'FailedSumBySvr',subtype:'Month'}]
 }

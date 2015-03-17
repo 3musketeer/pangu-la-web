@@ -2,7 +2,7 @@ var scopeNames = {'day':'日', 'month':'月', 'year':'年'}
 
 exports.config = {
 	
-	TuxStateCalledSumByTimeAt117: {
+	TuxStateCalledSumByTimeByHostAt117: {
 		name: '134.32.28.117调用总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -12,7 +12,7 @@ exports.config = {
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeAt119: {
+	TuxStateCalledSumByTimeByHostAt119: {
 		name: '134.32.28.119调用总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -22,7 +22,7 @@ exports.config = {
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeAt120: {
+	TuxStateCalledSumByTimeByHostAt120: {
 		name: '134.32.28.120调用总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -32,7 +32,7 @@ exports.config = {
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeAt121: {
+	TuxStateCalledSumByTimeByHostAt121: {
 		name: '134.32.28.121调用总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -42,7 +42,7 @@ exports.config = {
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeAt122: {
+	TuxStateCalledSumByTimeByHostAt122: {
 		name: '134.32.28.122调用总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -52,7 +52,7 @@ exports.config = {
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeAt123: {
+	TuxStateCalledSumByTimeByHostAt123: {
 		name: '134.32.28.123调用总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -62,7 +62,7 @@ exports.config = {
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeAt152: {
+	TuxStateCalledSumByTimeByHostAt152: {
 		name: '134.32.28.152调用总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -72,7 +72,7 @@ exports.config = {
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeAt154: {
+	TuxStateCalledSumByTimeByHostAt154: {
 		name: '134.32.28.154调用总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -84,7 +84,7 @@ exports.config = {
 	},
 	
 	
-	TuxStateCalledSumByTimeAt197: {
+	TuxStateCalledSumByTimeByHostAt197: {
 		name: '134.32.28.197',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -94,7 +94,7 @@ exports.config = {
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeAt198: {
+	TuxStateCalledSumByTimeByHostAt198: {
 		name: '134.32.28.198',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -104,7 +104,7 @@ exports.config = {
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeAt44: {
+	TuxStateCalledSumByTimeByHostAt44: {
 		name: '134.32.28.44',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -114,7 +114,7 @@ exports.config = {
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeAt45: {
+	TuxStateCalledSumByTimeByHostAt45: {
 		name: '134.32.28.45',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -127,7 +127,7 @@ exports.config = {
 	
 	
 	
-	TuxStateCalledSumByTimeAt118: {
+	TuxStateCalledSumByTimeByHostAt118: {
 		name: '134.32.28.118',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -137,7 +137,7 @@ exports.config = {
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeAt124: {
+	TuxStateCalledSumByTimeByHostAt124: {
 		name: '134.32.28.124',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -147,7 +147,7 @@ exports.config = {
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeAt145: {
+	TuxStateCalledSumByTimeByHostAt145: {
 		name: '134.32.28.145',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -157,7 +157,7 @@ exports.config = {
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeAt188: {
+	TuxStateCalledSumByTimeByHostAt188: {
 		name: '134.32.28.188',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -170,7 +170,7 @@ exports.config = {
 	
 	
 	
-	TuxStateCalledSumByTimeAt36: {
+	TuxStateCalledSumByTimeByHostAt36: {
 		name: '134.32.28.36',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -180,7 +180,7 @@ exports.config = {
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeAt37: {
+	TuxStateCalledSumByTimeByHostAt37: {
 		name: '134.32.28.37',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -190,7 +190,7 @@ exports.config = {
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeAt38: {
+	TuxStateCalledSumByTimeByHostAt38: {
 		name: '134.32.28.38',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -200,7 +200,7 @@ exports.config = {
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeAt39: {
+	TuxStateCalledSumByTimeByHostAt39: {
 		name: '134.32.28.39',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -213,7 +213,7 @@ exports.config = {
 	
 	
 	
-	TuxStateCalledSumByTimeAt40: {
+	TuxStateCalledSumByTimeByHostAt40: {
 		name: '134.32.28.40',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -223,7 +223,7 @@ exports.config = {
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeAt41: {
+	TuxStateCalledSumByTimeByHostAt41: {
 		name: '134.32.28.41',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -235,7 +235,7 @@ exports.config = {
 	},
 	
 	
-	TuxStateCalledSumByTimeAt139: {
+	TuxStateCalledSumByTimeByHostAt139: {
 		name: '134.32.28.139',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -245,7 +245,7 @@ exports.config = {
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeAt141: {
+	TuxStateCalledSumByTimeByHostAt141: {
 		name: '134.32.28.141',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -257,7 +257,7 @@ exports.config = {
 	},
 	
 	
-	TuxStateFailedSumByTimeAt28: {
+	TuxStateFailedSumByTimeByHostAt28: {
 		name: '139异常总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -268,7 +268,7 @@ exports.config = {
 		sort: {'hours' : 1}
 	},
 
-	TuxStateFailedSumByTimeAt29: {
+	TuxStateFailedSumByTimeByHostAt29: {
 		name: '141异常总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -316,47 +316,47 @@ exports.list = {
     
 
 	historyLcuSumCompareChart:[ 
-	                          /* ,[   {mode:'TuxState', type:'FailedSumByTime', subtype: 'At28',hostName: '异常数'}
-	                                ,{mode:'TuxState', type:'FailedSumByTime', subtype: 'At29',hostName: '异常数'}
+	                          /* ,[   {mode:'TuxState', type:'FailedSumByTimeByHost', subtype: 'At28',hostName: '异常数'}
+	                                ,{mode:'TuxState', type:'FailedSumByTimeByHost', subtype: 'At29',hostName: '异常数'}
 	                            ]
-	                           ,[   {mode:'TuxState', type:'CalledSumByTime', subtype: 'BySvc1',hostName: '服务调用数'}
-	                               ,{mode:'TuxState', type:'CalledSumByTime', subtype: 'BySvc2',hostName: '服务调用数'}
-	                               ,{mode:'TuxState', type:'CalledSumByTime', subtype: 'BySvc3',hostName: '服务调用数'}
+	                           ,[   {mode:'TuxState', type:'CalledSumByTimeBySvr', subtype: '1',hostName: '服务调用数'}
+	                               ,{mode:'TuxState', type:'CalledSumByTimeBySvr', subtype: '2',hostName: '服务调用数'}
+	                               ,{mode:'TuxState', type:'CalledSumByTimeBySvr', subtype: '3',hostName: '服务调用数'}
 	                            ]*/
-	                            [    {mode:'TuxState', type:'CalledSumByTime', subtype: 'At197',hostName: 'ECS主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At198',hostName: 'ECS主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At44',hostName: 'ECS主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At45',hostName: 'ECS主机调用数(日)'}
+	                            [    {mode:'TuxState', type:'CalledSumByTimeByHost', subtype: 'At197',hostName: 'ECS主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At198',hostName: 'ECS主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At44',hostName: 'ECS主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At45',hostName: 'ECS主机调用数(日)'}
 	                            ]
 	                            ,
-	                            [    {mode:'TuxState', type:'CalledSumByTime', subtype: 'At139',hostName: '客服主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At141',hostName: '客服主机调用数(日)'}
+	                            [    {mode:'TuxState', type:'CalledSumByTimeByHost', subtype: 'At139',hostName: '客服主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At141',hostName: '客服主机调用数(日)'}
 	                            ]
 	                            ,
-	                            [    {mode:'TuxState', type:'CalledSumByTime', subtype: 'At117',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At119',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At120',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At121',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At122',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At123',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At152',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At154',hostName: '全业务主机调用数(日)'}
+	                            [    {mode:'TuxState', type:'CalledSumByTimeByHost', subtype: 'At117',hostName: '全业务主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At119',hostName: '全业务主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At120',hostName: '全业务主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At121',hostName: '全业务主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At122',hostName: '全业务主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At123',hostName: '全业务主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At152',hostName: '全业务主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At154',hostName: '全业务主机调用数(日)'}
 	                            ]
 	                            ,
-	                            [    {mode:'TuxState', type:'CalledSumByTime', subtype: 'At118',hostName: '缴费接口主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At124',hostName: '缴费接口主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At145',hostName: '缴费接口主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At188',hostName: '缴费接口主机调用数(日)'}
+	                            [    {mode:'TuxState', type:'CalledSumByTimeByHost', subtype: 'At118',hostName: '缴费接口主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At124',hostName: '缴费接口主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At145',hostName: '缴费接口主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At188',hostName: '缴费接口主机调用数(日)'}
 	                            ]
 	                            ,
-	                            [    {mode:'TuxState', type:'CalledSumByTime', subtype: 'At36',hostName: 'BSS主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At37',hostName: 'BSS主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At38',hostName: 'BSS主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At39',hostName: 'BSS主机调用数(日)'}
+	                            [    {mode:'TuxState', type:'CalledSumByTimeByHost', subtype: 'At36',hostName: 'BSS主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At37',hostName: 'BSS主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At38',hostName: 'BSS主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At39',hostName: 'BSS主机调用数(日)'}
 	                            ]
 	                            ,
-	                            [    {mode:'TuxState', type:'CalledSumByTime', subtype: 'At40',hostName: 'BPM主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTime', subtype: 'At41',hostName: 'BPM主机调用数(日)'}
+	                            [    {mode:'TuxState', type:'CalledSumByTimeByHost', subtype: 'At40',hostName: 'BPM主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At41',hostName: 'BPM主机调用数(日)'}
 	                            ]
 	                           
 	                            
