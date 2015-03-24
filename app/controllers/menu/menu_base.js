@@ -15,7 +15,7 @@ module.exports = [
     {title:'中间件',menuId:'tuxedo', class:'icon-tasks',list:[ //{title:'问题定位',url:'/flowInfoAnalysis.html?flowId=/lcuErrorAnalysis.html'},
                                                     //{title:'主机对比(实时)',url:'/realtimeHostCompareGraph.html?chartList=realTimeLcuSumCompareChart'},
                                                     {title:'服务队列(历史)',url:'/queueMonitorHis.html'},
-                                                    {title:'服务队列(实时)',url:'/queueMonitor.html'},
+                                                    //{title:'服务队列(实时)',url:'/queueMonitor.html'},
                                                     //{title:'服务僵死',url:'/realtimeQueryDetail.html?chartList=realTimeSvcDeadDetailList'},                                            
                                                     //{title:'内存占用',url:'/memoryMonitor.html?chartList=realMemory'},
                                                     {title:'服务超时明细(日)',url:'/historyQueryDetail.html?chartList=historySvcTimeOutDetailList'},     

@@ -171,7 +171,7 @@ exports.moduleName = {
     '/sumList.html?chartList=lcuCalledSumChart':'流程调用成功率',
     '/historyComPareGraph.html?chartList=historyLcuSumCompareChart':'主机对比',
     '/queueMonitorHis.html':'服务队列(历史)',
-    '/queueMonitor.html':'服务队列(实时)',
+    //'/queueMonitor.html':'服务队列(实时)',
     //'/realtimeQueryDetail.html?chartList=realTimeSvcDeadDetailList':'服务僵死',
     '/memoryMonitor.html?chartList=realMemory':'内存占用',
     '/historyQueryDetail.html?chartList=historySvcTimeOutDetailList':'服务超时(历史)',

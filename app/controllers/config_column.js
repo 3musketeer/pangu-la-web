@@ -7,7 +7,7 @@ exports.config = {
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count', 'host' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['134.32.28.127','134.32.28.128']}},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['134.32.28.197','134.32.28.198']}},
 		sort: {'hours' : 1}
 	},
 	TuxStateCalledSumByTimeByHostAt4445: {
@@ -15,7 +15,7 @@ exports.config = {
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count', 'host' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['134.32.28.129','134.32.28.45']}},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['134.32.28.44','134.32.28.45']}},
 		sort: {'hours' : 1}
 	},
 	

@@ -22,7 +22,7 @@ exports.plugin = function(server) {
         });
     });
 
-    server.get('/getTrade4GDataMR', function(req, res){
+    server.get('/getTrade4GData', function(req, res){
         var host = req.query['host'],
             date = req.query['value'],
             _operate = req.query['_operate'],

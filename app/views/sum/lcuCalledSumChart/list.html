@@ -20,16 +20,16 @@
 
 						<% var chartAreaIdx = 0 %>
 
-						<% var item = all['TuxStateCalledSumByTimeAtHours'], 
-							mode='TuxState', type='CalledSumByTime',subtype='AtHours';
+						<% var item = all['TuxStateCalledSumByTimeByHour'],
+							mode='TuxState', type='CalledSumByTimeByHour',subtype='';
 							item.color='#46bb00' %>
 						<% include ../../includes/widget/chart-area.html %>	
 						
 				    </div>
 					
 					<div class="span4">
-						<% var item = all['TuxStateFailedSumByTimeAtHours'], 
-							mode='TuxState', type='FailedSumByTime',subtype='AtHours';
+						<% var item = all['TuxStateFailedSumByTimeByHour'],
+							mode='TuxState', type='FailedSumByTimeByHour',subtype='';
 							item.color='#f1553c' %>
 						<% include ../../includes/widget/chart-area.html %>	
 
@@ -45,7 +45,7 @@
 			                </div>
 			                <div class="well body">
 								<div class="graph-standard" id="chart-pie-1"></div>
-								<div style="display:none" id="chart-pie-data1">[{"label":"成功总数", "data": <%= all['TuxStateCalledSumByTimeAtHours'].count - all['TuxStateFailedSumByTimeAtHours'].count  %>},{"label":"<%= all['TuxStateFailedSumByTimeAtHours'].name %>", "data":<%= all['TuxStateFailedSumByTimeAtHours'].count %>}]</div>
+								<div style="display:none" id="chart-pie-data1">[{"label":"成功总数", "data": <%= all['TuxStateCalledSumByTimeByHour'].count - all['TuxStateFailedSumByTimeByHour'].count  %>},{"label":"<%= all['TuxStateFailedSumByTimeByHour'].name %>", "data":<%= all['TuxStateFailedSumByTimeByHour'].count %>}]</div>
 			                </div>
 			            </div>		
 

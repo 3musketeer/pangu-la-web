@@ -63,7 +63,7 @@ $(function(){
         host = $('#trade4g_host option:selected').text() || '134.32.28.127';
         $.ajax({
             type: 'get',
-            url: '/getTrade4GDataMR',
+            url: '/getTrade4GData',
             data: {
                 value: $('#value').val() || '2015-02-10',
                 host: host,

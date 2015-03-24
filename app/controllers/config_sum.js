@@ -45,7 +45,7 @@ exports.config = {
 	
 	
 	
-	TuxStateCalledSumByTimeAtHours1: {
+	TuxStateCalledSumByTimeByHour1: {
 		name: '服务调用总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -65,7 +65,7 @@ exports.config = {
 		sort: {'day' : 1}
 	},
 
-	TuxStateFailedSumByTimeAtHours1: {
+	TuxStateFailedSumByTimeByHour1: {
 		name: '服务异常总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
@@ -95,9 +95,9 @@ exports.list = {
                     				 {mode:'TuxState', type:'FailedSumByTimeByHour', subtype: ''},
                     				 {mode:'TuxState', type:'FailedSumByTime', subtype: 'AtDay'}	],
   
-  svcCalledSumChart:[{mode:'TuxState', type:'CalledSumByTime', subtype: 'AtHours1'},
+  svcCalledSumChart:[{mode:'TuxState', type:'CalledSumByTimeByHour', subtype: '1'},
             				 {mode:'TuxState', type:'CalledSumByTime', subtype: 'AtDay1'},
-            				 {mode:'TuxState', type:'FailedSumByTime', subtype: 'AtHours1'},
+            				 {mode:'TuxState', type:'FailedSumByTimeByHour', subtype: '1'},
             				 {mode:'TuxState', type:'FailedSumByTime', subtype: 'AtDay1'}	]
 
 }

@@ -17,8 +17,7 @@ exports.plugin = function(server) {
         var date = req.query.value;
         var hosts = qConfig.hosts;
         res.renderPjax('plugin/queueReport/queueReportAnalyze', {
-            tabColNames: ['服务`队列', '队列配置', '队列深度(<5)', '队列深度(5-10)', '队列深度(10-20)',
-                '队列深度(>20)', '总记录数', '最大使用', '建议配置','占用内存(MB/个)', '内存变化(MB)'],
+            tabColNames: qrConfig.tabColNames,
             hosts: hosts,
             value: date
         });
