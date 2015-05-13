@@ -4,7 +4,7 @@
   , query = require('../../query')
   , config = require('../../plugin_config/hostCompare/config_realTime').graphConfig
   , chart_list = require('../../plugin_config/hostCompare/config_realTime').graphList
-  , transcode_list = require('../../config_coreTranscodeList').coreTranscodeList
+  , transcode_list = require('../../config_coreTranscodeList_cb_1_0').coreTranscodeList
   , extend = require('extend')
   , logger = require('../../log').logger;
 

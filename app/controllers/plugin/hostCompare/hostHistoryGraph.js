@@ -2,9 +2,9 @@ var mongoose = require('mongoose')
   , debug = require('debug')('pangu:top')
   , util = require("util")
   , query = require('../../query')
-  , config = require('../../plugin_config/hostCompare/config_history').config
-  , chart_list = require('../../plugin_config/hostCompare/config_history').list
-  , transcode_list = require('../../config_coreTranscodeList').coreTranscodeList
+  , config = require('../../plugin_config/hostCompare/config_history_cb_1_0').config
+  , chart_list = require('../../plugin_config/hostCompare/config_history_cb_1_0').list
+  , transcode_list = require('../../config_coreTranscodeList_cb_1_0').coreTranscodeList
   , extend = require('extend');
 
 exports.plugin = function(server) {

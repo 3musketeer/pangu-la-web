@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
     , logger = require('../../log').logger
-    , qConfig = require('../../plugin_config/queue/config_queue').queue
+    , qConfig = require('../../plugin_config/queue/config_queue_cb_1_0').queue
     , qrConfig = require('../../plugin_config/queueReport/report_config').queue
     , mConfig = require('../../plugin_config/memory/config_memory').memory
     , extend = require('extend')

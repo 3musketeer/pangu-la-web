@@ -4,14 +4,14 @@ var mongoose = require('mongoose')
   , query = require('../../query')
   , config = require('../../plugin_config/lcucalledsum/config_realTime').graphConfig
   , chart_list = require('../../plugin_config/lcucalledsum/config_realTime').graphList
-  , transcode_list = require('../../config_coreTranscodeList').coreTranscodeList
-  , server_list = require('../../config_coreServerList').coreServerList
+  , transcode_list = require('../../config_coreTranscodeList_cb_1_0').coreTranscodeList
+  , server_list = require('../../config_coreServerList_cb_1_0').coreServerList
   , extend = require('extend')
   , logger = require('../../log').logger;
 
 exports.plugin = function(server) {
 
-   //实时图表
+   //实时图锟斤拷
    server.get('/realtimeLcuCalledSum.html', function(req, res) { 
         var chartList = req.query.chartList;
         var list = chart_list[chartList]; 
