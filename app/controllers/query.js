@@ -236,13 +236,7 @@ exports.getTab = function(model, tab, date, ind) {
 
     if (!mode || !type || !subtype || !date || !model) throw new Error('参数不全');
 
-    var time = date.split('-');
-
-    var day = time[0]
-        + (time[1].length < 2 ? '0' + time[1] : time[1])
-        + (time[2].length < 2 ? '0' + time[2] : time[2]);
-
-    var tabName = mode + type + subtype + (ind > 0 ? day.substr(ind) : day);
+    var tabName = getTabName(tab, date, ind);
 
     var table = null;
     try{
@@ -255,3 +249,23 @@ exports.getTab = function(model, tab, date, ind) {
     return table;
 }
 
+var getTabName = function(tab, date, ind) {
+
+	var mode = tab.mode,
+		type = tab.type,
+		subtype = tab.subtype;
+
+	if (!mode || !type || !subtype || !date) throw new Error('参数不全');
+
+	var time = date.split('-');
+
+	var day = time[0]
+		+ (time[1].length < 2 ? '0' + time[1] : time[1])
+		+ (time[2].length < 2 ? '0' + time[2] : time[2]);
+
+	var tabName = mode + type + subtype + (ind > 0 ? day.substr(ind) : day);
+
+	return tabName;
+}
+
+exports.getTabName = getTabName;

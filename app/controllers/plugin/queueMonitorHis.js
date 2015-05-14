@@ -171,7 +171,8 @@ exports.plugin =  function(server) {
         };
 
         var chartConfig = qConfig.hisQueue[1];
-        var tabName = chartConfig.mode + chartConfig.type + chartConfig.subtype + date.replace(/-/g, '');
+        //var tabName = chartConfig.mode + chartConfig.type + chartConfig.subtype + date.replace(/-/g, '');
+        var tabName = query.getTabName(chartConfig, date, 0);
         console.log('tabName=>' + tabName);
 
         table = mongoose.model('QueueDetail', tabName);
@@ -222,7 +223,8 @@ exports.plugin =  function(server) {
             queue = tmpnq[1];
         logger.debug("{host:'"+host+"',name:'"+name+"',queue:'"+queue+"'}")
         var chartConfig = qConfig.hisQueue[1];
-        var tabName = chartConfig.mode + chartConfig.type + chartConfig.subtype + date.replace(/-/g, '');
+        //var tabName = chartConfig.mode + chartConfig.type + chartConfig.subtype + date.replace(/-/g, '');
+        var tabName = query.getTabName(chartConfig, date, 0);
         var table = mongoose.model('QueueDetail', tabName);
         table.find({name: name, host: host, queue: queue}, function(err, rows) {
             if(err){
