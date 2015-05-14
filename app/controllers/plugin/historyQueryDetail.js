@@ -242,7 +242,6 @@ exports.plugin = function(server) {
                      
       }else if(mode == 'TuxState'
                             && type == 'TimeOutTop' && scope == 'day'){
-      
         	var tabname = query.getTableName(mode, type, scope, value);
                 	
         	var tempConfig ={};	
@@ -304,25 +303,29 @@ exports.plugin = function(server) {
         	  var proxy = new EventProxy();
         	  proxy.assign('count', 'docs', render);
             var iDisplayEnd = iDisplayStart + iDisplayLength - 1;
-              client.zrange([tabname, iDisplayStart, iDisplayEnd], function(err, docs){
-                  var redisRet = [],
-                      sortMax = false;
-                  for(var key in tempConfig.sort){
-                      if(tempConfig.sort[key] == -1 ){
-                          sortMax = true;
-                      }
+              var sortMax = false;
+              for(var key in tempConfig.sort){
+                  if(tempConfig.sort[key] == -1 ){
+                      sortMax = true;
                   }
-                  if( sortMax ){
-                      for(var rsi=docs.length-1; rsi>=0; rsi--){
-                          redisRet.push(JSON.parse(docs[rsi]));
-                      }
-                  }else {
+              }
+              if( sortMax ){
+                  client.zrevrange([tabname, iDisplayStart, iDisplayEnd], function(err, docs){
+                      var redisRet = [];
                       for (var rsi = 0; rsi < docs.length; rsi++) {
                           redisRet.push(JSON.parse(docs[rsi]));
                       }
-                  }
-                  proxy.trigger('docs', redisRet);
-              })
+                      proxy.trigger('docs', redisRet);
+                  })
+              }else{
+                  client.zrange([tabname, iDisplayStart, iDisplayEnd], function(err, docs){
+                      var redisRet = [];
+                      for (var rsi = 0; rsi < docs.length; rsi++) {
+                          redisRet.push(JSON.parse(docs[rsi]));
+                      }
+                      proxy.trigger('docs', redisRet);
+                  })
+              }
 
               client.zcard([tabname], function(err, cnt){
                   proxy.trigger('count', cnt);
