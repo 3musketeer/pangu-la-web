@@ -251,7 +251,8 @@ $(document).ready(function () {
             },
             grid: { hoverable: true, clickable: true },
             legend: {
-                noColumns: 8
+                noColumns: 5,
+                margin: 25
             },
             xaxis: {
 //                tickDecimals: 0
