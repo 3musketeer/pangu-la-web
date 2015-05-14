@@ -5,7 +5,11 @@
   , config = require('../plugin_config/config_historyDetail').config
   , chart_list = require('../plugin_config/config_historyDetail').list
   , EventProxy = require('eventproxy').EventProxy
-  , extend = require('extend');
+  , extend = require('extend')
+  , env = process.env.NODE_ENV || 'development'
+  , redisCfg = require('../../../config/config')[env].redis
+  , redis = require('redis')
+  , client = redis.createClient(redisCfg.port, redisCfg.host);
 
 exports.plugin = function(server) {
 
@@ -238,7 +242,7 @@ exports.plugin = function(server) {
                      
       }else{
       
-        	var table = query.getTable(mode, type, scope, value)
+        	var tabname = query.getTableName(mode, type, scope, value);
                 	
         	var tempConfig ={};	
         	type +=subtype;
@@ -249,7 +253,7 @@ exports.plugin = function(server) {
             if(tempConfig.filter)
                     filter= tempConfig.filter;
              
-           if (sSearch && sSearch != ""){
+           /*if (sSearch && sSearch != ""){
                 filter.$or = [];
                 tempConfig.filterColNames.forEach(function(col){
                     
@@ -257,7 +261,7 @@ exports.plugin = function(server) {
                         obj[col] = new RegExp(sSearch);
                         filter.$or.push(obj);
                 }); 
-            }     
+            }     */
             tempConfig.filter = filter;
 
             tempConfig.limit = iDisplayLength;
@@ -298,14 +302,31 @@ exports.plugin = function(server) {
         	  }
         	  var proxy = new EventProxy();
         	  proxy.assign('count', 'docs', render);
-        	
-            table.getCount(tempConfig,function(cnt){ 
-              proxy.trigger('count', cnt);
-            });
-            
-        	  table.list(tempConfig, function(err, docs){	        
-        	    proxy.trigger('docs', docs);			
-        	  })
+            var iDisplayEnd = iDisplayStart + iDisplayLength - 1;
+              client.zrange([tabname, iDisplayStart, iDisplayEnd], function(err, docs){
+                  var redisRet = [],
+                      sortMax = false;
+                  for(var key in tempConfig.sort){
+                      if(tempConfig.sort[key] == -1 ){
+                          sortMax = true;
+                      }
+                  }
+                  if( sortMax ){
+                      for(var rsi=docs.length-1; rsi>=0; rsi--){
+                          redisRet.push(JSON.parse(docs[rsi]));
+                      }
+                  }else {
+                      for (var rsi = 0; rsi < docs.length; rsi++) {
+                          redisRet.push(JSON.parse(docs[rsi]));
+                      }
+                  }
+                  proxy.trigger('docs', redisRet);
+              })
+
+              client.zcard([tabname], function(err, cnt){
+                  proxy.trigger('count', cnt);
+              })
+
       }   
      
     });

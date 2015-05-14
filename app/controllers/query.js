@@ -61,6 +61,7 @@ var getTable = function(mode, type, scope, value) {
 }
 
 exports.getTable = getTable
+exports.getTableName = getTableName
 
 //limit 查询记录数,可选参数,不传则使用config.limit||0
 exports.multiQuery = function(list, config, limit, callback) {
