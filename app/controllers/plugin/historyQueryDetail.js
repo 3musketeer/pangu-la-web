@@ -240,7 +240,8 @@ exports.plugin = function(server) {
 
           });  
                      
-      }else{
+      }else if(mode == 'TuxState'
+                            && type == 'TimeOutTop' && scope == 'day'){
       
         	var tabname = query.getTableName(mode, type, scope, value);
                 	
@@ -327,7 +328,77 @@ exports.plugin = function(server) {
                   proxy.trigger('count', cnt);
               })
 
-      }   
+      } else{
+
+          var table = query.getTable(mode, type, scope, value)
+
+          var tempConfig ={};
+          type +=subtype;
+          extend(true,tempConfig,config[mode+type]);
+
+
+          var filter ={};
+          if(tempConfig.filter)
+              filter= tempConfig.filter;
+
+          if (sSearch && sSearch != ""){
+              filter.$or = [];
+              tempConfig.filterColNames.forEach(function(col){
+
+                  var obj = {};
+                  obj[col] = new RegExp(sSearch);
+                  filter.$or.push(obj);
+              });
+          }
+          tempConfig.filter = filter;
+
+          tempConfig.limit = iDisplayLength;
+          tempConfig.skip = iDisplayStart;
+
+          var render = function(count,docs){
+              var output = {};
+              var temp = [];
+              output.sEcho = parseInt(req.query.sEcho);
+              output.iTotalRecords = count;
+              output.iTotalDisplayRecords = count;
+              output.aaData = [];
+              docs.forEach(function(item,idx){
+                  var item1 = JSON.parse(JSON.stringify(item));
+                  tempConfig.colNames.forEach(function(col){
+                      if(col == '#') {
+                          temp.push(parseInt(iDisplayStart)+1+idx);
+                      }else if(col == 'avg_gt_2s_rate') {
+                          item1[col] =  '0%';
+                          if(item1['avgcount'] != 0 && item1['avg_gt_2s'] != 0)
+                              item1[col] = (item1['avg_gt_2s']/item1['avgcount']*100).toFixed(2)+'%';
+                          temp.push(item1[col]);
+
+                      }else if(col == 'max_gt_2s_rate') {
+                          item1[col] =  '0%';
+                          if(item1['maxcount'] != 0 && item1['max_gt_2s'] != 0)
+                              item1[col] = (item1['max_gt_2s']/item1['maxcount']*100).toFixed(2)+'%';
+                          temp.push(item1[col]);
+                      }else{
+                          temp.push(item1[col]);
+                      }
+                  });
+                  output.aaData.push(temp);
+                  temp = [];
+              });
+              var response = JSON.stringify(output);
+              res.send(response);
+          }
+          var proxy = new EventProxy();
+          proxy.assign('count', 'docs', render);
+
+          table.getCount(tempConfig,function(cnt){
+              proxy.trigger('count', cnt);
+          });
+
+          table.list(tempConfig, function(err, docs){
+              proxy.trigger('docs', docs);
+          })
+      }
      
     });
   
