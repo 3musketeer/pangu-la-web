@@ -3,11 +3,14 @@ var scopeNames = {'day':'日', 'month':'月', 'year':'年'}
 exports.config = {
 	
 	TuxStateCalledSumByTimeByHostAt197198: {
-		name: 'ECS非缴费流程调用量',
+		name: '全业务流程调用数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count', 'host' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['10.161.2.107_tuxapp1','10.161.2.107_tuxapp2']}},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['10.161.2.112_tuxapp5', '10.161.2.112_tuxapp6',
+			'10.161.2.113_tuxapp7', '10.161.2.113_tuxapp8',
+			'10.161.2.233_tuxapp5', '10.161.2.233_tuxapp6',
+			'10.161.2.234_tuxapp7', '10.161.2.234_tuxapp8']}},
 		sort: {'hours' : 1}
 	},
 	TuxStateCalledSumByTimeByHostAt4445: {
