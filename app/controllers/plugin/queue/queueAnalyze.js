@@ -99,6 +99,8 @@ exports.plugin = function(server) {
 
         var sum = 0;
 
+        logger.error(date,host)
+
         table.count({host: host}, function(err, count) {
             sum = count;
             var _q = {host: host, name:{$ne: 'GWTDOMAIN'}};

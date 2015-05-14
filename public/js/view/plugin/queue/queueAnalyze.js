@@ -8,7 +8,7 @@ $(function() {
     function init() {
 
         host = (!host || host == '') ? $('#qa_serv option:selected').text() : host;
-
+        console.log(host)
         table = $('#qa_table').dataTable({
             "bProcessing": true,
             "bServerSide": true,

@@ -1,8 +1,13 @@
 var mongoose = require('mongoose')
   , debug = require('debug')('pangu:query')
-  , logger = require('./log').logger;
+  , logger = require('./log').logger
+  , env = process.env.NODE_ENV || 'development'
+  , redisCfg = require('../../config/config')[env].redis
+  , redis = require('redis')
+  , client = redis.createClient(redisCfg.port, redisCfg.host)
+  , async = require('async');
 
-var getTable = function(mode, type, scope, value) {
+var getTableName = function(mode, type, scope, value) {
 
 	if (!mode || !type || !scope) throw new Error('参数不全');
 
@@ -34,7 +39,16 @@ var getTable = function(mode, type, scope, value) {
 	    collection = mode + type + scope.toUpperCase() + value;
 	}
 	debug('collection:%s.', collection)
-    var table;
+
+	return collection;
+	
+}
+
+var getTable = function(mode, type, scope, value) {
+
+	var collection = getTableName(mode, type, scope, value);
+	debug('collection:%s.', collection)
+	var table;
 	try{
 		table = mongoose.model('QueryResult', collection);
 	}catch(e){
@@ -43,7 +57,7 @@ var getTable = function(mode, type, scope, value) {
 	}
 	logger.debug("collection=%s",collection);
 	return table;
-	
+
 }
 
 exports.getTable = getTable
@@ -115,6 +129,98 @@ exports.multiQuery = function(list, config, limit, callback) {
 								callback(null, result);
 							}
 						}
+				})(mode, type, subtype, scope ,cfg, result))
+			}
+		}
+	}
+}
+
+//redis query
+exports.redisMQuery = function(list, config, limit, callback) {
+
+	var count=0;
+
+	if ('function' == typeof limit) {
+		callback = limit
+		limit = false;
+	}
+
+	//统计个数
+	for(var i=0,j=list.length; i<j; ++i) {
+		var mode = list[i].mode
+			, type = list[i].type
+			, value = list[i].value || false
+			, subtype = list[i].subtype || '';
+
+		cfg = config[mode+type+subtype];
+
+		if (!cfg) throw new Error('not found');
+
+		for(var idx in cfg.scopes) {
+			scope = cfg.scopes[idx]
+			if (!list[i].scope || list[i].scope == scope) {
+				++count;
+			}
+		}
+	}
+
+	var result = {};
+
+	for(var i=0,j=list.length; i<j; ++i) {
+		var mode = list[i].mode
+			, type = list[i].type
+			, value = list[i].value || false
+			, subtype = list[i].subtype || '';
+
+		cfg = config[mode+type+subtype];
+		if (limit) {
+			cfg.limit = limit;
+		}
+
+		if (!cfg) throw new Error('not found');
+
+		for(var idx in cfg.scopes) {
+			var scope = cfg.scopes[idx]
+
+			if (!list[i].scope || list[i].scope == scope) {
+				logger.debug("subtype=%s",subtype);
+				var tabname = getTableName(mode, type, scope, value);
+				var cfgSort = cfg.sort,
+					sortMax = false;
+				for(var key in cfg.sort){
+					if(cfg.sort[key] == -1 ){
+						sortMax = true;
+					}
+				}
+				var redStart = sortMax ? -(cfg.limit?cfg.limit:10) : 0,
+					redEnd = sortMax ? -1 : (cfg.limit?cfg.limit:10);
+				client.zrange([tabname, redStart, redEnd], (function(mode, type, subtype, scope, cfg, result) {
+					return function(err, docs) {
+						var redisRet = [];
+						if( sortMax ){
+							for(var rsi=docs.length-1; rsi>=0; rsi--){
+								redisRet.push(JSON.parse(docs[rsi]));
+							}
+						}else {
+							for (var rsi = 0; rsi < docs.length; rsi++) {
+								redisRet.push(JSON.parse(docs[rsi]));
+							}
+						}
+						--count;
+
+						if (docs) {
+							result[mode+type+subtype] = result[mode+type+subtype] || cfg;
+							result[mode+type+subtype][scope] = redisRet
+						}
+						if (err) {
+							result[mode+type+subtype] = result[mode+type+subtype] || cfg;
+							result[mode+type+subtype][scope] = {error: err};
+						}
+
+						if (!count) {
+							callback(null, result);
+						}
+					}
 				})(mode, type, subtype, scope ,cfg, result))
 			}
 		}
