@@ -1,18 +1,15 @@
 exports.coreTranscodeList = 
 [
-    'QAM_INTF_MONTHSUMFEEQRY',
-    'ITF_CRM_GetRecvLog',
-    'ITF_CRM_GetRecvLog1',
-    'ITF_CRM_GetRecvLog2',
+    'ITF_CCHQ_GetUserInfoCU_CCB',
+    'QCS_IsRedUser',
+    'QAM_ACCTBALANCEQRY_ESS',
+    'QCC_GetUserCredit_ESS',
+    'QAM_OWEFEEINFOQRY_ESS',
+    'ITF_CCHQ_GetCustInfoCU_CB',
+    'ITF_CCHQ_CheckUserPWD_CB',
+    'TCS_UniTradeGene_4Q_3Infos',
     'QAM_QUERYOWEFEE',
-    'ITF_CRM_NETTYPECODE',
-    'ITF_CCHQ_GetUserPublicInfoCU',
-    'ITF_CCHQ_GetUserProductAllInfo',
-    'QCS_CheckCustTransfer4G',
-    'QCS_User360BaseInfo',
-    'ITF_CCHQ_ChkAccount_ECS_SD',
-    'ITF_CRM_BKGetRealFee_SD',
-    'ITF_BKHQ_GetRealFee_SD',
-    'ITF_CRM_RECVFEE_SD'
+    'QCS_QUERYOWEFEE',
+    'ITF_CCHQ_GetAcctInfoCU_CB'
 ]
 

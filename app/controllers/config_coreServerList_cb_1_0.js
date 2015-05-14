@@ -1,8 +1,9 @@
 exports.coreServerList = 
 [
-    'qamcbs1l2server',
-    'qcscrm1l1server',
-    'itfbkhserver',
-    'qcscrm1l3server'
+    'qcscrm1|1serve',
+    'tcscrm1|2serve',
+    'qcscrm1|1serve',
+    'qcscrm1|2serve',
+    'qbllcdr1|1serv'
 ]
 
