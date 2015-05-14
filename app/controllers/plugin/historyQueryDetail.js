@@ -331,7 +331,7 @@ exports.plugin = function(server) {
                   proxy.trigger('count', cnt);
               })
 
-      } else{
+      } else {
 
           var table = query.getTable(mode, type, scope, value)
 

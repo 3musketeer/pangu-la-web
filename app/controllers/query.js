@@ -22,7 +22,8 @@ var getTableName = function(mode, type, scope, value) {
 	var YY = ("00"+dt.getFullYear()%100).substr(-2)
 	  , MM = ("00"+(dt.getMonth() + 1)).substr(-2)
 	  , DD = ("00"+dt.getDate()).substr(-2)
-	  , HH = ("00"+dt.getHours()).substr(-2);
+	  , HH = ("00"+dt.getHours()).substr(-2)
+	  , YYYY = dt.getFullYear();
 	if (scope=="hours") value= YY+MM+DD+HH; 
 	if(scope=="day") value = YY+MM+DD;
 	if(scope=="month") value = YY+MM;
@@ -34,7 +35,10 @@ var getTableName = function(mode, type, scope, value) {
 	}else if (scope == 'fullSuffix'){
 	    collection = mode + type  + value.replace(/-/g,'');
 	}else if (scope == 'suffix'){
-	    collection = mode + type  + value.replace(/-/g,'').substr(2);
+		if(value.length != 10){
+			value = YYYY + "-" + MM + "-" + DD;
+		}
+		collection = mode + type + value.replace(/-/g, '').substr(2);
 	}else{
 	    collection = mode + type + scope.toUpperCase() + value;
 	}
