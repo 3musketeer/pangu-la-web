@@ -114,7 +114,7 @@ $(document).ready(function () {
                         }
                     }
 
-                    group(tmpdata, [serv_sel, serve], [serv_sel, serve]);
+                    group(tmpdata, [serv_sel, serve], [serv_sel, "默认配置"]);
                 },
                 error: function() {
                 }
@@ -123,7 +123,7 @@ $(document).ready(function () {
     });
 
     function getData() {
-        host = $("#mh_hosts_sel").children("option:selected").text() || '134.32.28.36';
+        host = $("#mh_hosts_sel").children("option:selected").text() || '10.161.2.107_tuxapp1';
         serv_sel = $("#mh_serve_sel").children('option:selected').text() || '全部显示';
         //console.log(host)
         $.ajax({
@@ -249,6 +249,7 @@ $(document).ready(function () {
                     show: false
                 }
             },
+            grid: { hoverable: true, clickable: true },
             legend: {
                 noColumns: 8
             },
@@ -276,9 +277,7 @@ $(document).ready(function () {
             },
             selection: {
                 mode: "x"
-            },
-            hoverable: true,
-            clickable: true
+            }
         };
 
         var placeholder = $("#queue_monitor");
@@ -322,7 +321,7 @@ $(document).ready(function () {
 
         var previousPoint = null;
         placeholder.bind("plothover",function (event, pos, item) {
-            logger.debug(item)
+            //logger.debug(item)
 
             if (placeholder.length > 0) {
                 if (item) {
@@ -346,7 +345,7 @@ $(document).ready(function () {
                         showTooltip(
                             item.pageX+5,
                             item.pageY-20,
-                            '时间: ' + tx + '<br>队列深度: ' + y);
+                            '时间: ' + tx + '<br>队列: ' + item.series.label + ', 队列深度: ' + y);
                     }
                 }
                 else {
