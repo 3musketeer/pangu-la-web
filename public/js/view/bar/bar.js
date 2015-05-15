@@ -15,7 +15,7 @@ $(function() {
               var tempData = [temp.hours,temp._count];
               var bars = {
                   show: true, 
-                  barWidth: 0.4
+                  barWidth: 0.15
               };
               if(typeof(dataobj[item]) == 'undefined'){         
                   var obj ={};
@@ -80,7 +80,7 @@ $(function() {
                }
  
                var y = item.datapoint[1];
-               showTooltip(item.pageX+5, item.pageY+5,'主机'+item.series.label+':<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+x + '时调用(异常)量为:'+ y);
+               showTooltip(item.pageX+5, item.pageY+5,'主机'+item.series.label+':<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+x + '时调用总量为:'+ y);
 						}
 					}
 					else {

@@ -118,24 +118,28 @@
 				<div class="widget-title">
 		          <h5 class="widget-name"><i class="icon-bar-chart"></i>柱状对比图</h5>
 		    </div>
-		    
+
 		    <div class="row-fluid">
-					  <div class="span6">
+					  <div>
 					      	  <% var colChartIdx = 0 %>
         						<% var item = all['TuxStateCalledSumByTimeByHostAt197198'],
         							mode='TuxState', type='CalledSumByTime',subtype='At197198';
         						%>
         						<% include ../includes/widget/chart-cloumn.html %>	
-			       </div>  
-			       
-			       <div class="span6">
-					          <% var item = all['TuxStateCalledSumByTimeByHostAt4445'],
-        							mode='TuxState', type='CalledSumByTime',subtype='At4445';
-        					  %>
-        						<% include ../includes/widget/chart-cloumn.html %>	
-			       </div>  
+			       </div>
 			     
 			  </div>
+
+				<div class="row-fluid">
+
+					<div>
+						<% var item = all['TuxStateCalledSumByTimeByHostAt4445'],
+						mode='TuxState', type='CalledSumByTime',subtype='At4445';
+						%>
+						<% include ../includes/widget/chart-cloumn.html %>
+					</div>
+
+				</div>
 			  
 			  <div class="widget-title">
 		          <h5 class="widget-name"><i class="ico-list-alt"></i>流程超时明细列表(全省-日)</h5>
