@@ -302,7 +302,7 @@ exports.plugin = function(server) {
         	  }
         	  var proxy = new EventProxy();
         	  proxy.assign('count', 'docs', render);
-            var iDisplayEnd = iDisplayStart + iDisplayLength - 1;
+            var iDisplayEnd = parseInt(iDisplayStart) + parseInt(iDisplayLength) - 1;
               var sortMax = false;
               for(var key in tempConfig.sort){
                   if(tempConfig.sort[key] == -1 ){
