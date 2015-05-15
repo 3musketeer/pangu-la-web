@@ -1,4 +1,56 @@
 <script type="text/javascript" src="/js/view/plugin/historyQueryDetail.js"></script>
+<style>
+    .text-right {
+        text-align: right;
+    }
+
+    #lp_dialog {
+        width: 100%;
+        height: 100%;
+        display: none;
+        opacity: 1;
+    }
+
+    #lp_dialog_header {
+        position: absolute;
+        width: 60%;
+        height: 2.6em;
+        left: 20%;
+        top: 15%;
+        margin-top: -2.6em;
+        z-index: 1002;
+        font-size: 1.2em;
+    }
+
+    #lp_dialog_content {
+        position: absolute;
+        width: 60%;
+        height: 50%;
+        left: 20%;
+        top: 15%;
+        max-height: 540px;
+        background-color: #fff;
+        z-index: 1002;
+        padding-top: -4em;
+        overflow: hidden;
+    }
+
+    #lp_dialog_content table {
+        margin-top: 2.5em;
+    }
+
+    #lp_dialog_bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0%;
+        top: 0%;
+        z-index: 1001;
+        opacity: 0.8;
+        background-color: #fff;
+    }
+
+</style>
 		    <!-- Content wrapper -->
 		    <div class="wrapper">
 
@@ -39,4 +91,41 @@
 			
 
 		    </div>
+<div id="lp_dialog">
+
+    <div id="lp_dialog_header" class="navbar">
+        <div class="navbar-inner">
+            <h6 id="lp_dialog_content_title">Title</h6>
+            <ul class="navbar-icons">
+                <li><a href="#" class="tip" title="选择显示主机地址">
+                    <select id="lp_pids" style="vertical-align: bottom; height: 2em; margin-top: -1em;"></select>
+                </a></li>
+                <li>
+                    <a class="tip" title="关闭">
+                        <i class="ico-remove" id="lp_dialog_header_close"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="lp_dialog_content" class="well body">
+        <table id="lp_table" class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <% for (var i = 0; i < tabColNames.length; i++) { %>
+                <th style="text-align: center"><%= tabColNames[i] %></th>
+                <% } %>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="lp_dialog_bg"></div>
+    <input id="lp_host" type="hidden"/>
+    <input id="lp_trans" type="hidden"/>
+    <input id="value" type="hidden" value="<%= value %>"/>
+</div>
 		    <!-- /content wrapper -->

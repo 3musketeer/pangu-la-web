@@ -3,6 +3,7 @@
   , util = require("util")
   , query = require('../query')
   , config = require('../plugin_config/config_historyDetail').config
+  , lpConfig = require('../plugin_config/lcuPoint/config_lcupoint_cb_1_0').lcupoint
   , chart_list = require('../plugin_config/config_historyDetail').list
   , EventProxy = require('eventproxy').EventProxy
   , extend = require('extend')
@@ -25,7 +26,9 @@ exports.plugin = function(server) {
     		    titles: config[list[0].mode+list[0].type+list[0].subtype].titles, 
             queryUrl:queryUrl,
             headTile:headTile,
-            chartList:chartList
+            chartList:chartList,
+            value: value,
+                tabColNames: lpConfig.tabColNames
     		})     	              
    });
    
