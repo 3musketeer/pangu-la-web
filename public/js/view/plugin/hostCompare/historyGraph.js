@@ -139,7 +139,7 @@ $(function () {
     					//container: $('#label'+index),
     					labelBoxBorderColor: "#ccc", 
     					backgroundOpacity: 0.85,
-    					noColums: 10,	
+    					noColumns: 5,
     					margin: 2, 		   
     					labelFormatter:function(label){return "<FONT COLOR =#97694F SIZE=2>"+label+"</FONT>"}
     					 

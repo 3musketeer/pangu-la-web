@@ -2,235 +2,484 @@ var scopeNames = {'day':'日', 'month':'月', 'year':'年'}
 
 exports.config = {
 	
-	TuxStateCalledSumByTimeByHostAt112: {
-		name: '10.161.2.112调用总数',
+	TuxStateCalledSumByTimeByHostAt112_tuxapp5: {
+		name: '10.161.2.112_tuxapp5',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['10.161.2.112_tuxapp5','10.161.2.112_tuxapp6']}},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.112_tuxapp5'},
 		color: "#ef705b",
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeByHostAt113: {
-		name: '10.161.2.113调用总数',
+	TuxStateCalledSumByTimeByHostAt112_tuxapp6: {
+		name: '10.161.2.112_tuxapp6',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.112_tuxapp6'},
+		color: "#ef705b",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt113_tuxapp7: {
+		name: '10.161.2.113_tuxapp7',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['10.161.2.113_tuxapp7','10.161.2.113_tuxapp8']}},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.113_tuxapp7'},
 		color: "#4bb0ce",
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeByHostAt233: {
-		name: '10.161.2.233调用总数',
+	TuxStateCalledSumByTimeByHostAt113_tuxapp8: {
+		name: '10.161.2.113_tuxapp8',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.113_tuxapp8'},
+		color: "#4bb0ce",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt233_tuxapp5: {
+		name: '10.161.2.233_tuxapp5',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['10.161.2.233_tuxapp5','10.161.2.233_tuxapp6']}},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.233_tuxapp5'},
 		color: "#C6E2FF",
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeByHostAt234: {
+	TuxStateCalledSumByTimeByHostAt233_tuxapp6: {
+		name: '10.161.2.233_tuxapp6',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.233_tuxapp6'},
+		color: "#C6E2FF",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt234_tuxapp7: {
 		name: '10.161.2.234调用总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['10.161.2.234_tuxapp7','10.161.2.234_tuxapp8']}},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.234_tuxapp7'},
 		color: "#BDB76B",
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	
-	
-	TuxStateCalledSumByTimeByHostAt107: {
-		name: '10.161.2.107',
-		scopes: ['day'],
-		scopeNames: scopeNames,
-		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['10.161.2.107_tuxapp1','10.161.2.107_tuxapp2']}},
-		color: "#ef705b",
-		filterColNames: [],
-		sort: {'hours' : 1}
-	},
-	TuxStateCalledSumByTimeByHostAt108: {
-		name: '10.161.2.108',
-		scopes: ['day'],
-		scopeNames: scopeNames,
-		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['10.161.2.108_tuxapp1','10.161.2.108_tuxapp2']}},
-		color: "#4bb0ce",
-		filterColNames: [],
-		sort: {'hours' : 1}
-	},
-	TuxStateCalledSumByTimeByHostAt109: {
-		name: '10.161.2.109',
-		scopes: ['day'],
-		scopeNames: scopeNames,
-		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['10.161.2.109_tuxapp3','10.161.2.109_tuxapp4']}},
-		color: "#8B2323",
-		filterColNames: [],
-		sort: {'hours' : 1}
-	},
-	TuxStateCalledSumByTimeByHostAt110: {
-		name: '10.161.2.110',
-		scopes: ['day'],
-		scopeNames: scopeNames,
-		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['10.161.2.110_tuxapp3','10.161.2.110_tuxapp4']}},
-		color: "#BDB76B",
-		filterColNames: [],
-		sort: {'hours' : 1}
-	},
-	TuxStateCalledSumByTimeByHostAt231: {
-		name: '10.161.2.231',
+	TuxStateCalledSumByTimeByHostAt234_tuxapp8: {
+		name: '10.161.2.234调用总数',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ],
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['10.161.2.231_tuxapp1','10.161.2.231_tuxapp2']}},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.234_tuxapp8'},
 		color: "#BDB76B",
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeByHostAt232: {
-		name: '10.161.2.232',
+	
+	
+	TuxStateCalledSumByTimeByHostAt107_tuxapp1: {
+		name: '10.161.2.107_tuxapp1',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ], 
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.107_tuxapp1'},
+		color: "#ef705b",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt107_tuxapp2: {
+		name: '10.161.2.107_tuxapp2',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ],
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['10.161.2.232_tuxapp3','10.161.2.232_tuxapp4']}},
-		color: "#BDB76B",
-		filterColNames: [],
-		sort: {'hours' : 1}
-	},
-
-
-
-	TuxStateCalledSumByTimeByHostAt118: {
-		name: '134.32.28.118',
-		scopes: ['day'],
-		scopeNames: scopeNames,
-		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'134.32.28.118'},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.107_tuxapp2'},
 		color: "#ef705b",
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeByHostAt124: {
-		name: '134.32.28.124',
+	TuxStateCalledSumByTimeByHostAt108_tuxapp1: {
+		name: '10.161.2.108_tuxapp1',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'134.32.28.124'},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.108_tuxapp1'},
 		color: "#4bb0ce",
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeByHostAt145: {
-		name: '134.32.28.145',
+	TuxStateCalledSumByTimeByHostAt108_tuxapp2: {
+		name: '10.161.2.108_tuxapp2',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.108_tuxapp2'},
+		color: "#4bb0ce",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt109_tuxapp3: {
+		name: '10.161.2.109_tuxapp3',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'134.32.28.145'},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.109_tuxapp3'},
 		color: "#8B2323",
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeByHostAt188: {
-		name: '134.32.28.188',
+	TuxStateCalledSumByTimeByHostAt109_tuxapp4: {
+		name: '10.161.2.109_tuxapp4',
 		scopes: ['day'],
 		scopeNames: scopeNames,
-		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'134.32.28.188'},
-		color: "#BDB76B",
-		filterColNames: [],
-		sort: {'hours' : 1}
-	},
-	
-	
-	
-	TuxStateCalledSumByTimeByHostAt36: {
-		name: '134.32.28.36',
-		scopes: ['day'],
-		scopeNames: scopeNames,
-		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'134.32.28.36'},
-		color: "#ef705b",
-		filterColNames: [],
-		sort: {'hours' : 1}
-	},
-	TuxStateCalledSumByTimeByHostAt37: {
-		name: '134.32.28.37',
-		scopes: ['day'],
-		scopeNames: scopeNames,
-		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'134.32.28.37'},
-		color: "#4bb0ce",
-		filterColNames: [],
-		sort: {'hours' : 1}
-	},
-	TuxStateCalledSumByTimeByHostAt38: {
-		name: '134.32.28.38',
-		scopes: ['day'],
-		scopeNames: scopeNames,
-		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'134.32.28.38'},
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.109_tuxapp4'},
 		color: "#8B2323",
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeByHostAt39: {
-		name: '134.32.28.39',
+	TuxStateCalledSumByTimeByHostAt110_tuxapp3: {
+		name: '10.161.2.110_tuxapp3',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'134.32.28.39'},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.110_tuxapp3'},
+		color: "#BDB76B",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt110_tuxapp4: {
+		name: '10.161.2.110_tuxapp4',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.110_tuxapp4'},
+		color: "#BDB76B",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt231_tuxapp1: {
+		name: '10.161.2.231_tuxapp1',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.231_tuxapp1'},
+		color: "#BDB76B",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt231_tuxapp2: {
+		name: '10.161.2.231_tuxapp2',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.231_tuxapp2'},
+		color: "#BDB76B",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt232_tuxapp3: {
+		name: '10.161.2.232_tuxapp3',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.232_tuxapp3'},
+		color: "#BDB76B",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt232_tuxapp4: {
+		name: '10.161.2.232_tuxapp4',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.232_tuxapp4'},
+		color: "#BDB76B",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+
+
+
+
+	TuxStateCalledSumByTimeByHostAt111_tuxapp5: {
+		name: '10.161.2.111_tuxapp5',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ], 
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.111_tuxapp5'},
+		color: "#ef705b",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt111_tuxapp6: {
+		name: '10.161.2.111_tuxapp6',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ], 
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.111_tuxapp6'},
+		color: "#4bb0ce",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt114_tuxapp7: {
+		name: '10.161.2.114_tuxapp7',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ], 
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.114_tuxapp7'},
+		color: "#8B2323",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt114_tuxapp8: {
+		name: '10.161.2.114_tuxapp8',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ], 
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.114_tuxapp8'},
 		color: "#BDB76B",
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
 	
 	
-	
-	TuxStateCalledSumByTimeByHostAt40: {
-		name: '134.32.28.40',
+	// 前台Tuxdo
+	TuxStateCalledSumByTimeByHostAt99_tuxapp1: {
+		name: '10.161.2.99_tuxapp1',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'134.32.28.40'},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.99_tuxapp1'},
 		color: "#ef705b",
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeByHostAt41: {
-		name: '134.32.28.41',
+	TuxStateCalledSumByTimeByHostAt99_tuxapp2: {
+		name: '10.161.2.99_tuxapp2',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.99_tuxapp2'},
+		color: "#ef705b",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt100_tuxapp1: {
+		name: '10.161.2.100_tuxapp1',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'134.32.28.41'},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.100_tuxapp1'},
 		color: "#4bb0ce",
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	
-	
-	TuxStateCalledSumByTimeByHostAt139: {
-		name: '134.32.28.139',
+	TuxStateCalledSumByTimeByHostAt100_tuxapp2: {
+		name: '10.161.2.100_tuxapp2',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'134.32.28.139'},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.100_tuxapp2'},
+		color: "#8B2323",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt101_tuxapp3: {
+		name: '10.161.2.101_tuxapp3',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ], 
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.101_tuxapp3'},
+		color: "#BDB76B",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},TuxStateCalledSumByTimeByHostAt101_tuxapp4: {
+		name: '10.161.2.101_tuxapp4',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.101_tuxapp4'},
+		color: "#BDB76B",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},TuxStateCalledSumByTimeByHostAt102_tuxapp3: {
+		name: '10.161.2.102_tuxapp3',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.102_tuxapp4'},
+		color: "#BDB76B",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},TuxStateCalledSumByTimeByHostAt102_tuxapp4: {
+		name: '10.161.2.102_tuxapp4',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.102_tuxapp4'},
+		color: "#BDB76B",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},TuxStateCalledSumByTimeByHostAt103_tuxapp5: {
+		name: '10.161.2.103_tuxapp5',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.103_tuxapp5'},
+		color: "#BDB76B",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},TuxStateCalledSumByTimeByHostAt103_tuxapp6: {
+		name: '10.161.2.103_tuxapp6',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.103_tuxapp6'},
+		color: "#BDB76B",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},TuxStateCalledSumByTimeByHostAt104_tuxapp5: {
+		name: '10.161.2.104_tuxapp5',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.104_tuxapp5'},
+		color: "#BDB76B",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},TuxStateCalledSumByTimeByHostAt104_tuxapp6: {
+		name: '10.161.2.104_tuxapp6',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.104_tuxapp6'},
+		color: "#BDB76B",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},TuxStateCalledSumByTimeByHostAt105_tuxapp7: {
+		name: '10.161.2.105_tuxapp7',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.105_tuxapp7'},
+		color: "#BDB76B",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},TuxStateCalledSumByTimeByHostAt105_tuxapp8: {
+		name: '10.161.2.105_tuxapp8',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.105_tuxapp8'},
+		color: "#BDB76B",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},TuxStateCalledSumByTimeByHostAt106_tuxapp7: {
+		name: '10.161.2.106_tuxapp7',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.106_tuxapp7'},
+		color: "#BDB76B",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},TuxStateCalledSumByTimeByHostAt106_tuxapp8: {
+		name: '10.161.2.106_tuxapp8',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'10.161.2.106_tuxapp8'},
+		color: "#BDB76B",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+
+	
+	
+	
+	TuxStateCalledSumByTimeByHostAt141_bpmapp1: {
+		name: '10.161.2.141_bpmapp1',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ], 
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.141_bpmapp1'},
 		color: "#ef705b",
 		filterColNames: [],
 		sort: {'hours' : 1}
 	},
-	TuxStateCalledSumByTimeByHostAt141: {
-		name: '134.32.28.141',
+	TuxStateCalledSumByTimeByHostAt141_bpmapp2: {
+		name: '10.161.2.141_bpmapp2',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.141_bpmapp2'},
+		color: "#ef705b",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt142_bpmapp3: {
+		name: '10.161.2.142_bpmapp3',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host:'134.32.28.141'},
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.142_bpmapp3'},
+		color: "#4bb0ce",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt142_bpmapp4: {
+		name: '10.161.2.142_bpmapp4',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.142_bpmapp4'},
+		color: "#4bb0ce",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt143_bpmapp5: {
+		name: '10.161.2.143_bpmapp5',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.143_bpmapp5'},
+		color: "#4bb0ce",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt143_bpmapp6: {
+		name: '10.161.2.143_bpmapp6',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.143_bpmapp6'},
+		color: "#4bb0ce",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt144_bpmapp7: {
+		name: '10.161.2.144_bpmapp7',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.144_bpmapp7'},
+		color: "#4bb0ce",
+		filterColNames: [],
+		sort: {'hours' : 1}
+	},
+	TuxStateCalledSumByTimeByHostAt144_bpmapp8: {
+		name: '10.161.2.144_bpmapp8',
+		scopes: ['day'],
+		scopeNames: scopeNames,
+		colNames : [ 'hours', '_count' ],
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: '10.161.2.144_bpmapp8'},
 		color: "#4bb0ce",
 		filterColNames: [],
 		sort: {'hours' : 1}
@@ -303,39 +552,63 @@ exports.list = {
 	                               ,{mode:'TuxState', type:'CalledSumByTimeBySvr', subtype: '2',hostName: '服务调用数'}
 	                               ,{mode:'TuxState', type:'CalledSumByTimeBySvr', subtype: '3',hostName: '服务调用数'}
 	                            ]*/
-	                            [    {mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At107',hostName: 'ECS主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At108',hostName: 'ECS主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At109',hostName: 'ECS主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At110',hostName: 'ECS主机调用数(日)'}
-									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At231',hostName: 'ECS主机调用数(日)'}
-									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At232',hostName: 'ECS主机调用数(日)'}
+	                            [    {mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At107_tuxapp1',hostName: 'ECS主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At107_tuxapp2',hostName: 'ECS主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At108_tuxapp1',hostName: 'ECS主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At108_tuxapp2',hostName: 'ECS主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At109_tuxapp3',hostName: 'ECS主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At109_tuxapp4',hostName: 'ECS主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At110_tuxapp3',hostName: 'ECS主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At110_tuxapp4',hostName: 'ECS主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At231_tuxapp1',hostName: 'ECS主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At231_tuxapp2',hostName: 'ECS主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At232_tuxapp3',hostName: 'ECS主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At232_tuxapp4',hostName: 'ECS主机调用数(日)'}
 	                            ]
 	                            ,
-	                            [    {mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At139',hostName: '客服主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At141',hostName: '客服主机调用数(日)'}
+	                            [    {mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At112_tuxapp5',hostName: '全业务主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At112_tuxapp6',hostName: '全业务主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At113_tuxapp7',hostName: '全业务主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At113_tuxapp8',hostName: '全业务主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At233_tuxapp5',hostName: '全业务主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At233_tuxapp6',hostName: '全业务主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At234_tuxapp7',hostName: '全业务主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At234_tuxapp8',hostName: '全业务主机调用数(日)'}
 	                            ]
 	                            ,
-	                            [    {mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At112',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At113',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At233',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At234',hostName: '全业务主机调用数(日)'}
+	                            [    {mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At111_tuxapp5',hostName: 'IBOSS+一卡充主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At111_tuxapp6',hostName: 'IBOSS+一卡充主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At114_tuxapp7',hostName: 'IBOSS+一卡充主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At114_tuxapp8',hostName: 'IBOSS+一卡充主机调用数(日)'}
 	                            ]
 	                            ,
-	                            [    {mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At118',hostName: '缴费接口主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At124',hostName: '缴费接口主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At145',hostName: '缴费接口主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At188',hostName: '缴费接口主机调用数(日)'}
+	                            [    {mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At141_bpmapp1',hostName: 'BPM主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At141_bpmapp2',hostName: 'BPM主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At142_bpmapp3',hostName: 'BPM主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At142_bpmapp4',hostName: 'BPM主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At143_bpmapp5',hostName: 'BPM主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At143_bpmapp6',hostName: 'BPM主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At144_bpmapp7',hostName: 'BPM主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At144_bpmapp8',hostName: 'BPM主机调用数(日)'}
 	                            ]
-	                            ,
-	                            [    {mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At36',hostName: 'BSS主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At37',hostName: 'BSS主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At38',hostName: 'BSS主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At39',hostName: 'BSS主机调用数(日)'}
-	                            ]
-	                            ,
-	                            [    {mode:'TuxState', type:'CalledSumByTimeByHost', subtype: 'At40',hostName: 'BPM主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At41',hostName: 'BPM主机调用数(日)'}
-	                            ]
+								,
+								[    {mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At99_tuxapp1',hostName: '前台Tuxedo主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At99_tuxapp2',hostName: '前台Tuxedo主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At100_tuxapp1',hostName: '前台Tuxedo主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At100_tuxapp2',hostName: '前台Tuxedo主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At101_tuxapp3',hostName: '前台Tuxedo主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At101_tuxapp4',hostName: '前台Tuxedo主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At102_tuxapp3',hostName: '前台Tuxedo主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At102_tuxapp4',hostName: '前台Tuxedo主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At103_tuxapp5',hostName: '前台Tuxedo主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At103_tuxapp6',hostName: '前台Tuxedo主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At104_tuxapp5',hostName: '前台Tuxedo主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At104_tuxapp6',hostName: '前台Tuxedo主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At105_tuxapp7',hostName: '前台Tuxedo主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At105_tuxapp8',hostName: '前台Tuxedo主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At106_tuxapp7',hostName: '前台Tuxedo主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At106_tuxapp8',hostName: '前台Tuxedo主机调用数(日)'}
+								]
 	                           
 	                            
 	                            ]

@@ -1,5 +1,13 @@
 <script type="text/javascript" src="/js/view/plugin/hostCompare/historyGraph.js"></script>
-	    <div class="wrapper">
+
+<style>
+    #compGraph0,#compGraph1,#compGraph2,#compGraph3,#compGraph4{
+        height: 350px;
+    }
+</style>
+
+
+	    <div class="wrapper">
             <!-- Content head -->
 		        <% include ../../includes/contentHead.html %>	
 		    <!-- /Content head -->
@@ -16,7 +24,7 @@
                  <fieldset>
                        <div class="control-group">
                           
-                          <div class="span6"">
+                          <div class="span6">
                             <label class="control-label">流程名：</label>
                               <select id="transcodeValue" class="select">
                                   <option value="">所有流程</option>
@@ -30,17 +38,17 @@
                   </fieldset>
               </form>
          <% }%>
-	           	              
+
+	           	              
           <div class="well body">
 
           	          	
           	 
     		        <% var index = 0  %>
-    		        <% listIndex.forEach(function(item){       
-    		           if(index%2 ==0){
+    		        <% listIndex.forEach(function(item){
     		        %>
     		          <div class="row-fluid">
-        			   <div class="span6">
+        			   <div>
             				<div class="widget">
                             	<div class="navbar"><div class="navbar-inner"><h6><%= item[0].hostName %></h6></div></div>
                             	<div class="well body">         
@@ -48,20 +56,9 @@
                             	</div>
                             </div>
                          </div>
-        			  <% }else{ %> 
-        			    <div class="span6">
-        			         <div class="widget">
-                            	<div class="navbar"><div class="navbar-inner"><h6><%= item[0].hostName %></h6></div></div>
-                            	<div class="well body">         
-                                		<div class="graph-standard" id="compGraph<%= index %>"></div>
-                         	    </div>
-                             </div>
-                    
-                        </div>
-        			  <% } 
-        			  index++ %>  
+        			  <% index++ %>
+                      </div>
     			      <% }) %>
-    	    </div>
     			
     			  
     			  

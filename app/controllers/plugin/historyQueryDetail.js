@@ -241,7 +241,7 @@ exports.plugin = function(server) {
           });  
                      
       }else if(mode == 'TuxState'
-                            && type == 'TimeOutTop' && scope == 'day'){
+                            && type == 'TimeOutTop' && (scope == 'day' || scope == 'month') ){
         	var tabname = query.getTableName(mode, type, scope, value);
                 	
         	var tempConfig ={};	
