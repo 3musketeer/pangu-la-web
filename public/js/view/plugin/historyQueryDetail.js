@@ -139,7 +139,21 @@ $(function() {
 			},
 			"aoColumns": [
 				{ "mData": "TIME" },
-				{ "mData": "content" }
+				{ "mData": "content" },
+				{
+					"mData": "timediff",
+					fnRender: function(obj) {
+						if(obj.aData['timediff'] !== undefined) {
+							if (obj.aData['timediff'] >= 1000) {
+								return '<div style="color: red"><b>' + obj.aData['timediff'] + '</b></div>';
+							} else {
+								return obj.aData['timediff'];
+							}
+						}else{
+							return '<div style="color: green"><b>NULL</b></div>';
+						}
+					}
+				}
 			],
 			"bRetrieve":true,
 			"bJQueryUI": false,
