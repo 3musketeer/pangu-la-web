@@ -90,6 +90,7 @@ exports.plugin = function(server) {
         var conf = {};
         conf.limit = iDisplayLength;
         conf.skip = iDisplayStart;
+        conf.sort = qConfig.sort[0];
 
         var date = req.query.value;
         var host = req.query.host;

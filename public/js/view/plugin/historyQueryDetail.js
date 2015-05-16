@@ -1,5 +1,5 @@
 $(function() {
-	var cache = {};
+	var table = null;
 
 	//===== Datatables =====//
   if($("input[name='chartList']").val() == 'lcuTimeTopAnalyse'){
@@ -90,7 +90,6 @@ $(function() {
 		var transcode = $("td:first", this).text();
 		var host = $("td:eq(13)", this).text(),
 			value = $("#value").val() || "2014-12-25";
-		console.log("=====",host,value,"=====")
 		$('#lp_dialog_content_title').text("主机：" + host + ",  流程：" + transcode);
 		$("#lp_host").val(host);
 		$("#lp_trans").val(transcode);
@@ -103,7 +102,6 @@ $(function() {
 				TRANSCODE: transcode
 			},
 			success: function(res) {
-				console.log("=====",res,"=====")
 				var html = "";
 				for(var i=0; i<res.length; i++){
 					html += "<option>" + res[i] + "</option>";
@@ -121,24 +119,23 @@ $(function() {
 			$('#lp_dialog').hide();
 		});
 		$('#lp_pids').change(function(){
-			initChartData();
+			//initChartData();
+			table.fnDraw();
 		});
 	}
 
 	//初始化图表数据
 	function initChartData() {
-		var host = $("#lp_host").val() || "10.161.2.141_builder",
-			transcode = $("#lp_trans").val() || "QAM_OWEFEE_QUERY",
-			pid = $('#lp_pids option:selected').text() || 23790082;
 		table = $('#lp_table').dataTable({
 			"bProcessing": true,
 			"bServerSide": true,
 			"sAjaxSource": '/lcuPointDataByPIDPage',
 			"fnServerParams": function ( aoData ) {
 				aoData.push( { "name": "value", "value": $('#value').val() } );
-				aoData.push( { "name": "host", "value": host } );
-				aoData.push( { "name": "PID", "value": pid } );
-				aoData.push( { "name": "TRANSCODE", "value": transcode } );
+				aoData.push( { "name": "chartList", "value": "lcuPointDayList"});
+				aoData.push( { "name": "host", "value": $("#lp_host").val() || "10.161.2.141_builder" } );
+				aoData.push( { "name": "PID", "value": $('#lp_pids option:selected').text() || 23790082 } );
+				aoData.push( { "name": "TRANSCODE", "value": $("#lp_trans").val() || "QAM_OWEFEE_QUERY" } );
 			},
 			"aoColumns": [
 				{ "mData": "TIME" },
@@ -149,6 +146,9 @@ $(function() {
 			"bAutoWidth": false,
 			"bSort": false,
 			"sPaginationType": "full_numbers",
+			"aLengthMenu": [
+				10
+			],
 			"oLanguage": {
 				"sSearch": "<span>关键字过滤:</span> _INPUT_",
 				"sLengthMenu": "<span>每页显示数:</span> _MENU_",

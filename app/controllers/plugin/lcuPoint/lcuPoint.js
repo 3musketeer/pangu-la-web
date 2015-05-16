@@ -1,6 +1,8 @@
 var mongoose = require('mongoose')
     , logger = require('../../log').logger
-    , lpConfig = require('../../plugin_config/lcuPoint/config_lcupoint_cb_1_0').lcupoint
+    , lpPoint = require('../../plugin_config/lcuPoint/config_lcupoint_cb_1_0').lcupoint
+    , lpConfig = require('../../plugin_config/lcuPoint/config_lcupoint_cb_1_0').config
+    , lpList = require('../../plugin_config/lcuPoint/config_lcupoint_cb_1_0').list
     , extend = require('extend')
     , query = require('../../query');
 
@@ -10,10 +12,10 @@ exports.plugin = function(server) {
         var date = req.query.value,
             host = req.query.host,
             transcode = req.query.TRANSCODE,
-            tab = lpConfig.baseLcuPoint[0],
+            tab = lpPoint.baseLcuPoint[0],
             table = query.getTab("LcuPoint", tab, date, 0);
         table.find({host: host, TRANSCODE: transcode}, {PID: 1, TIME: 1, content: 1, timestamp: 1, _id:0}, function(err, docs){
-            res.send({tabColNames: lpConfig.tabColNames, textFields: lpConfig.textFields, data: docs});
+            res.send({tabColNames: lpPoint.tabColNames, textFields: lpPoint.textFields, data: docs});
         });
     });
 
@@ -21,7 +23,7 @@ exports.plugin = function(server) {
         var date = req.query.value,
             host = req.query.host,
             transcode = req.query.TRANSCODE,
-            tab = lpConfig.baseLcuPoint[0];
+            tab = lpPoint.baseLcuPoint[0];
         date = "2014-12-25";
         transcode = "QAM_OWEFEE_QUERY";
         host = "10.161.2.141_builder";
@@ -48,14 +50,14 @@ exports.plugin = function(server) {
         transcode = "QAM_OWEFEE_QUERY";
         host = "10.161.2.141_builder";
         pid = 23790082;
-        var tab = lpConfig.baseLcuPoint[0],
+        var tab = lpPoint.baseLcuPoint[0],
             table = query.getTab("LcuPoint", tab, date, 0);
         var title = {
             TRANSCODE: transcode,
             host: host
         }
         table.find({host: host, TRANSCODE: transcode, PID: pid}, {TIME: 1, content: 1, timestamp: 1, _id: 0}, function(err, docs){
-            res.send({title: title, tabColNames: lpConfig.tabColNames, textFields: lpConfig.textFields, data: docs});
+            res.send({title: title, tabColNames: lpPoint.tabColNames, textFields: lpPoint.textFields, data: docs});
         });
     });
 
@@ -64,11 +66,16 @@ exports.plugin = function(server) {
         var iDisplayStart = req.query.iDisplayStart | 0
             , iDisplayLength = req.query.iDisplayLength | 10
             , sEcho = req.query.sEcho
-            , sSearch = req.query.sSearch;
+            , sSearch = req.query.sSearch
+            , chartList = req.query.chartList;
+
+        var chart_list = lpList[chartList][0],
+            tmpConfig = lpConfig[chart_list.mode + chart_list.type + chart_list.subtype];
 
         var conf = {};
         conf.limit = iDisplayLength;
         conf.skip = iDisplayStart;
+        conf.sort = tmpConfig.sort;
 
         //var date = req.query.value;
         var host = req.query.host,
@@ -78,9 +85,8 @@ exports.plugin = function(server) {
         var date = "2014-12-25",
             transcode = "QAM_OWEFEE_QUERY",
             host = "10.161.2.141_builder";
-        var tab = lpConfig.baseLcuPoint[0],
-            table = query.getTab("LcuPoint", tab, date, 0);
-        console.log("===",pid,"====")
+        var table = query.getTab("LcuPoint", chart_list, date, 0);
+        console.log("====",pid,"====")
 
         var sum = 0;
 
@@ -93,14 +99,11 @@ exports.plugin = function(server) {
                 var reg = new RegExp('.*' + sSearch + '.*', 'i');
                 _q['$or'] = [{
                     content: reg
+                },{
+                    TIME: reg
                 }];
             }
-            table.find(_q, {
-                TIME: 1,
-                content: 1,
-                timestamp: 1,
-                _id: 0
-            }, conf, function(err, rows) {
+            table.find(_q, tmpConfig.filterColNames[0], conf, function(err, rows) {
                 res.send({
                     sEcho: sEcho,
                     iTotalRecords: iDisplayLength,

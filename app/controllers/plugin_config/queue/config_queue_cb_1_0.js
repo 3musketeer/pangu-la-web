@@ -10,6 +10,7 @@ exports.queue = {
         '队列深度(>20)', '总记录数', '使用情况', '最大使用'/*, '建议配置'*/],
     anaListTab: [{mode: 'Tux', type: 'Que', subtype: 'ListDAY'}],
     anaBaseTab: [{mode: 'Tux', type: 'Que', subtype: 'Base'}],
+    sort: [{max_queued: -1}],
     hosts: [
         // ECS
         '10.161.2.107_tuxapp1', '10.161.2.107_tuxapp2',
