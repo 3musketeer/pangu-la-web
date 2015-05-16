@@ -146,9 +146,8 @@ $(function() {
 			"bAutoWidth": false,
 			"bSort": false,
 			"sPaginationType": "full_numbers",
-			"aLengthMenu": [
-				10
-			],
+			"sScrollX": "100%",
+			"sScrollY": 350,
 			"oLanguage": {
 				"sSearch": "<span>关键字过滤:</span> _INPUT_",
 				"sLengthMenu": "<span>每页显示数:</span> _MENU_",

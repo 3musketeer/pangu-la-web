@@ -3,11 +3,11 @@ var config = {
         name: '流程超时节点分析',
         scopes: ['day'],
         displayLength: 10,
-        titles: ['时间', '异常信息'],
+        titles: ['时间', '流程信息'],
         colNames: ['TIME', 'content'],
         textFields :  ['TIME', 'content'],
         filterColNames: [{'TIME':1, 'content':1, 'timestamp':1, '_id':0}],
-        sort: {'timestamp':-1}
+        sort: {'timestamp':1}
     }
 }
 

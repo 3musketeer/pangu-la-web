@@ -24,9 +24,9 @@ exports.plugin = function(server) {
             host = req.query.host,
             transcode = req.query.TRANSCODE,
             tab = lpPoint.baseLcuPoint[0];
-        date = "2014-12-25";
-        transcode = "QAM_OWEFEE_QUERY";
-        host = "10.161.2.141_builder";
+        //date = "2014-12-25";
+        //transcode = "QAM_OWEFEE_QUERY";
+        //host = "10.161.2.141_builder";
         var tabname = query.getTabName(tab, date, 0),
             command = {
                 "distinct" : tabname,
@@ -77,14 +77,14 @@ exports.plugin = function(server) {
         conf.skip = iDisplayStart;
         conf.sort = tmpConfig.sort;
 
-        //var date = req.query.value;
+        var date = req.query.value;
         var host = req.query.host,
             transcode = req.query.TRANSCODE,
             pid = req.query.PID;
 
-        var date = "2014-12-25",
-            transcode = "QAM_OWEFEE_QUERY",
-            host = "10.161.2.141_builder";
+        //var date = "2014-12-25",
+            //transcode = "QAM_OWEFEE_QUERY",
+            //host = "10.161.2.141_builder";
         var table = query.getTab("LcuPoint", chart_list, date, 0);
         console.log("====",pid,"====")
 
