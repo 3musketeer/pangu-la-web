@@ -63,7 +63,7 @@ exports.config = {
 		sort: {'hours' : 1}
 	},
 	TuxStateCalledSumByTimeByHostAt234_tuxapp7: {
-		name: '10.161.2.234调用总数',
+		name: '10.161.2.234_tuxapp7',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ], 
@@ -73,7 +73,7 @@ exports.config = {
 		sort: {'hours' : 1}
 	},
 	TuxStateCalledSumByTimeByHostAt234_tuxapp8: {
-		name: '10.161.2.234调用总数',
+		name: '10.161.2.234_tuxapp8',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count' ],

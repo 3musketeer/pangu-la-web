@@ -104,11 +104,22 @@ exports.plugin = function(server) {
                 }];
             }
             table.find(_q, tmpConfig.filterColNames[0], conf, function(err, rows) {
+                var tmpT = 0,
+                    docs = [];
+                for(var i=0; i<rows.length; i++){
+                    if(0 == tmpT){
+                        tmpT = rows[i].timestamp;
+                        //docs.push({TIME: rows[i].TIME, content: rows[i].content, timediff: 0})
+                    }else{
+                        docs.push({TIME: rows[i].TIME, content: rows[i].content, timediff: rows[i].timestamp - tmpT})
+                        tmpT = rows[i].timestamp;
+                    }
+                }
                 res.send({
                     sEcho: sEcho,
                     iTotalRecords: iDisplayLength,
                     iTotalDisplayRecords: sum,
-                    aaData: rows
+                    aaData: docs
                 })
             });
         });
