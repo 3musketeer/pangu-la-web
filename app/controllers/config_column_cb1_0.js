@@ -7,8 +7,7 @@ exports.config = {
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count', 'host' ], 
-		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['10.161.2.112_tuxapp5', '10.161.2.112_tuxapp6',
-			'10.161.2.113_tuxapp7', '10.161.2.113_tuxapp8',
+		filter: {SVRNAME: {$exists: false}, TRANSCODE:{$exists:false},host: {$in: ['10.161.2.112_tuxapp5', '10.161.2.113_tuxapp7',
 			'10.161.2.233_tuxapp5', '10.161.2.233_tuxapp6',
 			'10.161.2.234_tuxapp7', '10.161.2.234_tuxapp8']}},
 		sort: {'hours' : 1}

@@ -567,20 +567,26 @@ exports.list = {
 	                            ]
 	                            ,
 	                            [    {mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At112_tuxapp5',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At112_tuxapp6',hostName: '全业务主机调用数(日)'}
 	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At113_tuxapp7',hostName: '全业务主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At113_tuxapp8',hostName: '全业务主机调用数(日)'}
 									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At233_tuxapp5',hostName: '全业务主机调用数(日)'}
 									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At233_tuxapp6',hostName: '全业务主机调用数(日)'}
 									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At234_tuxapp7',hostName: '全业务主机调用数(日)'}
 									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At234_tuxapp8',hostName: '全业务主机调用数(日)'}
 	                            ]
 	                            ,
-	                            [    {mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At111_tuxapp5',hostName: 'IBOSS+一卡充主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At111_tuxapp6',hostName: 'IBOSS+一卡充主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At114_tuxapp7',hostName: 'IBOSS+一卡充主机调用数(日)'}
-	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At114_tuxapp8',hostName: 'IBOSS+一卡充主机调用数(日)'}
+	                            [    {mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At111_tuxapp5',hostName: 'IBOSS主机调用数(日)'}
+	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At114_tuxapp7',hostName: 'IBOSS主机调用数(日)'}
 	                            ]
+								,
+								[
+									 {mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At112_tuxapp6',hostName: '一卡充主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At113_tuxapp8',hostName: '一卡充主机调用数(日)'}
+								]
+								,
+								[
+									 {mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At111_tuxapp6',hostName: '客服主机调用数(日)'}
+									,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At114_tuxapp8',hostName: '客服主机调用数(日)'}
+								]
 	                            ,
 	                            [    {mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At141_bpmapp1',hostName: 'BPM主机调用数(日)'}
 	                                ,{mode:'TuxState',type:'CalledSumByTimeByHost', subtype: 'At141_bpmapp2',hostName: 'BPM主机调用数(日)'}
