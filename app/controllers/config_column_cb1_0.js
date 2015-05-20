@@ -13,7 +13,7 @@ exports.config = {
 		sort: {'hours' : 1}
 	},
 	TuxStateCalledSumByTimeByHostAt4445: {
-		name: 'ECS缴费流程调用量',
+		name: 'ECS流程调用量',
 		scopes: ['day'],
 		scopeNames: scopeNames,
 		colNames : [ 'hours', '_count', 'host' ], 

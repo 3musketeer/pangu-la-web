@@ -5,6 +5,7 @@
   , config = require('../plugin_config/config_historyDetail').config
   , lpConfig = require('../plugin_config/lcuPoint/config_lcupoint_cb_1_0').lcupoint
   , chart_list = require('../plugin_config/config_historyDetail').list
+  , hostsList = require('../plugin_config/queue/config_queue_cb_1_0').queue.hosts
   , EventProxy = require('eventproxy').EventProxy
   , extend = require('extend')
   , env = process.env.NODE_ENV || 'development'
@@ -27,6 +28,7 @@ exports.plugin = function(server) {
             queryUrl:queryUrl,
             headTile:headTile,
             chartList:chartList,
+            hosts:hostsList,
             value: value,
                 tabColNames: lpConfig.tabColNames
     		})     	              
@@ -42,6 +44,7 @@ exports.plugin = function(server) {
     	  , iDisplayStart = req.query.iDisplayStart
     	  , iDisplayLength = req.query.iDisplayLength
         , sSearch = req.query.sSearch
+            , host = req.query.host || '';
     
       if(!iDisplayStart) iDisplayStart = 0;
       if(!iDisplayLength) iDisplayLength = 10;
@@ -246,6 +249,10 @@ exports.plugin = function(server) {
       }else if(mode == 'TuxState'
                             && type == 'TimeOutTop' && (scope == 'day' || scope == 'month') ){
         	var tabname = query.getTableName(mode, type, scope, value);
+
+          if('' != host){
+              tabname = tabname + '_' + host;
+          }
                 	
         	var tempConfig ={};	
         	type +=subtype;
@@ -316,7 +323,10 @@ exports.plugin = function(server) {
                   client.zrevrange([tabname, iDisplayStart, iDisplayEnd], function(err, docs){
                       var redisRet = [];
                       for (var rsi = 0; rsi < docs.length; rsi++) {
-                          redisRet.push(JSON.parse(docs[rsi]));
+                          var tmpObj = JSON.parse(docs[rsi]);
+                          if(tmpObj['host'] == host || host == '') {
+                              redisRet.push(tmpObj);
+                          }
                       }
                       proxy.trigger('docs', redisRet);
                   })
@@ -324,7 +334,10 @@ exports.plugin = function(server) {
                   client.zrange([tabname, iDisplayStart, iDisplayEnd], function(err, docs){
                       var redisRet = [];
                       for (var rsi = 0; rsi < docs.length; rsi++) {
-                          redisRet.push(JSON.parse(docs[rsi]));
+                          var tmpObj = JSON.parse(docs[rsi]);
+                          if(tmpObj['host'] == host || host == '') {
+                              redisRet.push(tmpObj);
+                          }
                       }
                       proxy.trigger('docs', redisRet);
                   })
@@ -357,6 +370,10 @@ exports.plugin = function(server) {
               });
           }
           tempConfig.filter = filter;
+
+          if(host != ''){
+              tempConfig.filter.host = host;
+          }
 
           tempConfig.limit = iDisplayLength;
           tempConfig.skip = iDisplayStart;

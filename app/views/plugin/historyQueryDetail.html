@@ -67,10 +67,16 @@
                 	<div class="navbar">
                     	<div class="navbar-inner">
                         	<h6><%= headTile %></h6>
-                            <div class="nav pull-right">
-                                <a href="#" class="dropdown-toggle navbar-icon" data-toggle="dropdown"><i class="icon-cog"></i></a>
-                                
-                            </div>
+                            <ul class="navbar-icons" style="margin-top: 8px">
+                                <li><a href="#" class="tip" title="选择显示主机地址">
+                                    <select id="hqd_host_sl" style="vertical-align: bottom; height: 2em; margin-top: -1em;">
+                                        <option>全部显示</option>
+                                        <% for (var i = 0; i < hosts.length; i++) { %>
+                                        <option><%= hosts[i] %></option>
+                                        <% } %>
+                                    </select>
+                                </a></li>
+                            </ul>
                         </div>
                     </div>
                     <div class="table-overflow">
@@ -97,7 +103,7 @@
         <div class="navbar-inner">
             <h6 id="lp_dialog_content_title">Title</h6>
             <ul class="navbar-icons">
-                <li><a href="#" class="tip" title="选择显示主机地址">
+                <li><a href="#" class="tip" title="选择显示进程">
                     <select id="lp_pids" style="vertical-align: bottom; height: 2em; margin-top: -1em;"></select>
                 </a></li>
                 <li>

@@ -1,5 +1,6 @@
 $(function() {
-	var table = null;
+	var table = null,
+		oTable = null;
 
 	//===== Datatables =====//
   if($("input[name='chartList']").val() == 'lcuTimeTopAnalyse'){
@@ -121,6 +122,38 @@ $(function() {
 		$('#lp_pids').change(function(){
 			//initChartData();
 			table.fnDraw();
+		});
+
+		$('#hqd_host_sl').change(function(){
+			var host = $('#hqd_host_sl option:selected').text() || "全部显示",
+				query_url = $("input[name='queryUrl']").val(),
+				arr_url = query_url.split('&');
+			if( host != '全部显示'){
+				var flag = false;
+				for(var i=0; i<arr_url.length; i++){
+					if( arr_url[i].split('=')[0] == 'host' ){
+						arr_url[i] = "host="+host;
+						flag = true;
+					}
+				}
+				if(!flag){
+					arr_url.push("host="+host);
+				}
+				query_url = arr_url.join('&');
+				console.log(query_url)
+			}else{
+				var resUrl = [];
+				for(var i=0; i<arr_url.length; i++){
+					if( arr_url[i].split('=')[0] != 'host' ){
+						resUrl.push(arr_url[i]);
+					}
+				}
+				query_url = resUrl.join('&');
+				console.log(query_url)
+			}
+			$("input[name='queryUrl']").val(query_url);
+			oTable.fnSettings().sAjaxSource = query_url;
+			oTable.fnDraw();
 		});
 	}
 
