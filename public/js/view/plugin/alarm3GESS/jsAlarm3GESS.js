@@ -1,25 +1,21 @@
 $(function(){
-    var _operate = null,
-        type = null,
-        host = null;
-    $('#3gesss_operate').change(function(){
+    $('#3gess_operate').change(function(){
         updateTable();
     });
-    $('#3gesss_type').change(function(){
+    $('#3gess_service').change(function(){
+        getOperate();
         updateTable();
     });
-    $('#3gesss_host').change(function(){
+    $('#3gess_host').change(function(){
+        getService();
+        getOperate();
         updateTable();
     });
 
     function initChartData (data) {
         var rows = [];
         for(var i=0; i<data.results.length; i++){
-            if( 'CODE' == type ) {
-                rows.push({label: (data.results[i].REQUSET_CODE.split(' '))[0], data: data.results[i].count});
-            }else{
-                rows.push({ label: data.results[i].REQUSET_DESC.substr(0,7) + '...', data: data.results[i].count });
-            }
+            rows.push({label: data.results[i]['rspcode'], data: data.results[i].count});
         }
         $.plot($("#bingtu"), rows,{
                 series: {
@@ -55,21 +51,19 @@ $(function(){
 
     function updateTable(){
 
-        _operate = $('#3gesss_operate option:selected').text() || 'all';
-        type = $('#3gesss_type option:selected').text() || 'CODE';
-        if( type.length > 4 ){
-            type = type.substr(8);
-        }
-        host = $('#3gesss_host option:selected').text() || '134.32.28.127';
+        var _operate = $('#3gess_operate option:selected').text() || 'all',
+            _service = $('#3gess_service option:selected').text() || 'ESSTermSer',
+            host = $('#3gess_host option:selected').text() || '10.161.2.141_builder';
         $.ajax({
             type: 'get',
-            url: '/getTrade4GData',
+            url: '/getAlarm3GESSData',
             data: {
-                value: $('#value').val() || '2015-02-10',
+                value: $('#value').val() || '2015-05-19',
                 host: host,
                 _operate: _operate,
-                type: type
-
+                _service: _service,
+                charList: $('#charList').val() || 'alarm3GESSGroupList',
+                charBList: $('#charBList').val() || 'alarm3GESSBaseList'
             },
             success: function(data) {
                 var html = '',
@@ -91,7 +85,7 @@ $(function(){
                     html += '<th style="text-align: center">' + colName[i] + '</th>';
                 }
                 html += '</tr>';
-                $('#3gesss_table > thead').html(html);
+                $('#3gess_table > thead').html(html);
                 html = '';
                 for(var i=0; i<rows.length; i++){
                     if( i%2 == 0 ) {
@@ -99,20 +93,57 @@ $(function(){
                     }else {
                         html += '<tr class="even">';
                     }
-                    if('CODE' == type) {
-                        html += '<td style="text-align: left; padding-left: 8%" width="45%">' + rows[i]['REQUSET_CODE'] + '</td>';
-                    }else{
-                        html += '<td style="text-align: left; padding-left: 8%" width="45%">' + rows[i]['REQUSET_DESC'] + '</td>';
-                    }
+                    html += '<td style="text-align: left; padding-left: 8%" width="45%">' + rows[i]['rspcode'] + '</td>';
                     html += '<td style="text-align: center">'+rows[i]['count']+'</td>';
                     html += '<td style="text-align: center">' + (rows[i]['count']/total*100).toFixed(3) + '</td>';
 
                 }
-                $('#3gesss_table > tbody').html(html);
+                $('#3gess_table > tbody').html(html);
                 initChartData(data);
             }
         });
     }
 
-    updateTable();
+    function getService(){
+        $.ajax({
+            type: 'get',
+            url: '/getAlarm3GESSService',
+            data: {
+                value: $('#value').val() || '2015-05-19',
+                host: $('#3gess_host option:selected').text(),
+                charList: $('#charList').val() || 'alarm3GESSGroupList'
+            },
+            success: function(rows) {
+                var html = "";
+                for(var idx=0; idx<rows.length; idx++){
+                    html += "<option>" + rows[idx] + "</option>"
+                }
+                $('#3gess_service').html(html);
+                getOperate();
+            }
+        });
+    }
+
+    function getOperate(){
+        $.ajax({
+            type: 'get',
+            url: '/getAlarm3GESSOperate',
+            data: {
+                value: $('#value').val() || '2015-05-19',
+                host: $('#3gess_host option:selected').text(),
+                charBList: $('#charBList').val() || 'alarm3GESSBaseList',
+                _service: $('#3gess_service option:selected').text() || 'ESSTermSer'
+            },
+            success: function(rows) {
+                var html = "<option>all</option>";
+                for(var idx=0; idx<rows.length; idx++){
+                    html += "<option>" + rows[idx] + "</option>"
+                }
+                $('#3gess_operate').html(html);
+                updateTable();
+            }
+        });
+    }
+
+    getService();
 });

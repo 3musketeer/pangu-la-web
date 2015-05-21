@@ -1,74 +1,66 @@
 var mongoose = require('mongoose')
+    , db = mongoose.connection.db
     , logger = require('../../log').logger
     , extend = require('extend')
     , query = require('../../query')
     , aConfig = require('../../plugin_config/alarm3GESS/config_alarm_3gess_cb_1_0').config
     , aList = require('../../plugin_config/alarm3GESS/config_alarm_3gess_cb_1_0').list
-    , mutil = require('../../util');
+    , mutil = require('../../util')
+    , async = require('async');
 
 
 exports.plugin = function(server) {
 
     server.get('/Alarm3G_ESS.html', function(req, res){
         var date = req.query['value'] || "2015-05-19",
-            charList = req.query['chartList'],
+            charList = req.query['charList'],
             char_list = aList[charList][0],
-            rConfig = aConfig[char_list.mode+char_list.type+char_list.subtype];
+            rConfig = aConfig[char_list.mode+char_list.type+char_list.subtype],
+            charBList = req.query['charBList'];
         var hosts = rConfig.hosts;
-        res.renderPjax('plugin/trade4G/trade4G', {
+        res.renderPjax('plugin/alarm3GESS/alarm3GESS', {
             hosts: hosts,
             value: date,
-            type: type,
-            charList: charList
+            charList: charList,
+            charBList: charBList
         });
     });
 
     server.get('/getAlarm3GESSService', function(req, res){
         var date = req.query['value'],
             host = req.query['host'],
-            charList = req.query['chartList'],
+            charList = req.query['charList'],
             char_list = aList[charList][0],
             rConfig = aConfig[char_list.mode+char_list.type+char_list.subtype];
         // 查询基础表用 getTabName，统计表用getTableName
-        var tabname = query.getTableName(char_list.mode, char_list.type, char_list.subtype, date),
-            command = {
-                "distinct" : tabname,
-                "key": "servicename",
-                "query": {
-                    host: host
-                }
-            };
-        mongoose.connection.db.executeDbCommand(command, function(err, docs){
-            if(err) {
+        var tabname = query.getTableName(char_list.mode, char_list.type+char_list.subtype, rConfig.scopes[0], date),
+            conf = {};
+        if('all' != host){
+            conf.host = host;
+        }
+        db.collection(tabname).distinct('servicename', conf, function(err, docs){
+            if(err){
                 logger.error(err)
             }
-            res.send(docs.documents[0].value);
+            res.send(docs)
         })
     });
 
     server.get('/getAlarm3GESSOperate', function(req, res){
         var date = req.query['value'],
             host = req.query['host'],
-            charList = req.query['chartList'],
+            charBList = req.query['charBList'],
             _service = req.query['_service'],
-            char_list = aList[charList][0],
+            char_list = aList[charBList][0],
             rConfig = aConfig[char_list.mode+char_list.type+char_list.subtype];
         // 查询基础表用 getTabName，统计表用getTableName
-        var tabname = query.getTabName(char_list, date, -1),
-            command = {
-                "distinct" : tabname,
-                "key": "operatename",
-                "query": {
-                    host: host,
-                    service: _service
-                }
-            };
-        mongoose.connection.db.executeDbCommand(command, function(err, docs){
-            if(err) {
+        var tabname = query.getTabName(char_list, date, -1);
+        db.collection(tabname).distinct('operatename', {host: host, servicename: _service}, function(err, docs){
+            if(err){
                 logger.error(err)
             }
-            res.send(docs.documents[0].value);
-        })
+            res.send(docs)
+        });
     });
 
     server.get('/getAlarm3GESSData', function(req, res){
@@ -76,13 +68,13 @@ exports.plugin = function(server) {
             date = req.query['value'],
             _operate = req.query['_operate'],
             _service = req.query['_service'],
-            charList = req.query['chartList'],
+            charList = req.query['charList'],
             char_list = aList[charList][0],
             gConfig = aConfig[char_list.mode+char_list.type+char_list.subtype],
             charBList = req.query['charBList'],
             char_blist = aList[charBList][0],
             bConfig = aConfig[char_blist.mode+char_blist.type+char_blist.subtype];
-        var cadesc = tConfig.codeAddDesc[0];
+        //var cadesc = tConfig.codeAddDesc[0];
 
         var obj = {},
             filter = {},
@@ -103,7 +95,7 @@ exports.plugin = function(server) {
         }
 
         var tableBaseName = query.getTabName(char_blist, date, -1),
-            tableGroupName = query.getTableName(char_list.mode, char_list.type, char_list.subtype, date);
+            tableGroupName = query.getTableName(char_list.mode, char_list.type+char_list.subtype, gConfig.scopes[0], date);
         var table = db.collection(tableBaseName),
             tableGroup = db.collection(tableGroupName);
 
@@ -111,6 +103,7 @@ exports.plugin = function(server) {
             base: function(callback){
                 tableGroup.find(filter, { _id: 0, host: 0, operatename: 0, type: 0, servicename: 0 }, function(err, rest){
                     rest.toArray(function(err, rows){
+                        logger.debug(rows)
                         var tmpDocs = {}, total = 0;
                         for(var i=0; i<rows.length; i++){
                             for(var idx in rows[i]){
@@ -138,7 +131,8 @@ exports.plugin = function(server) {
                 });
             },
             success: function(callback){
-                tableGroup.count(filter, {'0000': 1, _id: 0}, function(err, cntSuccess){
+                table.count(filter, function(err, cntSuccess){
+                    logger.debug('=====',filter,cntSuccess,'=====')
                     callback(null, cntSuccess);
                 });
             }

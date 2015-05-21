@@ -16,23 +16,20 @@
 
 <div class="widget">
     <input id="value" type="hidden" value="<%= value %>"/>
+    <input id="charList" type="hidden" value="<%= charList %>"/>
+    <input id="charBList" type="hidden" value="<%= charBList %>"/>
 
     <div class="navbar">
         <div class="navbar-inner">
-            <h6>Trade4G</h6>
+            <h6>3G_ESS 分析</h6>
             <ul class="navbar-icons" style="margin-top: 8px">
-                <li><a href="#" class="tip" title="选择服务">
-                    <select id="3gess_operate" style="vertical-align: bottom; height: 2em; margin-top: -1em;">
-                        <% for (var i = 0; i < operate.length; i++) { %>
-                        <option><%= operate[i] %></option>
-                        <% } %>
+                <li><a href="#" class="tip" title="选择SERV">
+                    <select id="3gess_service" style="vertical-align: bottom; height: 2em; margin-top: -1em;">
                     </select>
                 </a></li>
-                <li><a href="#" class="tip" title="选择统计类型">
-                    <select id="3gess_type" style="vertical-align: bottom; height: 2em; margin-top: -1em;">
-                        <% for (var i = 0; i < type.length; i++) { %>
-                        <option><%= type[i] %></option>
-                        <% } %>
+                <li><a href="#" class="tip" title="选择OPER">
+                    <select id="3gess_operate" style="vertical-align: bottom; height: 2em; margin-top: -1em;">
+                        <option>all</option>
                     </select>
                 </a></li>
                 <li><a href="#" class="tip" title="选择显示主机地址">

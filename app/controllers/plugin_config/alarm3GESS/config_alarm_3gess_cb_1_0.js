@@ -20,7 +20,7 @@ var config = {
         sort: {'timestamp': 1},
         tabColNames_CODE: ['rspcode', '出现次数', '占比(%)'],
         tabColNames_DESC: ['rspdesc', '出现次数', '占比(%)'],
-        hosts: ['all', '10.161.2.141_builder'],
+        hosts: ['all','10.161.2.141_builder'],
         codeAnddesc: []
     }
 }
