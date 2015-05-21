@@ -38,7 +38,9 @@ exports.plugin = function(server) {
                 }
             };
         mongoose.connection.db.executeDbCommand(command, function(err, docs){
-            console.log(err)
+            if(err) {
+                logger.error(err)
+            }
             res.send(docs.documents[0].value);
         })
     });
@@ -58,7 +60,8 @@ exports.plugin = function(server) {
             dd = ("000" + date.split('-')[2]).substr(-2),
             tabname = mongoose.model('QueryResult', tab.mode+tab.type+tab.subtype+yyyy+mm+dd);
 
-        var conf = [];
+        var conf = [],
+            isexist = {'TRANSCODE':{'$exists':true}};
         for(var i=0; i<_cnt; i++){
             conf.push({
                 host: host,
@@ -86,24 +89,24 @@ exports.plugin = function(server) {
             proxy.trigger('count', cnt);
         });*/
         async.parallel({
-            0: function(cb){tabname.count(conf[0], cb)},
-            1: function(cb){tabname.count(conf[1], cb)},
-            2: function(cb){tabname.count(conf[2], cb)},
-            3: function(cb){tabname.count(conf[3], cb)},
-            4: function(cb){tabname.count(conf[4], cb)},
-            5: function(cb){tabname.count(conf[5], cb)},
-            6: function(cb){tabname.count(conf[6], cb)},
-            7: function(cb){tabname.count(conf[7], cb)},
-            8: function(cb){tabname.count(conf[8], cb)},
-            9: function(cb){tabname.count(conf[9], cb)},
-            10: function(cb){tabname.count(conf[10], cb)},
-            11: function(cb){tabname.count(conf[11], cb)},
-            12: function(cb){tabname.count(conf[12], cb)},
-            13: function(cb){tabname.count(conf[13], cb)},
-            14: function(cb){tabname.count(conf[14], cb)},
-            15: function(cb){tabname.count(conf[15], cb)},
-            16: function(cb){tabname.count(conf[16], cb)},
-            17: function(cb){tabname.count(conf[17], cb)}
+            0: function(cb){tabname.count(conf[0], isexist, cb)},
+            1: function(cb){tabname.count(conf[1], isexist, cb)},
+            2: function(cb){tabname.count(conf[2], isexist, cb)},
+            3: function(cb){tabname.count(conf[3], isexist, cb)},
+            4: function(cb){tabname.count(conf[4], isexist, cb)},
+            5: function(cb){tabname.count(conf[5], isexist, cb)},
+            6: function(cb){tabname.count(conf[6], isexist, cb)},
+            7: function(cb){tabname.count(conf[7], isexist, cb)},
+            8: function(cb){tabname.count(conf[8], isexist, cb)},
+            9: function(cb){tabname.count(conf[9], isexist, cb)},
+            10: function(cb){tabname.count(conf[10], isexist, cb)},
+            11: function(cb){tabname.count(conf[11], isexist, cb)},
+            12: function(cb){tabname.count(conf[12], isexist, cb)},
+            13: function(cb){tabname.count(conf[13], isexist, cb)},
+            14: function(cb){tabname.count(conf[14], isexist, cb)},
+            15: function(cb){tabname.count(conf[15], isexist, cb)},
+            16: function(cb){tabname.count(conf[16], isexist, cb)},
+            17: function(cb){tabname.count(conf[17], isexist, cb)}
         }, function(err, results){
             var docs = [
                 { 'TIME':'09:30', 'count': results['0'] },
