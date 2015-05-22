@@ -4,18 +4,23 @@ $(function(){
     });
     $('#3gess_service').change(function(){
         getOperate();
-        updateTable();
     });
     $('#3gess_host').change(function(){
         getService();
-        getOperate();
-        updateTable();
     });
 
     function initChartData (data) {
-        var rows = [];
+        var rows = [],
+            tmpR = {};
         for(var i=0; i<data.results.length; i++){
-            rows.push({label: data.results[i]['rspcode'], data: data.results[i].count});
+            if(tmpR[data.results[i]['rspcode']] === undefined){
+                tmpR[data.results[i]['rspcode']] = data.results[i]['count'];
+            }else{
+                tmpR[data.results[i]['rspcode']] += data.results[i]['count'];
+            }
+        }
+        for(var idx in tmpR){
+            rows.push({label: idx, data: tmpR[idx]});
         }
         $.plot($("#bingtu"), rows,{
                 series: {
@@ -52,8 +57,8 @@ $(function(){
     function updateTable(){
 
         var _operate = $('#3gess_operate option:selected').text() || 'all',
-            _service = $('#3gess_service option:selected').text() || 'ESSTermSer',
-            host = $('#3gess_host option:selected').text() || '10.161.2.141_builder';
+            _service = $('#3gess_service option:selected').text() || 'all',
+            host = $('#3gess_host option:selected').text() || 'all';
         $.ajax({
             type: 'get',
             url: '/getAlarm3GESSData',
@@ -93,7 +98,9 @@ $(function(){
                     }else {
                         html += '<tr class="even">';
                     }
-                    html += '<td style="text-align: left; padding-left: 8%" width="45%">' + rows[i]['rspcode'] + '</td>';
+                    html += '<td style="text-align: left">' + rows[i]['servicename'] + '</td>';
+                    html += '<td style="text-align: left">' + rows[i]['operatename'] + '</td>';
+                    html += '<td style="text-align: center">' + rows[i]['rspcode'] + '</td>';
                     html += '<td style="text-align: center">'+rows[i]['count']+'</td>';
                     html += '<td style="text-align: center">' + (rows[i]['count']/total*100).toFixed(3) + '</td>';
 
@@ -104,17 +111,36 @@ $(function(){
         });
     }
 
+    function getHosts(){
+        $.ajax({
+            type: 'get',
+            url: '/getAlarm3GESSHost',
+            data: {
+                value: $('#value').val() || '2015-05-19',
+                charList: $('#charList').val() || 'alarm3GESSGroupList'
+            },
+            success: function(rows) {
+                var html = "<option>all</option>";
+                for(var idx=0; idx<rows.length; idx++){
+                    html += "<option>" + rows[idx] + "</option>"
+                }
+                $('#3gess_host').html(html);
+                getService();
+            }
+        });
+    }
+
     function getService(){
         $.ajax({
             type: 'get',
             url: '/getAlarm3GESSService',
             data: {
                 value: $('#value').val() || '2015-05-19',
-                host: $('#3gess_host option:selected').text(),
+                host: $('#3gess_host option:selected').text() || 'all',
                 charList: $('#charList').val() || 'alarm3GESSGroupList'
             },
             success: function(rows) {
-                var html = "";
+                var html = "<option>all</option>";
                 for(var idx=0; idx<rows.length; idx++){
                     html += "<option>" + rows[idx] + "</option>"
                 }
@@ -130,7 +156,7 @@ $(function(){
             url: '/getAlarm3GESSOperate',
             data: {
                 value: $('#value').val() || '2015-05-19',
-                host: $('#3gess_host option:selected').text(),
+                host: $('#3gess_host option:selected').text() || 'all',
                 charBList: $('#charBList').val() || 'alarm3GESSBaseList',
                 _service: $('#3gess_service option:selected').text() || 'ESSTermSer'
             },
@@ -145,5 +171,5 @@ $(function(){
         });
     }
 
-    getService();
+    getHosts();
 });

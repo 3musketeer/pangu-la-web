@@ -36,7 +36,7 @@ module.exports = [
                                                     {title:'主机对比',url:'/historyComPareGraph.html?chartList=historyLcuSumCompareChart'},
                                                     {title:'服务部署建议',url:'/queueReportAnalyze.html'},
         /*{title:'服务部署建议（4天）', url:'/queueReportBy4Days.html'},*/
-        {title:'23转4异常分析', url:'/trade4G.html'},
+        //{title:'23转4异常分析', url:'/trade4G.html'},
         {title:'3G_ESS分析', url:'/Alarm3G_ESS.html?charList=alarm3GESSGroupList&charBList=alarm3GESSBaseList'}
                                                     
                                                     

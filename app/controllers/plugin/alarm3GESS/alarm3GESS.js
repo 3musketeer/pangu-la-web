@@ -26,6 +26,21 @@ exports.plugin = function(server) {
         });
     });
 
+    server.get('/getAlarm3GESSHost', function(req, res){
+        var date = req.query['value'],
+            charList = req.query['charList'],
+            char_list = aList[charList][0],
+            rConfig = aConfig[char_list.mode+char_list.type+char_list.subtype];
+        // 查询基础表用 getTabName，统计表用getTableName
+        var tabname = query.getTableName(char_list.mode, char_list.type+char_list.subtype, rConfig.scopes[0], date);
+        db.collection(tabname).distinct('host', function(err, docs){
+            if(err){
+                logger.error(err)
+            }
+            res.send(docs)
+        })
+    });
+
     server.get('/getAlarm3GESSService', function(req, res){
         var date = req.query['value'],
             host = req.query['host'],
@@ -37,6 +52,8 @@ exports.plugin = function(server) {
             conf = {};
         if('all' != host){
             conf.host = host;
+        }else{
+            delete conf.host;
         }
         db.collection(tabname).distinct('servicename', conf, function(err, docs){
             if(err){
@@ -54,8 +71,15 @@ exports.plugin = function(server) {
             char_list = aList[charBList][0],
             rConfig = aConfig[char_list.mode+char_list.type+char_list.subtype];
         // 查询基础表用 getTabName，统计表用getTableName
-        var tabname = query.getTabName(char_list, date, -1);
-        db.collection(tabname).distinct('operatename', {host: host, servicename: _service}, function(err, docs){
+        var tabname = query.getTabName(char_list, date, -1),
+            conf = {};
+        if('all' != host){
+            conf.host = host;
+        }else{
+            delete conf.host;
+        }
+        conf.servicename = _service;
+        db.collection(tabname).distinct('operatename', conf, function(err, docs){
             if(err){
                 logger.error(err)
             }
@@ -76,22 +100,24 @@ exports.plugin = function(server) {
             bConfig = aConfig[char_blist.mode+char_blist.type+char_blist.subtype];
         //var cadesc = tConfig.codeAddDesc[0];
 
-        var obj = {},
-            filter = {},
-            filterOperate = gConfig.filterOperate,
-            filterService = gConfig.filterService;
+        var filter = {};
 
-        if( 'all' == _operate) {
-            filter = {
-                'servicename': _service
-            }
-        }else{
-            filter = {
-                'operatename': _operate
-            };
+        if('all' == _operate && 'all' != _service){
+            filter.servicename = _service;
+            delete  filter.operatename;
+        }
+        if('all' != _operate && 'all' != _service){
+            filter.servicename = _service;
+            filter.operatename = _operate;
+        }
+        if('all' == _service){
+            delete  filter.servicename;
+            delete  filter.operatename;
         }
         if( 'all' != host ){
             filter.host = host;
+        }else{
+            delete filter.host;
         }
 
         var tableBaseName = query.getTabName(char_blist, date, -1),
@@ -101,27 +127,28 @@ exports.plugin = function(server) {
 
         async.parallel({
             base: function(callback){
-                tableGroup.find(filter, { _id: 0, host: 0, operatename: 0, type: 0, servicename: 0 }, function(err, rest){
+                tableGroup.find(filter, { _id: 0, host: 0, type: 0 }, function(err, rest){
                     rest.toArray(function(err, rows){
-                        logger.debug(rows)
-                        var tmpDocs = {}, total = 0;
+                        logger.debug('===',filter,rows.length,'===')
+                        var total = 0, docs = [], cntSuccess = 0;
                         for(var i=0; i<rows.length; i++){
+                            cntSuccess += rows[i]['0000'];
                             for(var idx in rows[i]){
-                                total += rows[i][idx];
-                                if(tmpDocs[idx] === undefined){
-                                    tmpDocs[idx] = rows[i][idx];
-                                }else{
-                                    tmpDocs[idx] += rows[i][idx];
+                                if(idx != 'servicename' && idx != 'operatename') {
+                                    total += rows[i][idx];
+                                    docs.push({
+                                        'servicename': rows[i]['servicename'],
+                                        'operatename': rows[i]['operatename'],
+                                        'rspcode': idx,
+                                        'count': rows[i][idx]
+                                    })
                                 }
                             }
-                        }
-                        var docs = [];
-                        for(var idx in tmpDocs){
-                            docs.push({rspcode: idx, count: tmpDocs[idx]});
+
                         }
                         docs = mutil.sortObj(docs, 'count');
                         var tabColName = gConfig.tabColNames_CODE;
-                        callback(null, {results:docs, total: total, tabColName: tabColName});
+                        callback(null, {results:docs, total: total, tabColName: tabColName, success: cntSuccess});
                     });
                 });
             },
@@ -129,20 +156,13 @@ exports.plugin = function(server) {
                 table.count(filter, function(err, cntTotal){
                     callback(null, cntTotal);
                 });
-            },
-            success: function(callback){
-                table.count(filter, function(err, cntSuccess){
-                    logger.debug('=====',filter,cntSuccess,'=====')
-                    callback(null, cntSuccess);
-                });
             }
         },function(err, results){
             var rest = results.base,
                 total = results.total,
-                success = results.success,
+                success = results.base.success,
                 failure = total - success;
             rest.count = total;
-            rest.success = success;
             rest.failure = failure;
             res.send(rest);
         });
