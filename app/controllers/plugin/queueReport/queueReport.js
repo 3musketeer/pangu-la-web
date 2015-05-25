@@ -25,6 +25,7 @@ exports.plugin = function(server) {
 
         res.renderPjax('plugin/queueReport/queueReportAnalyze', {
             tabColNames: tabList.tabColNames,
+            title: tabList.name,
             hosts: hosts,
             value: date,
             chartList: chartList,
