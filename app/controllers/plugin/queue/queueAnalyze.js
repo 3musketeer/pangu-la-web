@@ -1,6 +1,8 @@
 var mongoose = require('mongoose')
     , logger = require('../../log').logger
-    , qConfig = require('../../plugin_config/queue/config_queue_cb_1_0').queue
+    , qConfig = require('../../plugin_config/queue/config_queue_cb_1_0').config
+    , qList = require('../../plugin_config/queue/config_queue_cb_1_0').list
+    , hosts = require('../../plugin_config/queue/config_queue_cb_1_0').hosts
     , extend = require('extend')
     , query = require('../../query')
     , QueueAnalyze = require('../../../models/queueanalyze')
@@ -11,8 +13,11 @@ exports.plugin = function(server) {
     //初始化页面操作
     server.get('/queueAnalyze.html', function(req, res) {
 
-        var date = req.query.value;
-        var hosts = qConfig.hosts;
+        var date = req.query.value,
+            chartList = req.query['chartList'],
+            chartBList = req.query['chartBList'],
+            chart_list = qList[chartList][0],
+            mConfig = qConfig[chart_list.mode+chart_list.type+chart_list.subtype];
 
         /*var tab = qConfig.anaListTab[0];
         var table = query.getTab('QueueAnalyze', tab, date, 2);
@@ -63,9 +68,12 @@ exports.plugin = function(server) {
         });*/
 
         res.renderPjax('plugin/queue/queueAnalyze', {
-            tabColNames: qConfig.anaTabColNames,
+            tabColNames: mConfig['titles'],
             hosts: hosts,
-            value: date
+            value: date,
+            chartList: chartList,
+            chartBList: chartBList,
+            title: mConfig['name']
         });
     });
 
@@ -85,22 +93,32 @@ exports.plugin = function(server) {
         var iDisplayStart = req.query.iDisplayStart | 0
             , iDisplayLength = req.query.iDisplayLength | 10
             , sEcho = req.query.sEcho
-            , sSearch = req.query.sSearch;
+            , sSearch = req.query.sSearch
+            , chartList = req.query['chartList']
+            , chartBList = req.query['chartBList']
+            , chart_list = qList[chartList][0]
+            , mConfig = qConfig[chart_list.mode+chart_list.type+chart_list.subtype]
+            , date = req.query['value']
+            , host = req.query['host'];
 
         var conf = {};
         conf.limit = iDisplayLength;
         conf.skip = iDisplayStart;
-        conf.sort = qConfig.sort[0];
+        //logger.debug('===',mConfig,'===')
+        conf.sort = mConfig['sort'][0];
 
-        var date = req.query.value;
-        var host = req.query.host;
-
-        var tab = qConfig.anaListTab[0];
-        var table = query.getTab('QueueAnalyze', tab, date, 2);
-
+        //var tab = qConfig.anaListTab[0];
+        logger.debug('===',query.getTabName(chart_list, date, 2, 4),'===')
+        var table = null;
+        if("queueAnalyzeListDAY" == chartList) {
+            table = query.getTab('QueueAnalyze', chart_list, date, 2);
+        }else{
+            table = query.getTab('QueueAnalyze', chart_list, date, 2, 4);
+        }
+        logger.debug(table)
         var sum = 0;
 
-        logger.error(date,host)
+        logger.debug(date,host)
 
         table.count({host: host}, function(err, count) {
             sum = count;
@@ -129,15 +147,18 @@ exports.plugin = function(server) {
 
     //获取图表数据
     server.get('/getAnalyzeDayDetail', function(req, res) {
-        var server = req.query.server,
-            queue = req.query.queue;
+        var server = req.query.server
+            , queue = req.query.queue
+            , chartList = req.query['chartList']
+            , chartBList = req.query['chartBList']
+            , chart_blist = qList[chartBList][0]
+            , dConfig = qConfig[chart_blist.mode+chart_blist.type+chart_blist.subtype]
+            , date = req.query['value']
+            , host = req.query['host'];
 
-        var date = req.query.value;
-        var host = req.query.host;
+        //var tab = qConfig.anaBaseTab[0];
 
-        var tab = qConfig.anaBaseTab[0];
-
-        var table = query.getTab('QueueDetail', tab, date, 0);
+        var table = query.getTab('QueueDetail', chart_blist, date, 0);
 
         table.find({
             host: host,
@@ -151,8 +172,6 @@ exports.plugin = function(server) {
         }, function(err, rows) {
             res.send(rows);
         });
-
-        table.find()
     });
 
 }

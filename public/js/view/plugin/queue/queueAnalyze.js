@@ -15,6 +15,8 @@ $(function() {
             "sAjaxSource": '/queueAnalyzeDayPage',
             "fnServerParams": function ( aoData ) {
                 aoData.push( { "name": "value", "value": $('#value').val() } );
+                aoData.push( { "name": "chartList", "value": $('#chartList').val() } );
+                aoData.push( { "name": "chartBList", "value": $('#chartBList').val() } );
                 aoData.push( { "name": "host", "value": host } )
             },
             "aoColumns": [
@@ -93,6 +95,8 @@ $(function() {
                 server: serv,
                 queue: que,
                 value: $('#value').val(),
+                chartList: $('#chartList').val(),
+                chartBList: $('#chartBList').val(),
                 host: host
             },
             success: function(res) {
@@ -196,7 +200,7 @@ $(function() {
             }
         };
 
-        drawChart(data, options, '服务:' + server + '; 队列:' + queue);
+        drawChart(data, options, '服务:' + server + '; 队列:' + queue + '; 时间:' + $('#value').val());
 
     }
 

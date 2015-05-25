@@ -28,7 +28,8 @@ $(function() {
   
       var oSettings = oTable.fnSettings();
       oSettings._iDisplayLength = 100;
-  }else if($("input[name='chartList']").val() == 'lcuTimeTopAnalyseRate'){
+  }else if($("input[name='chartList']").val() == 'lcuTimeTopAnalyseRate'
+	  							|| $("input[name='chartList']").val() == 'lcuTimeTopAnalyseRate'){
     	oTable = $('#data-table').dataTable({
     	  "bProcessing": true,
     		"bServerSide": true, 

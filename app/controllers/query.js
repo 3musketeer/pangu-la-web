@@ -232,7 +232,7 @@ exports.redisMQuery = function(list, config, limit, callback) {
 	}
 }
 
-exports.getTab = function(model, tab, date, ind) {
+exports.getTab = function(model, tab, date, ind, len) {
 
     var mode = tab.mode,
         type = tab.type,
@@ -240,7 +240,7 @@ exports.getTab = function(model, tab, date, ind) {
 
     if (!mode || !type || !subtype || !date || !model) throw new Error('参数不全');
 
-    var tabName = getTabName(tab, date, ind);
+    var tabName = getTabName(tab, date, ind, len);
 
     var table = null;
     try{
@@ -253,7 +253,7 @@ exports.getTab = function(model, tab, date, ind) {
     return table;
 }
 
-var getTabName = function(tab, date, ind) {
+var getTabName = function(tab, date, ind, len) {
 
 	var mode = tab.mode,
 		type = tab.type,
@@ -266,8 +266,11 @@ var getTabName = function(tab, date, ind) {
 	var day = time[0]
 		+ (time[1].length < 2 ? '0' + time[1] : time[1])
 		+ (time[2].length < 2 ? '0' + time[2] : time[2]);
+	if(ind > 0){
+		len = len ? len : day.length - ind;
+	}
 
-	var tabName = mode + type + subtype + (ind > 0 ? day.substr(ind) : day);
+	var tabName = mode + type + subtype + (ind > 0 ? day.substr(ind, len) : day);
 
 	return tabName;
 }

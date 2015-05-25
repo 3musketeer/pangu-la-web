@@ -19,7 +19,7 @@ exports.plugin = function(server) {
         var chartList = req.query.chartList;
         var value = req.query.value;           
         var list = chart_list[chartList];  
-        
+        console.log('===',chartList, list, config, '===')
         var headTile = config[list[0].mode+list[0].type+list[0].subtype].name;
         var scope = config[list[0].mode+list[0].type+list[0].subtype].scopes[0];        
         var queryUrl = "/historyQueryDetailData?mode="+list[0].mode+"&type="+list[0].type+"&scope="+scope+"&subtype="+list[0].subtype+"&value="+value;
