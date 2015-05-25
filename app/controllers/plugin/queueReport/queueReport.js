@@ -1,8 +1,11 @@
 var mongoose = require('mongoose')
     , logger = require('../../log').logger
-    , qConfig = require('../../plugin_config/queue/config_queue_cb_1_0').queue
-    , qrConfig = require('../../plugin_config/queueReport/report_config').queue
-    , mConfig = require('../../plugin_config/memory/config_memory').memory
+    , qConfig = require('../../plugin_config/queue/config_queue_cb_1_0').config
+    , hosts = require('../../plugin_config/queue/config_queue_cb_1_0').hosts
+    , qList = require('../../plugin_config/queue/config_queue_cb_1_0').list
+    , qrConfig = require('../../plugin_config/queueReport/report_config').config
+    , qrList = require('../../plugin_config/queueReport/report_config').list
+    , memConfig = require('../../plugin_config/memory/config_memory').memory
     , extend = require('extend')
     , query = require('../../query')
     , QueueAnalyze = require('../../../models/queueanalyze')
@@ -14,12 +17,18 @@ exports.plugin = function(server) {
 
 
     server.get('/queueReportAnalyze.html', function(req, res){
-        var date = req.query.value;
-        var hosts = qConfig.hosts;
+        var date = req.query.value,
+            chartList = req.query['chartList'],
+            chartQList = req.query['chartQList'],
+            chart_list = qrList[chartList][0],
+            tabList = qrConfig[chart_list['mode']+chart_list['type']+chart_list['subtype']];
+
         res.renderPjax('plugin/queueReport/queueReportAnalyze', {
-            tabColNames: qrConfig.tabColNames,
+            tabColNames: tabList.tabColNames,
             hosts: hosts,
-            value: date
+            value: date,
+            chartList: chartList,
+            chartQList: chartQList
         });
     });
 
@@ -27,16 +36,27 @@ exports.plugin = function(server) {
     server.get('/getReportQueueData', function(req, res){
 
         var host = req.query['host'],
-            date = req.query['value'];
+            date = req.query['value'],
+            chartList = req.query['chartList'],
+            chart_list = qrList[chartList][0],
+            clConfig = qrConfig[chart_list['mode']+chart_list['type']+chart_list['subtype']],
+            chartQList = req.query['chartQList'],
+            chart_qlist = qList[chartQList][0],
+            cqConfig = qConfig[chart_qlist['mode']+chart_qlist['type']+chart_qlist['subtype']];
 
-        var tab = qConfig.anaListTab[0],
-            table = query.getTab('QueueAnalyze', tab, date, 2);
+        var table = null;
+        if("queueReportDayList" == chartList) {
+            table = query.getTab('QueueAnalyze', chart_qlist, date, 2);
+        }else{
+            table = query.getTab('QueueAnalyze', chart_qlist, date, 2, 4);
+        }
+        logger.debug("===",query.getTab('QueueAnalyze', chart_qlist, date, 2),query.getTab('QueueAnalyze', chart_qlist, date, 2, 4),'===');
 
-        var tabMem = mConfig.baseMemory[0],
+        var tabMem = memConfig.baseMemory[0],
             tableMem = query.getTab('memorymonitor', tabMem, date, 0),
             sumMem = 0;
 
-        var exceptName = qrConfig.exceptName;
+        var exceptName = clConfig.exceptName;
 
         function countSuggestion(g1, g2, overflow, serve, sum, max){
             var sug = 0;
@@ -189,7 +209,7 @@ exports.plugin = function(server) {
             var tab = qConfig.anaListTab[0],
                 table = query.getTab('QueueAnalyze', tab, date, 2);
 
-            var tabMem = mConfig.baseMemory[0],
+            var tabMem = memConfig.baseMemory[0],
                 tableMem = query.getTab('memorymonitor', tabMem, date, 0),
                 sumMem = 0;
 

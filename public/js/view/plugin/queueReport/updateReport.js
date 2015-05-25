@@ -31,6 +31,9 @@ $(function() {
                 server: serv,
                 queue: que,
                 value: $('#value').val(),
+                chartList: $('#chartList').val(),
+                chartQList: $('#chartQList').val(),
+                chartBList: "queueAnalyzeBaseList",
                 host: host
             },
             success: function(res) {
@@ -134,7 +137,7 @@ $(function() {
             }
         };
 
-        drawChart(data, options, '服务:' + server + '; 队列:' + queue);
+        drawChart(data, options, '服务:' + server + '; 队列:' + queue + '; 时间:' + $('#value').val());
 
     }
 
@@ -234,6 +237,8 @@ $(function() {
             url: '/getReportQueueData',
             data: {
                 value: $('#value').val(),
+                chartList: $('#chartList').val(),
+                chartQList: $('#chartQList').val(),
                 host: host
             },
             success: function(rows) {
