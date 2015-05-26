@@ -6,7 +6,8 @@ $(function() {
     var month = (now.getMonth()+1) < 10 ? "0" + (now.getMonth()+1) : (now.getMonth()+1);
     var year = now.getFullYear();     
     var value = year+"-"+month+"-"+Date;
-    var barIndex = parseInt($('#barIndex')[0].innerText);
+    var barIndex = $('#barIndex')[0].innerText;
+    console.log(barIndex)
     
     $('#transcodeValue').change(function(){
         var param = "";

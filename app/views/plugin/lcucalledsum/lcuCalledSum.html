@@ -73,7 +73,9 @@
                 						    &nbsp;
             					  </div> 
     			             
-    			        <% barIndex++;} %>
+    			        <% if(item.scopes[0] == 'day'){barIndex++;}
+					if(item.scopes[0] == 'month'){barIndex+=10;}
+					if(item.scopes[0] == 'year'){barIndex+=100;}} %>
     			      <% }  %>
     			      <div  style="display:none" id="barIndex" ><%= barIndex %></div>
 			    </div>
