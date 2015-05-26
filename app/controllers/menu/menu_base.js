@@ -37,13 +37,22 @@ module.exports = [
         {title:'超时流程分析(月)',url:'/historyQueryDetail.html?chartList=lcuTimeTopAnalyseRateMonth'},
         {title:'服务部署建议(日)',url:'/queueReportAnalyze.html?chartList=queueReportDayList&chartQList=queueAnalyzeListDAY'},
         {title:'服务部署建议(月)',url:'/queueReportAnalyze.html?chartList=queueReportMonthList&chartQList=queueAnalyzeListMONTH'},
-        {title:'主机对比',url:'/historyComPareGraph.html?chartList=historyLcuSumCompareChart'},
+        {title:'主机对比',url:'/historyComPareGraph.html?chartList=historyLcuSumCompareChart'}
         /*{title:'服务部署建议（4天）', url:'/queueReportBy4Days.html'},*/
         //{title:'23转4异常分析', url:'/trade4G.html'},
-        {title:'3G_ESS分析', url:'/Alarm3G_ESS.html?charList=alarm3GESSGroupList&charBList=alarm3GESSBaseList'}
                                                     
                                                     
                                                   ]
+    },
+
+    {title:'接口',menuId:'interface', class:'icon-tasks',list:[
+        {title:'CUST分析', url:'/Alarm3G_ESS.html?charList=alarmWSCUSTGroupList&charBList=alarmWSCUSTBaseList'},
+        {title:'CBSS分析', url:'/Alarm3G_ESS.html?charList=alarmWSCBSSGroupList&charBList=alarmWSCBSSBaseList'},
+        {title:'3G_ESS分析', url:'/Alarm3G_ESS.html?charList=alarm3GESSGroupList&charBList=alarm3GESSBaseList'},
+        {title:'3G_HTTP分析', url:'/Alarm3G_ESS.html?charList=alarmWS3GHTTPGroupList&charBList=alarmWS3GHTTPBaseList'}
+
+
+    ]
     },
         		
 	/*{title:'中间件WEBLOGIC',menuId:'weblogic', class:'icon-tasks',list:[    {title:'异常明细(历史)',url:'#'},

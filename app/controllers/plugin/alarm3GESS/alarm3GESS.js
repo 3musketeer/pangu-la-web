@@ -16,9 +16,12 @@ exports.plugin = function(server) {
             charList = req.query['charList'],
             char_list = aList[charList][0],
             rConfig = aConfig[char_list.mode+char_list.type+char_list.subtype],
-            charBList = req.query['charBList'];
+            charBList = req.query['charBList'],
+            char_blist = aList[charBList][0],
+            bConfig = aConfig[char_blist.mode+char_blist.type+char_blist.subtype];
         var hosts = rConfig.hosts;
         res.renderPjax('plugin/alarm3GESS/alarm3GESS', {
+            title: bConfig.name,
             hosts: hosts,
             value: date,
             charList: charList,
@@ -132,7 +135,9 @@ exports.plugin = function(server) {
                         logger.debug('===',filter,rows.length,'===')
                         var total = 0, docs = [], cntSuccess = 0;
                         for(var i=0; i<rows.length; i++){
-                            cntSuccess += rows[i]['0000'];
+                            if(rows[i]['0000'] !== undefined) {
+                                cntSuccess += rows[i]['0000'];
+                            }
                             for(var idx in rows[i]){
                                 if(idx != 'servicename' && idx != 'operatename') {
                                     total += rows[i][idx];
