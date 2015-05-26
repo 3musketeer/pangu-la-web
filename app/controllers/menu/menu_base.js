@@ -64,6 +64,8 @@ module.exports = [
                                           ]
   },*/
   
-  {title:'异常明细',class:'ico-warning-sign',list:[],url:"/historyQueryDetail.html?chartList=getWarning"}
+  {title:'异常明细',class:'ico-warning-sign',list:[],url:"/historyQueryDetail.html?chartList=getWarning"},
+
+    {title:'网络拓扑图(ing)',class:'icon-tasks',list:[],url:"/NetTopologyGraph.html"}
    
 ]

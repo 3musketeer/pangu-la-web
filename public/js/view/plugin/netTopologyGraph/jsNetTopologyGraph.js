@@ -2,92 +2,106 @@ $(function(){
     var width = 1100,
         height = 800,
         root = {
-            "name": "flare",
+            "name": "10.161.1.66_uipapp",
             "size": 10,
             "expand": true,
+            "type": "root",
             "children": [
                 {
                     "name": "ECS",
                     "expand": true,
+                    "type": "switch",
                     "children": [
-                        { "name": "2.107_tuxapp1", "size" : 5, "state" : 1 }, { "name": "2.107_tuxapp2", "size" : 5, "state" : 1 },
-                        { "name": "2.108_tuxapp1", "size" : 5, "state" : 1 }, { "name": "2.108_tuxapp2", "size" : 5, "state" : 1 },
-                        { "name": "2.109_tuxapp3", "size" : 5, "state" : 1 }, { "name": "2.109_tuxapp4", "size" : 5, "state" : 1 },
-                        { "name": "2.110_tuxapp3", "size" : 5, "state" : 0 }, { "name": "2.110_tuxapp4", "size" : 5, "state" : 0 },
-                        { "name": "2.231_tuxapp1", "size" : 5, "state" : 1 }, { "name": "2.231_tuxapp2", "size" : 5, "state" : 1 },
-                        { "name": "2.232_tuxapp3", "size" : 5, "state" : 0 }, { "name": "2.232_tuxapp4", "size" : 5, "state" : 1 }
+                        { "name": "2.107_tuxapp1", "size" : 5, "type": "point", "state" : 1 },
+                        { "name": "2.107_tuxapp2", "size" : 5, "type": "point", "state" : 1 },
+                        { "name": "2.108_tuxapp1", "size" : 5, "type": "point", "state" : 1 },
+                        { "name": "2.108_tuxapp2", "size" : 5, "type": "point", "state" : 1 },
+                        { "name": "2.109_tuxapp3", "size" : 5, "type": "point", "state" : 1 },
+                        { "name": "2.109_tuxapp4", "size" : 5, "type": "point", "state" : 1 },
+                        { "name": "2.110_tuxapp3", "size" : 5, "type": "point", "state" : 0 },
+                        { "name": "2.110_tuxapp4", "size" : 5, "type": "point", "state" : 0 },
+                        { "name": "2.231_tuxapp1", "size" : 5, "type": "point", "state" : 1 },
+                        { "name": "2.231_tuxapp2", "size" : 5, "type": "point", "state" : 1 },
+                        { "name": "2.232_tuxapp3", "size" : 5, "type": "point", "state" : 0 },
+                        { "name": "2.232_tuxapp4", "size" : 5, "type": "point", "state" : 1 }
                     ]
                 },
                 {
                     "name": "全业务",
                     "expand": true,
+                    "type": "switch",
                     "children": [
-                        {"name": "2.112_tuxapp5", "size" : 5, "state" : 1 },
-                        {"name": "2.113_tuxapp7", "size" : 5, "state" : 1 },
-                        {"name": "2.233_tuxapp5", "size" : 5, "state" : 0 },
-                        {"name": "2.233_tuxapp6", "size" : 5, "state" : 1 },
-                        {"name": "2.234_tuxapp7", "size" : 5, "state" : 0 },
-                        {"name": "2.234_tuxapp8", "size" : 5, "state" : 1 }
+                        {"name": "2.112_tuxapp5", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.113_tuxapp7", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.233_tuxapp5", "size" : 5, "type": "point", "state" : 0 },
+                        {"name": "2.233_tuxapp6", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.234_tuxapp7", "size" : 5, "type": "point", "state" : 0 },
+                        {"name": "2.234_tuxapp8", "size" : 5, "type": "point", "state" : 1 }
                     ]
                 },
                 {
                     "name": "一卡充",
                     "expand": true,
+                    "type": "switch",
                     "children": [
-                        {"name": "2.112_tuxapp6", "size" : 5, "state" : 1 },
-                        {"name": "2.113_tuxapp8", "size" : 5, "state" : 1 }
+                        {"name": "2.112_tuxapp6", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.113_tuxapp8", "size" : 5, "type": "point", "state" : 1 }
                     ]
                 },
                 {
                     "name": "IBOSS",
                     "expand": true,
+                    "type": "switch",
                     "children": [
-                        {"name": "2.111_tuxapp5", "size" : 5, "state" : 0 },
-                        {"name": "2.114_tuxapp7", "size" : 5, "state" : 1 }
+                        {"name": "2.111_tuxapp5", "size" : 5, "type": "point", "state" : 0 },
+                        {"name": "2.114_tuxapp7", "size" : 5, "type": "point", "state" : 1 }
                     ]
                 },
                 {
                     "name": "客服",
                     "expand": true,
+                    "type": "switch",
                     "children": [
-                        {"name": "2.111_tuxapp6", "size" : 5, "state" : 1 },
-                        {"name": "2.114_tuxapp8", "size" : 5, "state" : 1 },
+                        {"name": "2.111_tuxapp6", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.114_tuxapp8", "size" : 5, "type": "point", "state" : 1 },
                     ]
                 },
                 {
                     "name": "BPM",
                     "expand": true,
+                    "type": "switch",
                     "children": [
-                        {"name": "2.141_bpmapp1", "size" : 5, "state" : 1 },
-                        {"name": "2.141_bpmapp2", "size" : 5, "state" : 1 },
-                        {"name": "2.142_bpmapp3", "size" : 5, "state" : 0 },
-                        {"name": "2.142_bpmapp4", "size" : 5, "state" : 1 },
-                        {"name": "2.143_bpmapp5", "size" : 5, "state" : 1 },
-                        {"name": "2.143_bpmapp6", "size" : 5, "state" : 1 },
-                        {"name": "2.144_bpmapp7", "size" : 5, "state" : 0 },
-                        {"name": "2.144_bpmapp8", "size" : 5, "state" : 1 }
+                        {"name": "2.141_bpmapp1", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.141_bpmapp2", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.142_bpmapp3", "size" : 5, "type": "point", "state" : 0 },
+                        {"name": "2.142_bpmapp4", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.143_bpmapp5", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.143_bpmapp6", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.144_bpmapp7", "size" : 5, "type": "point", "state" : 0 },
+                        {"name": "2.144_bpmapp8", "size" : 5, "type": "point", "state" : 1 }
                     ]
                 },
                 {
                     "name": "前台Tuxedo",
                     "expand": true,
+                    "type": "switch",
                     "children": [
-                        {"name": "2.99_tuxapp1", "size" : 5, "state" : 1 },
-                        {"name": "2.99_tuxapp2", "size" : 5, "state" : 0 },
-                        {"name": "2.100_tuxapp1", "size" : 5, "state" : 1 },
-                        {"name": "2.100_tuxapp2", "size" : 5, "state" : 1 },
-                        {"name": "2.101_tuxapp3", "size" : 5, "state" : 1 },
-                        {"name": "2.101_tuxapp4", "size" : 5, "state" : 1 },
-                        {"name": "2.102_tuxapp3", "size" : 5, "state" : 1 },
-                        {"name": "2.102_tuxapp4", "size" : 5, "state" : 0 },
-                        {"name": "2.103_tuxapp5", "size" : 5, "state" : 1 },
-                        {"name": "2.103_tuxapp6", "size" : 5, "state" : 1 },
-                        {"name": "2.104_tuxapp5", "size" : 5, "state" : 1 },
-                        {"name": "2.104_tuxapp6", "size" : 5, "state" : 1 },
-                        {"name": "2.105_tuxapp7", "size" : 5, "state" : 1 },
-                        {"name": "2.105_tuxapp8", "size" : 5, "state" : 0 },
-                        {"name": "2.106_tuxapp7", "size" : 5, "state" : 1 },
-                        {"name": "2.106_tuxapp8", "size" : 5, "state" : 1 }
+                        {"name": "2.99_tuxapp1", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.99_tuxapp2", "size" : 5, "type": "point", "state" : 0 },
+                        {"name": "2.100_tuxapp1", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.100_tuxapp2", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.101_tuxapp3", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.101_tuxapp4", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.102_tuxapp3", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.102_tuxapp4", "size" : 5, "type": "point", "state" : 0 },
+                        {"name": "2.103_tuxapp5", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.103_tuxapp6", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.104_tuxapp5", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.104_tuxapp6", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.105_tuxapp7", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.105_tuxapp8", "size" : 5, "type": "point", "state" : 0 },
+                        {"name": "2.106_tuxapp7", "size" : 5, "type": "point", "state" : 1 },
+                        {"name": "2.106_tuxapp8", "size" : 5, "type": "point", "state" : 1 }
                     ]
                 }
             ]
@@ -108,7 +122,6 @@ $(function(){
         node = svg.selectAll(".node");
 
         update();
-
 
     function update() {
         var nodes = flatten(root),
@@ -150,6 +163,7 @@ $(function(){
             .on('click', function(d){ return d.expand && click(d) })
             //.on('click',function(d){ d.expand && click(d);})
             .on("mouseover", function (d) {
+                console.log(d)
                 if(d.expand) return;
                 $.ajax({
                     type: 'get',
@@ -158,20 +172,22 @@ $(function(){
                         value: $('#value').val() || "2015-5-25",
                         host: "10.161." + d.name || "10.161.2.107_tuxapp1"
                     },
-                    success: function(docs) {
+                    success: function (docs) {
                         showTooltip(d, docs)
                     }
                 })
             })
             .on("mouseout", function (d) {
-                $('#tooltip2').remove();
+                hideTooltip();
             })
             .call(force.drag);
         //console.log(nodeEnter)
 
         nodeEnter.append("svg:image")
             .attr("class", "circle")
-            .attr("xlink:href", function(d){ return d.state == 1 || undefined === d.state ? "img/icons/server-ok.png" : "img/icons/server-down.png" })
+            .attr("xlink:href", function(d){
+                return d.state == 1 || undefined === d.state ? "img/icons/server-ok.png" : "img/icons/server-down.png"
+            })
             .attr("x", "-13px")
             .attr("y", "-13px")
             .attr("width", "26px")
@@ -231,23 +247,23 @@ $(function(){
     }
 
     function showTooltip(d, docs) {
-        var rootElt = 'body';
-        $('<table id="tooltip2" class="table table-striped table-hover">' +
-        '<tbody>' +
-        '<tr><td style="text-align: center">主机IP</td><td style="text-align: center">10.161.' + d.name.split('_')[0] + '</td></tr>' +
-        '<tr><td style="text-align: center">用户</td><td style="text-align: center">' + d.name.split('_')[1] + '</td></tr>' +
-        '<tr><td style="text-align: center">当日调用总量</td><td style="text-align: center">' + docs.CallCnt + '</td></tr>' +
-        '<tr><td style="text-align: center">当日异常总量</td><td style="text-align: center">' + docs.FailCnt + '</td></tr>' +
-        '<tr><td style="text-align: center">当日成功率</td><td style="text-align: center">' +
-                                ((docs.CallCnt - docs.FailCnt)/docs.CallCnt).toFixed(2) + '%</td></tr>' +
-        '</tbody></table>').css( {
-            position: 'fixed',
-            display: 'none',
-            top: 245,
-            right: 10,
-            width: '300px',
-            'z-index': '9999'
-        }).prependTo(rootElt).show();
+        $("td#ntg-ip").text("10.161." + d.name.split("_")[0]);
+        $("td#ntg-user").text(d.name.split("_")[1]);
+        $("td#ntg-call").text(docs.CallCnt);
+        $("td#ntg-fail").text(docs.FailCnt);
+        $("td#ntg-rate").text(((docs.CallCnt - docs.FailCnt)*100/docs.CallCnt).toFixed(2) + "%");
+        $("table#tooltip-topology").css("top", d.y);
+        $("table#tooltip-topology").css("left", d.x);
+        $("table#tooltip-topology").show();
+    }
+
+    function hideTooltip(){
+        $("table#tooltip-topology").hide();
+        var display = $("table#tooltip-topology").css("display");
+        if(display != 'none'){
+            //console.log(display)
+            $("table#tooltip-topology").css("display", "none");
+        }
     }
 })
 
