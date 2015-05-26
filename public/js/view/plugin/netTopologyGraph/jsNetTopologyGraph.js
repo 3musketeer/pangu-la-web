@@ -1,115 +1,14 @@
 $(function(){
     var width = 1100,
         height = 800,
-        root = {
-            "name": "10.161.1.66_uipapp",
-            "size": 10,
-            "expand": true,
-            "type": "root",
-            "children": [
-                {
-                    "name": "ECS",
-                    "expand": true,
-                    "type": "switch",
-                    "children": [
-                        { "name": "2.107_tuxapp1", "size" : 5, "type": "point", "state" : 1 },
-                        { "name": "2.107_tuxapp2", "size" : 5, "type": "point", "state" : 1 },
-                        { "name": "2.108_tuxapp1", "size" : 5, "type": "point", "state" : 1 },
-                        { "name": "2.108_tuxapp2", "size" : 5, "type": "point", "state" : 1 },
-                        { "name": "2.109_tuxapp3", "size" : 5, "type": "point", "state" : 1 },
-                        { "name": "2.109_tuxapp4", "size" : 5, "type": "point", "state" : 1 },
-                        { "name": "2.110_tuxapp3", "size" : 5, "type": "point", "state" : 0 },
-                        { "name": "2.110_tuxapp4", "size" : 5, "type": "point", "state" : 0 },
-                        { "name": "2.231_tuxapp1", "size" : 5, "type": "point", "state" : 1 },
-                        { "name": "2.231_tuxapp2", "size" : 5, "type": "point", "state" : 1 },
-                        { "name": "2.232_tuxapp3", "size" : 5, "type": "point", "state" : 0 },
-                        { "name": "2.232_tuxapp4", "size" : 5, "type": "point", "state" : 1 }
-                    ]
-                },
-                {
-                    "name": "全业务",
-                    "expand": true,
-                    "type": "switch",
-                    "children": [
-                        {"name": "2.112_tuxapp5", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.113_tuxapp7", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.233_tuxapp5", "size" : 5, "type": "point", "state" : 0 },
-                        {"name": "2.233_tuxapp6", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.234_tuxapp7", "size" : 5, "type": "point", "state" : 0 },
-                        {"name": "2.234_tuxapp8", "size" : 5, "type": "point", "state" : 1 }
-                    ]
-                },
-                {
-                    "name": "一卡充",
-                    "expand": true,
-                    "type": "switch",
-                    "children": [
-                        {"name": "2.112_tuxapp6", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.113_tuxapp8", "size" : 5, "type": "point", "state" : 1 }
-                    ]
-                },
-                {
-                    "name": "IBOSS",
-                    "expand": true,
-                    "type": "switch",
-                    "children": [
-                        {"name": "2.111_tuxapp5", "size" : 5, "type": "point", "state" : 0 },
-                        {"name": "2.114_tuxapp7", "size" : 5, "type": "point", "state" : 1 }
-                    ]
-                },
-                {
-                    "name": "客服",
-                    "expand": true,
-                    "type": "switch",
-                    "children": [
-                        {"name": "2.111_tuxapp6", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.114_tuxapp8", "size" : 5, "type": "point", "state" : 1 },
-                    ]
-                },
-                {
-                    "name": "BPM",
-                    "expand": true,
-                    "type": "switch",
-                    "children": [
-                        {"name": "2.141_bpmapp1", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.141_bpmapp2", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.142_bpmapp3", "size" : 5, "type": "point", "state" : 0 },
-                        {"name": "2.142_bpmapp4", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.143_bpmapp5", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.143_bpmapp6", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.144_bpmapp7", "size" : 5, "type": "point", "state" : 0 },
-                        {"name": "2.144_bpmapp8", "size" : 5, "type": "point", "state" : 1 }
-                    ]
-                },
-                {
-                    "name": "前台Tuxedo",
-                    "expand": true,
-                    "type": "switch",
-                    "children": [
-                        {"name": "2.99_tuxapp1", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.99_tuxapp2", "size" : 5, "type": "point", "state" : 0 },
-                        {"name": "2.100_tuxapp1", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.100_tuxapp2", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.101_tuxapp3", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.101_tuxapp4", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.102_tuxapp3", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.102_tuxapp4", "size" : 5, "type": "point", "state" : 0 },
-                        {"name": "2.103_tuxapp5", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.103_tuxapp6", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.104_tuxapp5", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.104_tuxapp6", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.105_tuxapp7", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.105_tuxapp8", "size" : 5, "type": "point", "state" : 0 },
-                        {"name": "2.106_tuxapp7", "size" : 5, "type": "point", "state" : 1 },
-                        {"name": "2.106_tuxapp8", "size" : 5, "type": "point", "state" : 1 }
-                    ]
-                }
-            ]
-        };
+        root,
+        updateInterval = 10 * 1000,
+        warn = {};
 
     var force = d3.layout.force()
         .gravity(.05)
-        .distance(100)
+        //.distance(100)
+        .linkDistance(function(d) { return (d.distance*10) || 70; })
         .charge(-750)
         .size([width, height])
         .on("tick", tick);
@@ -121,8 +20,12 @@ $(function(){
     var link = svg.selectAll(".link"),
         node = svg.selectAll(".node");
 
-        update();
+    //setInterval(function(){}, updateInterval);
 
+    $.getJSON('/getNTGNodes', function(data){
+        root = data;
+        update();
+    })
     function update() {
         var nodes = flatten(root),
             links = d3.layout.tree().links(nodes);
@@ -160,10 +63,9 @@ $(function(){
             //.attr("cy", function(d) { return d.y; })
             //.attr("r", function(d) { return d.size || 8; })
             //.style("fill", color)
-            .on('click', function(d){ return d.expand && click(d) })
+            .on('click', function(d){ return (d['type'] == 'switch') && click(d) })
             //.on('click',function(d){ d.expand && click(d);})
             .on("mouseover", function (d) {
-                console.log(d)
                 if(d.expand) return;
                 $.ajax({
                     type: 'get',
@@ -186,12 +88,23 @@ $(function(){
         nodeEnter.append("svg:image")
             .attr("class", "circle")
             .attr("xlink:href", function(d){
-                return d.state == 1 || undefined === d.state ? "img/icons/server-ok.png" : "img/icons/server-down.png"
+                return d['state'] == 0 ? "img/icons/ntg-warning.gif" : d.type == "switch"
+                                    ? "img/icons/ntg-switch.png" : d.type == "point"
+                                    ? "img/icons/server-ok.png" : d.type == "root"
+                                    ? "img/icons/server-ok.png" : "img/icons/server-down.png"
             })
-            .attr("x", "-13px")
-            .attr("y", "-13px")
-            .attr("width", "26px")
-            .attr("height", "26px")
+            .attr("x", function(d){
+                return d.type == "switch" ? "-13px" : "-16px";
+            })
+            .attr("y", function(d){
+                return d.type == "switch" ? "-13px" : "-16px";
+            })
+            .attr("width", function(d){
+                return d.type == "switch" ? "26px" : "32px";
+            })
+            .attr("height", function(d){
+                return d.type == "switch" ? "26px" : "32px";
+            })
 
         nodeEnter.append("svg:text")
             .attr("class", "nodetext")
@@ -217,16 +130,12 @@ $(function(){
 // Toggle children on click.
     function click(d) {
         if (d3.event.defaultPrevented) return;
-        if(!d['_expand']){
-            console.log('==1==',d)
+        if(d.children){
             d._children = d.children;
             d.children = null;
-            d['_expand'] = true;
         }else{
-            console.log('==2==',d)
             d.children = d._children;
             d._children = null;
-            d['_expand'] = false;
         }
         update();
 
@@ -241,7 +150,6 @@ $(function(){
             if (!node.id) node.id = ++i;
             nodes.push(node);
         }
-
         recurse(root);
         return nodes;
     }
@@ -254,6 +162,12 @@ $(function(){
         $("td#ntg-rate").text(((docs.CallCnt - docs.FailCnt)*100/docs.CallCnt).toFixed(2) + "%");
         $("table#tooltip-topology").css("top", d.y);
         $("table#tooltip-topology").css("left", d.x);
+        if(warn["10.161." + d.name]){
+            $("tr#ntg-fail-content > td").html('<font color=red>'+warn["10.161." + d.name]['content']+'</font>');
+            $("tr#ntg-fail-content").show();
+        }else{
+            $("tr#ntg-fail-content").hide();
+        }
         $("table#tooltip-topology").show();
     }
 

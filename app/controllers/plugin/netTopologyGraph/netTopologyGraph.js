@@ -5,7 +5,8 @@ var mongoose = require('mongoose')
     , query = require('../../query')
     , async = require('async')
     , EventProxy = require('eventproxy').EventProxy
-    , _node = require('../../plugin_config/netTopologyGraph/config_nettopology_cb_1_0').nodes;
+    , _node = require('../../plugin_config/netTopologyGraph/config_nettopology_cb_1_0').nodes
+    , Faye = require('faye');
 
 
 exports.plugin = function(server) {
@@ -62,5 +63,21 @@ exports.plugin = function(server) {
             })
         });
 
+    });
+
+    server.get('/getNTGNodes', function(req, res){
+        res.send(_node);
+    })
+
+    server.get('/getWarningNode', function(req, res){
+        var bayeux = new Faye.Client('http://10.161.0.84:8001/faye');
+        var l = [
+            "level-100",
+            "level-200",
+            "level-300"
+        ];
+        bayeux.subscribe('/SystemMessage/level-100', function(message){
+
+        });
     });
 }

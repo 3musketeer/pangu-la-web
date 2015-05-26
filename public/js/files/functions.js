@@ -748,7 +748,7 @@
             clearTimeout(timeId);
             delete timeId;
        }      
-       closeWarningTag = false;
+       closeWarningTag = true;
    });
    
     $(document).on('complete.pjax', function (e) { 
@@ -875,7 +875,7 @@
     
    callbacks.add(function() {
        //刷新用户订阅配置
-       var bayeux = new Faye.Client('10.161.0.84:8001/faye');
+       var bayeux = new Faye.Client('http://10.161.0.84:8001/faye');
        $.ajax({  
             type:"GET",  
             url:"/getUserSubscribeType.html",  
