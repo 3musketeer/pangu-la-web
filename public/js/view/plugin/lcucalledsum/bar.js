@@ -23,12 +23,14 @@ $(function() {
             data:"value="+value+"&chartList="+$('#chart-list')[0].innerText+"&TRANSCODE="+param+"&ajaxGetTag=true",  
             dataType:"json",  
             success:function(data1){        
-              for(var item in data1){    
-                   for(var m = 0;m<barIndex;m++){ 
-                       var objDiv = $('#placeholder-'+m);
-                       if ($('#placeholder-data'+m)[0].innerText.indexOf('hours')>0 && JSON.stringify(data1[item]).indexOf('hours')>0){
-                           draw(data1[item][data1[item].scopes[0]],objDiv);
-                       }
+              for(var item in data1){
+                  var tmstr = "" + barIndex,
+                      tmlen = tmstr.length;
+                  for(var i=0; i<tmlen; i++){
+                      var objDiv = $('#placeholder-'+data1[item].scopes[0]);
+                      if($('#placeholder-data-'+data1[item].scopes[0])[0].innerText.indexOf('hours')>0 && JSON.stringify(data1[item]).indexOf('hours')>0){
+                          draw(data1[item][data1[item].scopes[0]],objDiv);
+                      }
                   }
                    
               } 
@@ -109,39 +111,43 @@ $(function() {
         }).prependTo(rootElt).show();
      }
 
-	var previousPoint = null;
-	for(var m = 0;m<barIndex;m++){
-    	$('#placeholder-'+m).bind("plothover",(function(idx){return function (event, pos, item) {
-    
-    		if ($('#placeholder-'+idx).length > 0) {
-    			if (item) {
-    				if (previousPoint != item.datapoint) {
-    					previousPoint = item.datapoint;
-    					
-    					$('.chart-tooltip').remove();
-    					var x = item.datapoint[0];
-    					
-    					if(item.series.bars.order){
-                        for(var i=0; i < item.series.data.length; i++){
-                            if(item.series.data[i][3] == item.datapoint[0])
-                                x = item.series.data[i][0];
+	var previousPoint = null,
+        str = ""+barIndex,
+        len = str.length;
+    for(var i = 0;i<len;i++){
+        var idx1 = i == 0 ? "day" : i == 1 ? "month" : "year";
+        $('#placeholder-'+idx1).bind("plothover",(function(idx){return function (event, pos, item) {
+
+            if ($('#placeholder-'+idx).length > 0) {
+                if (item) {
+                    if (previousPoint != item.datapoint) {
+                        previousPoint = item.datapoint;
+
+                        $('.chart-tooltip').remove();
+                        var x = item.datapoint[0];
+
+                        if(item.series.bars.order){
+                            for(var i=0; i < item.series.data.length; i++){
+                                if(item.series.data[i][3] == item.datapoint[0])
+                                    x = item.series.data[i][0];
                             }
                         }
-                       var y = item.datapoint[1];
-                       showTooltip(item.pageX+5, item.pageY+5,x + '(日)时调用量为:'+ y);
-    				}
-    			}
-    			else {
-    				$('.chart-tooltip').remove();
-                    previousPoint = null;        
-    			}
-    		}
-    	}})(m));
+                        var y = item.datapoint[1];
+                        showTooltip(item.pageX+5, item.pageY+5,x + '(日)时调用量为:'+ y);
+                    }
+                }
+                else {
+                    $('.chart-tooltip').remove();
+                    previousPoint = null;
+                }
+            }
+        }})(idx1));
     }
-       
-  for(var m = 0;m<barIndex;m++){
-      var objDiv = $('#placeholder-'+m);
-      draw(jQuery.parseJSON($('#placeholder-data'+m)[0].innerText),objDiv);
-  }
+
+    for(var i=0; i<len; i++){
+        var idx2 = i == 0 ? "day" : i == 1 ? "month" : "year";
+        var objDiv = $('#placeholder-'+idx2);
+        draw(jQuery.parseJSON($('#placeholder-data-'+idx2)[0].innerText),objDiv);
+    }
 
 });
