@@ -1,12 +1,9 @@
 $(function(){
-    $('#3gess_operate').change(function(){
+    $('#interface_operate').change(function(){
         updateTable();
     });
-    $('#3gess_service').change(function(){
+    $('#interface_service').change(function(){
         getOperate();
-    });
-    $('#3gess_host').change(function(){
-        getService();
     });
 
     function initChartData (data) {
@@ -56,23 +53,25 @@ $(function(){
 
     function updateTable(){
 
-        var _operate = $('#3gess_operate option:selected').text() || 'all',
-            _service = $('#3gess_service option:selected').text() || 'all',
-            host = $('#3gess_host option:selected').text() || 'all';
+        var _operate = $('#interface_operate option:selected').text() || 'all',
+            _service = $('#interface_service option:selected').text() || 'all',
+            host = $('#host').val();
         $.ajax({
             type: 'get',
-            url: '/getAlarm3GESSData',
+            url: '/getInterfaceWEBData',
             data: {
                 value: $('#value').val() || '2015-05-19',
                 host: host,
                 _operate: _operate,
                 _service: _service,
-                charList: $('#charList').val() || 'alarm3GESSGroupList',
-                charBList: $('#charBList').val() || 'alarm3GESSBaseList'
+                chartList: $('#chartList').val() || 'alarmWS3GESSGroupList',
+                chartCList: $('#chartCList').val() || 'alarmWS3GESSCalledSumList'
             },
             success: function(data) {
                 var html = '',
-                    total = data.total,
+                    total = data.count,
+                    success = data.success,
+                    failure = data.failure,
                     rows = data.results,
                     colName = data.tabColName;
                 if( rows.length == 0){
@@ -81,16 +80,16 @@ $(function(){
                 }else{
                     $('#_total').show();
                 }
-                $('#TradeTotal').html('<strong>' + data['count'] + '</strong>');
-                $('#TradeSuccess').html('<strong>' + data['success'] + '</strong>');
-                $('#TradeFailure').html('<strong>' + data['failure'] + '</strong>');
-                $('#TradeFailureRate').html('<strong>' + (data['failure'] / data['count'] * 100).toFixed(2) + '%</strong>');
+                $('#TradeTotal').html('<strong>' + total + '</strong>');
+                $('#TradeSuccess').html('<strong>' + success + '</strong>');
+                $('#TradeFailure').html('<strong>' + failure + '</strong>');
+                $('#TradeFailureRate').html('<strong>' + (failure / total * 100).toFixed(2) + '%</strong>');
                 html += '<tr>';
                 for(var i=0; i<colName.length; i++){
                     html += '<th style="text-align: center">' + colName[i] + '</th>';
                 }
                 html += '</tr>';
-                $('#3gess_table > thead').html(html);
+                $('#interface_table > thead').html(html);
                 html = '';
                 for(var i=0; i<rows.length; i++){
                     if( i%2 == 0 ) {
@@ -105,27 +104,8 @@ $(function(){
                     html += '<td style="text-align: center">' + (rows[i]['count']/total*100).toFixed(3) + '</td>';
 
                 }
-                $('#3gess_table > tbody').html(html);
+                $('#interface_table > tbody').html(html);
                 initChartData(data);
-            }
-        });
-    }
-
-    function getHosts(){
-        $.ajax({
-            type: 'get',
-            url: '/getAlarm3GESSHost',
-            data: {
-                value: $('#value').val() || '2015-05-19',
-                charList: $('#charList').val() || 'alarm3GESSGroupList'
-            },
-            success: function(rows) {
-                var html = "<option>all</option>";
-                for(var idx=0; idx<rows.length; idx++){
-                    html += "<option>" + rows[idx] + "</option>"
-                }
-                $('#3gess_host').html(html);
-                getService();
             }
         });
     }
@@ -133,18 +113,18 @@ $(function(){
     function getService(){
         $.ajax({
             type: 'get',
-            url: '/getAlarm3GESSService',
+            url: '/getInterfaceWEBService',
             data: {
                 value: $('#value').val() || '2015-05-19',
-                host: $('#3gess_host option:selected').text() || 'all',
-                charList: $('#charList').val() || 'alarm3GESSGroupList'
+                host: $('#host').val() || 'all',
+                chartList: $('#chartList').val() || 'alarmWS3GESSGroupList'
             },
             success: function(rows) {
                 var html = "<option>all</option>";
                 for(var idx=0; idx<rows.length; idx++){
                     html += "<option>" + rows[idx] + "</option>"
                 }
-                $('#3gess_service').html(html);
+                $('#interface_service').html(html);
                 getOperate();
             }
         });
@@ -153,23 +133,23 @@ $(function(){
     function getOperate(){
         $.ajax({
             type: 'get',
-            url: '/getAlarm3GESSOperate',
+            url: '/getInterfaceWEBOperate',
             data: {
                 value: $('#value').val() || '2015-05-19',
-                host: $('#3gess_host option:selected').text() || 'all',
-                charBList: $('#charBList').val() || 'alarm3GESSBaseList',
-                _service: $('#3gess_service option:selected').text() || 'ESSTermSer'
+                host: $('#host').val() || 'all',
+                chartCList: $('#chartList').val() || 'alarmWS3GESSCalledSumList',
+                _service: $('#interface_service option:selected').text() || 'ESSTermSer'
             },
             success: function(rows) {
                 var html = "<option>all</option>";
                 for(var idx=0; idx<rows.length; idx++){
                     html += "<option>" + rows[idx] + "</option>"
                 }
-                $('#3gess_operate').html(html);
+                $('#interface_operate').html(html);
                 updateTable();
             }
         });
     }
 
-    getHosts();
+    getService();
 });

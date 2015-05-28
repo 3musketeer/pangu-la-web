@@ -1,36 +1,27 @@
 var config = {
-    Alarm3GESSBase: {
+    AlarmWS3GESSCalledSum: {
         name: "3GESS 分析",
         scopes: ['day'],
         displayLength: 10,
-        titles: ['时间', '流程信息', '时间差( ms )'],
-        colNames: ['TIME', 'content', 'Time Diff'],
-        textFields :  ['TIME', 'content', 'Time Diff'],
         filterColNames: [{'host':1, 'servicename':1, 'operatename':1, 'rspcode':1, '_id':0}],
         sort: {'timestamp': 1}
     },
 
-    Alarm3GESSGroup: {
+    AlarmWS3GESSGroup: {
         scopes: ['day'],
         displayLength: 10,
-        textFields :  ['TIME', 'content', 'Time Diff'],
         filterColNames: [{'host':1, 'servicename':1, 'operatename':1, 'rspcode':1, '_id':0}],
         filterOperate: {'operatename': {$exists: true}},
         filterService: {'servicename': {$exists: true}},
         sort: {'timestamp': 1},
         tabColNames_CODE: ['servicename', 'operatename', 'rspcode', '出现次数', '占比(%)'],
-        tabColNames_DESC: ['rspdesc', '出现次数', '占比(%)'],
-        hosts: ['all','10.161.2.141_builder'],
         codeAnddesc: []
     },
 
-    AlarmWS3GHTTPBase: {
+    AlarmWS3GHTTPCalledSum: {
         name: "3G_HTTP 分析",
         scopes: ['day'],
         displayLength: 10,
-        titles: ['时间', '流程信息', '时间差( ms )'],
-        colNames: ['TIME', 'content', 'Time Diff'],
-        textFields :  ['TIME', 'content', 'Time Diff'],
         filterColNames: [{'host':1, 'servicename':1, 'operatename':1, 'rspcode':1, '_id':0}],
         sort: {'timestamp': 1}
     },
@@ -38,24 +29,18 @@ var config = {
     AlarmWS3GHTTPGroup: {
         scopes: ['day'],
         displayLength: 10,
-        textFields :  ['TIME', 'content', 'Time Diff'],
         filterColNames: [{'host':1, 'servicename':1, 'operatename':1, 'rspcode':1, '_id':0}],
         filterOperate: {'operatename': {$exists: true}},
         filterService: {'servicename': {$exists: true}},
         sort: {'timestamp': 1},
         tabColNames_CODE: ['servicename', 'operatename', 'rspcode', '出现次数', '占比(%)'],
-        tabColNames_DESC: ['rspdesc', '出现次数', '占比(%)'],
-        hosts: ['all','10.161.2.141_builder'],
         codeAnddesc: []
     },
 
-    AlarmWSCUSTBase: {
+    AlarmWSCUSTCalledSum: {
         name: "CUST 分析",
         scopes: ['day'],
         displayLength: 10,
-        titles: ['时间', '流程信息', '时间差( ms )'],
-        colNames: ['TIME', 'content', 'Time Diff'],
-        textFields :  ['TIME', 'content', 'Time Diff'],
         filterColNames: [{'host':1, 'servicename':1, 'operatename':1, 'rspcode':1, '_id':0}],
         sort: {'timestamp': 1}
     },
@@ -63,24 +48,18 @@ var config = {
     AlarmWSCUSTGroup: {
         scopes: ['day'],
         displayLength: 10,
-        textFields :  ['TIME', 'content', 'Time Diff'],
         filterColNames: [{'host':1, 'servicename':1, 'operatename':1, 'rspcode':1, '_id':0}],
         filterOperate: {'operatename': {$exists: true}},
         filterService: {'servicename': {$exists: true}},
         sort: {'timestamp': 1},
         tabColNames_CODE: ['servicename', 'operatename', 'rspcode', '出现次数', '占比(%)'],
-        tabColNames_DESC: ['rspdesc', '出现次数', '占比(%)'],
-        hosts: ['all','10.161.2.141_builder'],
         codeAnddesc: []
     },
 
-    AlarmWSCBSSBase: {
+    AlarmWSCBSSCalledSum: {
         name: "CBSS 分析",
         scopes: ['day'],
         displayLength: 10,
-        titles: ['时间', '流程信息', '时间差( ms )'],
-        colNames: ['TIME', 'content', 'Time Diff'],
-        textFields :  ['TIME', 'content', 'Time Diff'],
         filterColNames: [{'host':1, 'servicename':1, 'operatename':1, 'rspcode':1, '_id':0}],
         sort: {'timestamp': 1}
     },
@@ -88,26 +67,23 @@ var config = {
     AlarmWSCBSSGroup: {
         scopes: ['day'],
         displayLength: 10,
-        textFields :  ['TIME', 'content', 'Time Diff'],
         filterColNames: [{'host':1, 'servicename':1, 'operatename':1, 'rspcode':1, '_id':0}],
         filterOperate: {'operatename': {$exists: true}},
         filterService: {'servicename': {$exists: true}},
         sort: {'timestamp': 1},
         tabColNames_CODE: ['servicename', 'operatename', 'rspcode', '出现次数', '占比(%)'],
-        tabColNames_DESC: ['rspdesc', '出现次数', '占比(%)'],
-        hosts: ['all','10.161.2.141_builder'],
         codeAnddesc: []
     }
 }
 
 var list = {
-    alarm3GESSBaseList:[ {mode:'Alarm', type:'3GESS',subtype:'Base'}],
-    alarm3GESSGroupList:[ {mode:'Alarm', type:'3GESS',subtype:'Group'}],
-    alarmWS3GHTTPBaseList:[ {mode:'AlarmWS', type:'3GHTTP',subtype:'Base'}],
+    alarmWS3GESSCalledSumList:[ {mode:'AlarmWS', type:'3GESS',subtype:'CalledSum'}],
+    alarmWS3GESSGroupList:[ {mode:'AlarmWS', type:'3GESS',subtype:'Group'}],
+    alarmWS3GHTTPCalledSumList:[ {mode:'AlarmWS', type:'3GHTTP',subtype:'CalledSum'}],
     alarmWS3GHTTPGroupList:[ {mode:'AlarmWS', type:'3GHTTP',subtype:'Group'}],
-    alarmWSCUSTBaseList:[ {mode:'AlarmWS', type:'CUST',subtype:'Base'}],
+    alarmWSCUSTCalledSumList:[ {mode:'AlarmWS', type:'CUST',subtype:'CalledSum'}],
     alarmWSCUSTGroupList:[ {mode:'AlarmWS', type:'CUST',subtype:'Group'}],
-    alarmWSCBSSBaseList:[ {mode:'AlarmWS', type:'CBSS',subtype:'Base'}],
+    alarmWSCBSSCalledSumList:[ {mode:'AlarmWS', type:'CBSS',subtype:'CalledSum'}],
     alarmWSCBSSGroupList:[ {mode:'AlarmWS', type:'CBSS',subtype:'Group'}]
 }
 

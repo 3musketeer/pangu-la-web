@@ -46,10 +46,35 @@ module.exports = [
     },
 
     {title:'接口',menuId:'interface', class:'icon-tasks',list:[
-        {title:'CUST分析', url:'/Alarm3G_ESS.html?charList=alarmWSCUSTGroupList&charBList=alarmWSCUSTBaseList'},
-        {title:'CBSS分析', url:'/Alarm3G_ESS.html?charList=alarmWSCBSSGroupList&charBList=alarmWSCBSSBaseList'},
-        {title:'3G_ESS分析', url:'/Alarm3G_ESS.html?charList=alarm3GESSGroupList&charBList=alarm3GESSBaseList'},
-        {title:'3G_HTTP分析', url:'/Alarm3G_ESS.html?charList=alarmWS3GHTTPGroupList&charBList=alarmWS3GHTTPBaseList'}
+        {title:'CUST分析',menuId:'alarm_ws_cust', list:[
+            {title:'所有主机', url:'/InterfaceWEB.html?chartList=alarmWSCUSTGroupList&chartCList=alarmWSCUSTCalledSumList&host=all'},
+            {title:'10.161.1.6_uipapp', url:'/InterfaceWEB.html?chartList=alarmWSCUSTGroupList&chartCList=alarmWSCUSTCalledSumList&host=10.161.1.6_uipapp'},
+            {title:'10.161.1.7_uipapp', url:'/InterfaceWEB.html?chartList=alarmWSCUSTGroupList&chartCList=alarmWSCUSTCalledSumList&host=10.161.1.7_uipapp'}
+        ]},
+        {title:'CBSS分析', menuId:'alarm_ws_cbss', list:[
+            {title:'所有主机', url:'/InterfaceWEB.html?chartList=alarmWSCBSSGroupList&chartCList=alarmWSCBSSCalledSumList&host=all'},
+            {title:'10.161.1.26_uipapp', url:'/InterfaceWEB.html?chartList=alarmWSCBSSGroupList&chartCList=alarmWSCBSSCalledSumList&host=10.161.1.26_uipapp'},
+            {title:'10.161.1.27_uipapp', url:'/InterfaceWEB.html?chartList=alarmWSCBSSGroupList&chartCList=alarmWSCBSSCalledSumList&host=10.161.1.27_uipapp'},
+            {title:'10.161.1.28_uipapp', url:'/InterfaceWEB.html?chartList=alarmWSCBSSGroupList&chartCList=alarmWSCBSSCalledSumList&host=10.161.1.28_uipapp'},
+            {title:'10.161.1.30_uipapp', url:'/InterfaceWEB.html?chartList=alarmWSCBSSGroupList&chartCList=alarmWSCBSSCalledSumList&host=10.161.1.30_uipapp'},
+            {title:'10.161.1.31_uipapp', url:'/InterfaceWEB.html?chartList=alarmWSCBSSGroupList&chartCList=alarmWSCBSSCalledSumList&host=10.161.1.31_uipapp'},
+            {title:'10.161.1.32_uipapp', url:'/InterfaceWEB.html?chartList=alarmWSCBSSGroupList&chartCList=alarmWSCBSSCalledSumList&host=10.161.1.32_uipapp'},
+            {title:'10.161.1.33_uipapp', url:'/InterfaceWEB.html?chartList=alarmWSCBSSGroupList&chartCList=alarmWSCBSSCalledSumList&host=10.161.1.33_uipapp'},
+            {title:'10.161.1.34_uipapp', url:'/InterfaceWEB.html?chartList=alarmWSCBSSGroupList&chartCList=alarmWSCBSSCalledSumList&host=10.161.1.34_uipapp'},
+            {title:'10.161.1.35_uipapp', url:'/InterfaceWEB.html?chartList=alarmWSCBSSGroupList&chartCList=alarmWSCBSSCalledSumList&host=10.161.1.35_uipapp'},
+            {title:'10.161.1.36_uipapp', url:'/InterfaceWEB.html?chartList=alarmWSCBSSGroupList&chartCList=alarmWSCBSSCalledSumList&host=10.161.1.36_uipapp'},
+            {title:'10.161.1.37_uipapp', url:'/InterfaceWEB.html?chartList=alarmWSCBSSGroupList&chartCList=alarmWSCBSSCalledSumList&host=10.161.1.37_uipapp'}
+        ]},
+        {title:'3G_ESS分析', menuId:'alarm_ws_3gess', list:[
+            {title:'所有主机', url:'/InterfaceWEB.html?chartList=alarmWS3GESSGroupList&chartCList=alarmWS3GESSCalledSumList&host=all'},
+            {title:'10.161.1.6_uipapp', url:'/InterfaceWEB.html?chartList=alarmWS3GESSGroupList&chartCList=alarmWS3GESSCalledSumList&host=10.161.1.6_uipapp'},
+            {title:'10.161.1.7_uipapp', url:'/InterfaceWEB.html?chartList=alarmWS3GESSGroupList&chartCList=alarmWS3GESSCalledSumList&host=10.161.1.7_uipapp'}
+        ]},
+        {title:'3G_HTTP分析', menuId:'alarm_ws_3ghttp',list:[
+            {title:'所有主机', url:'/InterfaceWEB.html?chartList=alarmWS3GHTTPGroupList&chartCList=alarmWS3GHTTPCalledSumList&host=all'},
+            {title:'10.161.1.6_uipapp', url:'/InterfaceWEB.html?chartList=alarmWS3GHTTPGroupList&chartCList=alarmWS3GHTTPCalledSumList&host=10.161.1.6_uipapp'},
+            {title:'10.161.1.7_uipapp', url:'/InterfaceWEB.html?chartList=alarmWS3GHTTPGroupList&chartCList=alarmWS3GHTTPCalledSumList&host=10.161.1.7_uipapp'}
+        ]}
 
 
     ]
